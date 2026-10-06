@@ -12,3 +12,8 @@ venv/
 .venv/
 .DS_Store
 *.log
+results/*_cache/
+results/interpreter/
+audit_output.txt
+critique_extracted.txt
+

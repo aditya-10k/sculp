@@ -369,4 +369,10 @@ class ExperimentRunner:
         prot_df.to_csv(prot_csv, index=False)
         out_dict["protected_pruning_ablation"] = str(prot_csv)
 
+        # 5. Cross-Model Evaluation
+        from src.experiments.cross_model import run_cross_model_experiment
+        cross_df = run_cross_model_experiment(prompts, scored_cache, output_dir=str(self.results_dir))
+        out_dict["cross_model"] = str(self.results_dir / "tables" / "cross_model_results.csv")
+
         return out_dict
+

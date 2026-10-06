@@ -60,12 +60,11 @@ class GradientScorer(BaseScorer):
         outputs = self.model(inputs_embeds=input_embeds, attention_mask=attention_mask)
         mask_expanded = attention_mask.unsqueeze(-1).expand(outputs.last_hidden_state.size()).float()
         sum_embeddings = torch.sum(outputs.last_hidden_state * mask_expanded, dim=1)
-        sum_mask = mask_expanded.sum(dim=1).clamp(min=1e-9)
         v = sum_embeddings / sum_mask
-        v_unit = F.normalize(v, p=2, dim=-1)
 
-        # Objective: Semantic projection onto unperturbed target representation
-        semantic_objective = (v_unit * v0_unit).sum()
+        # Objective: Linear projection of semantic representation onto target unit direction v0_unit
+        # F(E) = v(E) . v0_unit
+        semantic_objective = (v * v0_unit).sum()
 
         self.model.zero_grad()
         if input_embeds.grad is not None:

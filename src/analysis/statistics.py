@@ -16,7 +16,7 @@ def bootstrap_ci(
     Computes empirical bootstrap confidence interval for the mean.
     Returns: (mean, ci_lower, ci_upper)
     """
-    if not data:
+    if len(data) == 0:
         return 0.0, 0.0, 0.0
     arr = np.array(data, dtype=np.float64)
     n = len(arr)

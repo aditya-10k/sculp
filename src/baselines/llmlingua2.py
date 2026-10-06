@@ -70,6 +70,7 @@ class LLMLingua2Compressor:
 
         target_retention = max(0.1, 1.0 - target_removal)
         compressed_text = ""
+        is_official = False
 
         if self.compressor is not None:
             try:
@@ -78,7 +79,10 @@ class LLMLingua2Compressor:
                     rate=target_retention,
                     use_llmlingua2=True
                 )
-                compressed_text = res.get("compressed_prompt", prompt)
+                comp = res.get("compressed_prompt", "")
+                if comp and comp.strip() != prompt.strip():
+                    compressed_text = comp
+                    is_official = True
             except Exception as e:
                 compressed_text = ""
 
@@ -112,5 +116,6 @@ class LLMLingua2Compressor:
             compressed_prompt=compressed_text,
             removed_words=[],
             kept_words=[w.word for w in words_comp],
-            metadata={"official_llmlingua2": self.compressor is not None}
+            metadata={"official_llmlingua2": is_official}
         )
+

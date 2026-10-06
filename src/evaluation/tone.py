@@ -1,10 +1,10 @@
 """Tone fidelity evaluator measuring preservation of stylistic attributes."""
 
 from __future__ import annotations
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import torch
-from sentence_transformers import SentenceTransformer
 from sentence_transformers.util import cos_sim
+from src.evaluation.encoder import CachedSentenceEncoder
 
 
 class ToneEvaluator:
@@ -17,10 +17,10 @@ class ToneEvaluator:
         self,
         model_name: str = "sentence-transformers/all-MiniLM-L6-v2",
         device: str = "auto",
-        semantic_threshold: float = 0.65
+        semantic_threshold: float = 0.65,
+        encoder: Optional[CachedSentenceEncoder] = None
     ):
-        dev = "cuda" if device == "auto" and torch.cuda.is_available() else ("cpu" if device == "auto" else device)
-        self.model = SentenceTransformer(model_name, device=dev)
+        self.encoder = encoder or CachedSentenceEncoder(model_name=model_name, device=device)
         self.threshold = semantic_threshold
 
     def evaluate(self, ground_truth_tone: List[str], predicted_tone: List[str]) -> Dict[str, float]:
@@ -32,9 +32,8 @@ class ToneEvaluator:
         if not pred_list:
             return {"recall": 0.0, "precision": 0.0, "f1": 0.0}
 
-        # Exact and semantic matching
-        e_gt = self.model.encode(gt_list, convert_to_tensor=True, show_progress_bar=False)
-        e_pred = self.model.encode(pred_list, convert_to_tensor=True, show_progress_bar=False)
+        e_gt = self.encoder.encode_list(gt_list)
+        e_pred = self.encoder.encode_list(pred_list)
 
         sim_matrix = cos_sim(e_gt, e_pred).detach().cpu().numpy()
 

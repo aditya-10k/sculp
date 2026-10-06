@@ -1,6 +1,6 @@
 # Semantic Collapse Under Lexical Pruning: Research Experiment Report
 
-**Generated:** 2026-10-06 06:52:18 UTC  
+**Generated:** 2026-10-06 07:29:22 UTC  
 **Project:** Semantic Collapse Under Lexical Pruning (SCULP)  
 **Corpus / Benchmark:** 100 Balanced Multi-Component Prompts across 5 Semantic Dimensions  
 
@@ -39,12 +39,12 @@
 
 | Method | Mean Semantic Fidelity (SF) | Mean Embedding Sim | Delta vs Random | Cohen's d vs Random | Sig (p < 0.05) |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| `llmlingua` | 0.5800 | 1.0000 | +0.0362 | 0.94 | True (p < 0.001) |
-| `embedding` | 0.5608 | 0.8983 | +0.0170 | 0.94 | True (p < 0.001) |
-| `gradient` | 0.5603 | 0.8592 | +0.0165 | 0.94 | True (p < 0.001) |
-| `llmlingua2` | 0.5595 | 0.8179 | +0.0156 | 0.94 | True (p < 0.001) |
-| `random` | 0.5438 | 0.7796 | +0.0000 | N/A | Control |
-| `integrated_gradients` | 0.5411 | 0.7604 | -0.0027 | 0.94 | True (p < 0.001) |
+| `llmlingua2` | 0.4734 | 0.8510 | +0.0316 | 0.94 | True (p < 0.001) |
+| `llmlingua` | 0.4714 | 0.8422 | +0.0295 | 0.94 | True (p < 0.001) |
+| `gradient` | 0.4705 | 0.8646 | +0.0287 | 0.94 | True (p < 0.001) |
+| `embedding` | 0.4685 | 0.9147 | +0.0266 | 0.94 | True (p < 0.001) |
+| `integrated_gradients` | 0.4605 | 0.8341 | +0.0186 | 0.94 | True (p < 0.001) |
+| `random` | 0.4419 | 0.7393 | +0.0000 | N/A | Control |
 
 ---
 
@@ -54,18 +54,21 @@ Breakpoints detected using discrete gradient $\Delta_i = SF_i - SF_{i-1}$ identi
 
 | Method | Category | Collapse Threshold (Removal Ratio) | Pre-Collapse SF | Post-Collapse SF | Drop Magnitude |
 |:---|:---|:---:|:---:|:---:|:---:|
-| `random` | instruction | **80%** | 0.505 | 0.483 | 0.022 |
-| `random` | all | **80%** | 0.505 | 0.483 | 0.022 |
-| `embedding` | instruction | **30%** | 0.579 | 0.564 | 0.015 |
-| `embedding` | all | **30%** | 0.579 | 0.564 | 0.015 |
-| `gradient` | instruction | **60%** | 0.565 | 0.546 | 0.018 |
-| `gradient` | all | **60%** | 0.565 | 0.546 | 0.018 |
-| `integrated_gradients` | instruction | **30%** | 0.577 | 0.551 | 0.026 |
-| `integrated_gradients` | all | **30%** | 0.577 | 0.551 | 0.026 |
-| `llmlingua` | instruction | **10%** | 0.580 | 0.580 | 0.000 |
-| `llmlingua` | all | **10%** | 0.580 | 0.580 | 0.000 |
-| `llmlingua2` | instruction | **50%** | 0.572 | 0.555 | 0.016 |
-| `llmlingua2` | all | **50%** | 0.572 | 0.555 | 0.016 |
+| `random` | instruction | **50%** | 0.530 | 0.506 | 0.024 |
+| `random` | constraint | **20%** | 0.417 | 0.387 | 0.031 |
+| `random` | context | **60%** | 0.497 | 0.484 | 0.013 |
+| `random` | tone | **60%** | 0.540 | 0.521 | 0.019 |
+| `random` | multi_step | **20%** | 0.354 | 0.311 | 0.043 |
+| `random` | all | **20%** | 0.488 | 0.469 | 0.019 |
+| `embedding` | instruction | **30%** | 0.585 | 0.567 | 0.018 |
+| `embedding` | constraint | **10%** | 0.416 | 0.384 | 0.031 |
+| `embedding` | context | **80%** | 0.494 | 0.483 | 0.011 |
+| `embedding` | tone | **70%** | 0.560 | 0.545 | 0.015 |
+| `embedding` | multi_step | **30%** | 0.347 | 0.317 | 0.030 |
+| `embedding` | all | **30%** | 0.483 | 0.471 | 0.012 |
+| `gradient` | instruction | **60%** | 0.567 | 0.551 | 0.016 |
+| `gradient` | constraint | **10%** | 0.416 | 0.386 | 0.030 |
+| `gradient` | context | **70%** | 0.516 | 0.505 | 0.011 |
 
 ---
 
@@ -87,7 +90,37 @@ Comparison at equivalent average token retention:
 
 Identified cases where embedding similarity remained deceptively high ($> 0.82$) while ground-truth constraint preservation collapsed ($< 0.50$):
 
-Total detected critical failure cases: **0**
+Total detected critical failure cases: **501**
+
+### Failure Case 1: `p021` (random, CR=20%)
+- **Compressed String:** "Summarize the article in. Do not use technical. Do not mention the authors name."
+- **Embedding Cosine Similarity:** `0.8383` (High)
+- **Constraint Fidelity:** `0.4000` (Collapsed)
+- **Mechanism:** Critical omission of negative limiter or formatting boundary while content nouns remained intact.
+
+### Failure Case 2: `p021` (embedding, CR=10%)
+- **Compressed String:** "Summarize the article in exactly five sentences. not use technical terminology. not mention the author's name."
+- **Embedding Cosine Similarity:** `0.9929` (High)
+- **Constraint Fidelity:** `0.0000` (Collapsed)
+- **Mechanism:** Critical omission of negative limiter or formatting boundary while content nouns remained intact.
+
+### Failure Case 3: `p021` (embedding, CR=20%)
+- **Compressed String:** "Summarize the article in exactly five sentences. not technical terminology. not mention author' name."
+- **Embedding Cosine Similarity:** `0.9653` (High)
+- **Constraint Fidelity:** `0.0000` (Collapsed)
+- **Mechanism:** Critical omission of negative limiter or formatting boundary while content nouns remained intact.
+
+### Failure Case 4: `p021` (embedding, CR=30%)
+- **Compressed String:** "Summarize the article in exactly five sentences. technical terminology. not mention author' name"
+- **Embedding Cosine Similarity:** `0.9426` (High)
+- **Constraint Fidelity:** `0.0000` (Collapsed)
+- **Mechanism:** Critical omission of negative limiter or formatting boundary while content nouns remained intact.
+
+### Failure Case 5: `p021` (embedding, CR=40%)
+- **Compressed String:** "Summarize the article in five sentences. technical terminology. not mention author name"
+- **Embedding Cosine Similarity:** `0.9341` (High)
+- **Constraint Fidelity:** `0.0000` (Collapsed)
+- **Mechanism:** Critical omission of negative limiter or formatting boundary while content nouns remained intact.
 
 
 ---

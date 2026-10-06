@@ -57,9 +57,8 @@ class IntegratedGradientScorer(BaseScorer):
             sum_embeddings = torch.sum(out.last_hidden_state * mask_expanded, dim=1)
             sum_mask = mask_expanded.sum(dim=1).clamp(min=1e-9)
             v = sum_embeddings / sum_mask
-            v_norm = F.normalize(v, p=2, dim=-1)
-            # Scalar similarity score
-            return (v_norm * v0_unit).sum(dim=-1)
+            # Linear projection onto target unit direction v0_unit
+            return (v * v0_unit).sum(dim=-1)
 
         # Target embedding layer
         embedding_layer = self.model.embeddings

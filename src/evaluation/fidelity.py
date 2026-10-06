@@ -64,12 +64,14 @@ class FidelityEvaluatorSuite:
         judge_provider: str = "mock"
     ):
         self.device = "cuda" if device == "auto" and torch.cuda.is_available() else ("cpu" if device == "auto" else device)
-        self.embedding_model = SentenceTransformer(embedding_model_name, device=self.device)
-        self.intent_evaluator = IntentEvaluator(embedding_model_name, device=self.device)
-        self.constraint_evaluator = ConstraintEvaluator(embedding_model_name, device=self.device)
-        self.tone_evaluator = ToneEvaluator(embedding_model_name, device=self.device)
-        self.context_evaluator = ContextEvaluator(embedding_model_name, device=self.device)
-        self.dependency_evaluator = DependencyEvaluator(embedding_model_name, device=self.device)
+        from src.evaluation.encoder import CachedSentenceEncoder
+        self.encoder = CachedSentenceEncoder(model_name=embedding_model_name, device=self.device)
+        self.embedding_model = self.encoder.model
+        self.intent_evaluator = IntentEvaluator(encoder=self.encoder)
+        self.constraint_evaluator = ConstraintEvaluator(encoder=self.encoder)
+        self.tone_evaluator = ToneEvaluator(encoder=self.encoder)
+        self.context_evaluator = ContextEvaluator(encoder=self.encoder)
+        self.dependency_evaluator = DependencyEvaluator(encoder=self.encoder)
         self.judge = LLMJudge(provider=judge_provider)
 
     def evaluate(
