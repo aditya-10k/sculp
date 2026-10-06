@@ -1,0 +1,12 @@
+{
+  "task": "draft email correct any grammatical spelling mistakes",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "draft email correct any grammatical spelling mistakes"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

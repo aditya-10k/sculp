@@ -1,0 +1,14 @@
+{
+  "task": "Convert the CSV table into valid JSON array",
+  "role": "",
+  "constraints": [
+    "output strictly valid JSON"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Convert the CSV table into valid JSON array"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

@@ -1,0 +1,12 @@
+{
+  "task": "Summarize article exactly five sentences",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Summarize article exactly five sentences"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

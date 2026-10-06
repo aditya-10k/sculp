@@ -1,0 +1,14 @@
+{
+  "task": "WiFi failure must JSON without",
+  "role": "",
+  "constraints": [
+    "output strictly valid JSON"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "WiFi failure must JSON without"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

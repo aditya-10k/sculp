@@ -1,0 +1,12 @@
+{
+  "task": "cat chased",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "cat chased"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

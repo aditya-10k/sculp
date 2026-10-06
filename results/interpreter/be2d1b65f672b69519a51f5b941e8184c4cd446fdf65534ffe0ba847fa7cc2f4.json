@@ -1,0 +1,12 @@
+{
+  "task": "Write a haiku about autumn second line must contain color crimson",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Write a haiku about autumn second line must contain color crimson"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

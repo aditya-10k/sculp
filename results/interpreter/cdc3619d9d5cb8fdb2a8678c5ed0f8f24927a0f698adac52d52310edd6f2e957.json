@@ -1,0 +1,12 @@
+{
+  "task": "draft correct any mistakes",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "draft correct any mistakes"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

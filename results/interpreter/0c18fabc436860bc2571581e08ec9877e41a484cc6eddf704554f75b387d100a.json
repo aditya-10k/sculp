@@ -1,0 +1,12 @@
+{
+  "task": "Generate five candidate headlines blog renewable energy advances",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Generate five candidate headlines blog renewable energy advances"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

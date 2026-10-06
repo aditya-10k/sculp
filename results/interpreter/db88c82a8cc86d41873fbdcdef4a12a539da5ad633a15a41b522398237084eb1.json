@@ -1,0 +1,14 @@
+{
+  "task": "the CSV JSON",
+  "role": "",
+  "constraints": [
+    "output strictly valid JSON"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "the CSV JSON"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

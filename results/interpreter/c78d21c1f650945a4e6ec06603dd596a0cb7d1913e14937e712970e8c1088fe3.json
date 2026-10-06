@@ -1,0 +1,12 @@
+{
+  "task": "Convert table below valid array format",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Convert table below valid array format"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

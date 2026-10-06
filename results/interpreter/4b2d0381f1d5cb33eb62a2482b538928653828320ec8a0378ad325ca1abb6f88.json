@@ -1,0 +1,12 @@
+{
+  "task": "Draft polite job rejection reply",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Draft polite job rejection reply"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

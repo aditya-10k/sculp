@@ -1,0 +1,12 @@
+{
+  "task": "paragraph idiomatic French",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "paragraph idiomatic French"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

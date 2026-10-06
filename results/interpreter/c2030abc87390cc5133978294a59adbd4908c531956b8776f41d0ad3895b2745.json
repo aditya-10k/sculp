@@ -1,0 +1,12 @@
+{
+  "task": "the following paragraph into idiomatic",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "the following paragraph into idiomatic"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

@@ -1,0 +1,12 @@
+{
+  "task": "main findings of the attached quarterly earnings",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "main findings of the attached quarterly earnings"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

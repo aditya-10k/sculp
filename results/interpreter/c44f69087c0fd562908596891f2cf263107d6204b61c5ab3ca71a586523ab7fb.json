@@ -1,0 +1,14 @@
+{
+  "task": "Summarize article in 5 sentences",
+  "role": "",
+  "constraints": [
+    "5 sentences"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Summarize article in 5 sentences"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

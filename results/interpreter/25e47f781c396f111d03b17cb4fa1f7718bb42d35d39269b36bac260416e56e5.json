@@ -1,0 +1,12 @@
+{
+  "task": "following paragraph into idiomatic French",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "following paragraph into idiomatic French"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

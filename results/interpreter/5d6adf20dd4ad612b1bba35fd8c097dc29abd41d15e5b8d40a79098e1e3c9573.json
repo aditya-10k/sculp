@@ -1,0 +1,14 @@
+{
+  "task": "Respond to customer contacting third time on delayed order #9482 stuck 6 days",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [
+    "Respond to customer contacting third time on delayed order #9482 stuck 6 days"
+  ],
+  "required_actions": [
+    "Respond to customer contacting third time on delayed order #9482 stuck 6 days"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

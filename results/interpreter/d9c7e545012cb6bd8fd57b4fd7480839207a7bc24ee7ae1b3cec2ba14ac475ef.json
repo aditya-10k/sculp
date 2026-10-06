@@ -1,0 +1,12 @@
+{
+  "task": "draft any grammatical or spelling",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "draft any grammatical or spelling"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

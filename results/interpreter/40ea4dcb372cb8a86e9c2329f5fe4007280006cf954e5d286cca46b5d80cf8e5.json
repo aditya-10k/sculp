@@ -1,0 +1,14 @@
+{
+  "task": "Explain quantum computing simply under 100 words without 'qubits' or 'superposition'",
+  "role": "",
+  "constraints": [
+    "under 100 words"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Explain quantum computing simply under 100 words without 'qubits' or 'superposition'"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

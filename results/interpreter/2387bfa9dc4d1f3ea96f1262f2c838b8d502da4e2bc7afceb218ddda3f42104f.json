@@ -1,0 +1,14 @@
+{
+  "task": "Generate executive summary the proposal 50 words only passive voice",
+  "role": "",
+  "constraints": [
+    "50 words"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Generate executive summary the proposal 50 words only passive voice"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

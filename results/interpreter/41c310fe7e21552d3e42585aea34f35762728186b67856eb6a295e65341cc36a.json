@@ -1,0 +1,12 @@
+{
+  "task": "Summarize the attached quarterly report",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Summarize the attached quarterly report"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

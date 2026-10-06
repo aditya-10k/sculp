@@ -1,0 +1,16 @@
+{
+  "task": "Write apology letter client",
+  "role": "",
+  "constraints": [
+    "Never legal liability and not monetary refunds"
+  ],
+  "tone": [],
+  "context": [
+    "Write apology letter client"
+  ],
+  "required_actions": [
+    "Write apology letter client"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

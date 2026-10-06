@@ -1,0 +1,12 @@
+{
+  "task": "Write product description for running shoes",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Write product description for running shoes"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

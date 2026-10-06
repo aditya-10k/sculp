@@ -1,0 +1,14 @@
+{
+  "task": "Write description running shoes must not use words comfortable fast lightweight",
+  "role": "",
+  "constraints": [
+    "must not use words comfortable fast lightweight"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Write description running shoes must not use words comfortable fast lightweight"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

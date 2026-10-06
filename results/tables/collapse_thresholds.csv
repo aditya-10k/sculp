@@ -1,0 +1,13 @@
+method,category,collapse_ratio,ci_lower,ci_upper,pre_collapse_fidelity,post_collapse_fidelity,drop_magnitude
+random,instruction,0.8,0.63,0.75,0.5051,0.4827,0.0224
+random,all,0.8,0.63,0.75,0.5051,0.4827,0.0224
+embedding,instruction,0.3,0.5,0.72,0.579,0.5641,0.0149
+embedding,all,0.3,0.5,0.72,0.579,0.5641,0.0149
+gradient,instruction,0.6,0.56,0.74,0.5647,0.5464,0.0183
+gradient,all,0.6,0.56,0.74,0.5647,0.5464,0.0183
+integrated_gradients,instruction,0.3,0.4,0.61,0.5765,0.5507,0.0257
+integrated_gradients,all,0.3,0.4,0.61,0.5765,0.5507,0.0257
+llmlingua,instruction,0.1,0.1,0.1,0.58,0.58,0.0
+llmlingua,all,0.1,0.1,0.1,0.58,0.58,0.0
+llmlingua2,instruction,0.5,0.5,0.68,0.5718,0.5555,0.0164
+llmlingua2,all,0.5,0.5,0.68,0.5718,0.5555,0.0164

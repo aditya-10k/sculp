@@ -1,0 +1,14 @@
+{
+  "task": "Describe French Revolution three points Each bullet 20 words",
+  "role": "",
+  "constraints": [
+    "20 words"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Describe French Revolution three points Each bullet 20 words"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

@@ -1,0 +1,12 @@
+{
+  "task": "Draft reply gratitude",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Draft reply gratitude"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

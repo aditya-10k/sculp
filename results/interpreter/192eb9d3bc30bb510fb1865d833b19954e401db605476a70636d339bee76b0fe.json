@@ -1,0 +1,12 @@
+{
+  "task": "Explain supervised unsupervised machine",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Explain supervised unsupervised machine"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

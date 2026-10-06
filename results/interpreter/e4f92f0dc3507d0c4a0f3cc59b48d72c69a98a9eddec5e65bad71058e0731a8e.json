@@ -1,0 +1,12 @@
+{
+  "task": "draft email and grammatical",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "draft email and grammatical"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

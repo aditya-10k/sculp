@@ -1,0 +1,59 @@
+dataset:
+  num_prompts: 100
+  raw_path: "data/raw/prompts_100.json"
+  processed_path: "data/processed/prompts.json"
+  annotations_path: "data/annotations/ground_truth.json"
+
+compression_ratios:
+  - 0.0
+  - 0.1
+  - 0.2
+  - 0.3
+  - 0.4
+  - 0.5
+  - 0.6
+  - 0.7
+  - 0.8
+
+scorers:
+  - random
+  - embedding
+  - gradient
+  - integrated_gradients
+
+baselines:
+  - llmlingua
+  - llmlingua2
+
+embedding_model:
+  name: "sentence-transformers/all-MiniLM-L6-v2"
+  device: "auto"
+  batch_size: 32
+
+attribution_model:
+  name: "bert-base-uncased"
+  device: "auto"
+
+interpreter:
+  provider: "configurable" # Can be: "mock", "gemini", "openai", "groq", "local_hf"
+  model: "gemini-1.5-flash"
+  temperature: 0.0
+  max_tokens: 512
+  cache_dir: "results/interpreter_cache"
+
+pruning:
+  protect_delimiters: true
+  protect_code_blocks: true
+  protect_negations: false
+  protect_numbers: false
+
+evaluation:
+  use_embedding_similarity: true
+  use_llm_judge: true
+  judge_model: "gemini-1.5-flash"
+
+analysis:
+  bootstrap_samples: 10000
+  confidence_level: 0.95
+
+seed: 42

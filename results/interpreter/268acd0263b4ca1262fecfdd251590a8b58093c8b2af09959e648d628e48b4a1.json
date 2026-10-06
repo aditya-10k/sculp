@@ -1,0 +1,12 @@
+{
+  "task": "Translate paragraph to French",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Translate paragraph to French"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

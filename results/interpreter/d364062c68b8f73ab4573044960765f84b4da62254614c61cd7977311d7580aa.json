@@ -1,0 +1,12 @@
+{
+  "task": "Generate summary proposal 50 only",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Generate summary proposal 50 only"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

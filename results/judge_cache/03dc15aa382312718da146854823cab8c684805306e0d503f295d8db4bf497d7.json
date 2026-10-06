@@ -1,0 +1,9 @@
+{
+  "intent": 0.562,
+  "constraints": 0.113,
+  "context": 0.506,
+  "tone": 0.478,
+  "dependencies": 0.45,
+  "overall": 0.506,
+  "reason": "Heuristic evaluation based on lexical overlap and syntactic preservation"
+}

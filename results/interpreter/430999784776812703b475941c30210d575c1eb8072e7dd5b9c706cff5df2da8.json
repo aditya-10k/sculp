@@ -1,0 +1,12 @@
+{
+  "task": "all action items and assignees mentioned in the meeting minutes",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "all action items and assignees mentioned in the meeting minutes"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

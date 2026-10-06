@@ -1,0 +1,14 @@
+{
+  "task": "Write running shoes must not words",
+  "role": "",
+  "constraints": [
+    "must not words"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Write running shoes must not words"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

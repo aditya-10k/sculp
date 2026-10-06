@@ -1,0 +1,12 @@
+{
+  "task": "Extract all items in the meeting minutes",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Extract all items in the meeting minutes"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

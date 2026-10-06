@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-10-06T06:52:18.179241",
+  "seed": 42,
+  "num_prompts": 10,
+  "compression_ratios": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8
+  ],
+  "scorers": [
+    "random",
+    "embedding",
+    "gradient",
+    "integrated_gradients"
+  ],
+  "baselines": [
+    "llmlingua",
+    "llmlingua2"
+  ],
+  "attribution_model": "bert-base-uncased",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "interpreter_provider": "configurable",
+  "elapsed_seconds": 229.73
+}

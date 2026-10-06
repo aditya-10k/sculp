@@ -1,0 +1,12 @@
+{
+  "task": "Summarize the findings of the quarterly earnings report",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Summarize the findings of the quarterly earnings report"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

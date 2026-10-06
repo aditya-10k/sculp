@@ -1,0 +1,12 @@
+{
+  "task": "Explain quantum computing schooler words superposition",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Explain quantum computing schooler words superposition"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

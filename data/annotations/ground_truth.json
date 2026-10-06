@@ -1,0 +1,1954 @@
+{
+  "p001": {
+    "category": "instruction",
+    "prompt": "That cat chased the mouse across the garden.",
+    "ground_truth": {
+      "intent": "Narrate or describe that the specific indicated cat chased the mouse across the garden.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "declarative",
+        "neutral"
+      ],
+      "context": [
+        "cat chasing mouse across garden"
+      ],
+      "steps": []
+    }
+  },
+  "p002": {
+    "category": "instruction",
+    "prompt": "The cat chased the mouse across the garden.",
+    "ground_truth": {
+      "intent": "Narrate or describe that a cat chased the mouse across the garden.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "declarative",
+        "neutral"
+      ],
+      "context": [
+        "cat chasing mouse across garden"
+      ],
+      "steps": []
+    }
+  },
+  "p003": {
+    "category": "instruction",
+    "prompt": "Summarize the main findings of the attached quarterly earnings report.",
+    "ground_truth": {
+      "intent": "Summarize quarterly earnings report findings.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "concise",
+        "informative"
+      ],
+      "context": [
+        "quarterly financial report"
+      ],
+      "steps": []
+    }
+  },
+  "p004": {
+    "category": "instruction",
+    "prompt": "Translate the following paragraph into idiomatic French.",
+    "ground_truth": {
+      "intent": "Translate given paragraph into French.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "fluent",
+        "neutral"
+      ],
+      "context": [
+        "source text paragraph"
+      ],
+      "steps": []
+    }
+  },
+  "p005": {
+    "category": "instruction",
+    "prompt": "Extract all action items and assignees mentioned in the meeting minutes.",
+    "ground_truth": {
+      "intent": "Extract action items and assignees from meeting minutes.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "objective",
+        "structured"
+      ],
+      "context": [
+        "meeting minutes record"
+      ],
+      "steps": []
+    }
+  },
+  "p006": {
+    "category": "instruction",
+    "prompt": "Generate five candidate headlines for a blog post about renewable energy advances.",
+    "ground_truth": {
+      "intent": "Generate five blog post headlines about renewable energy.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "engaging",
+        "creative"
+      ],
+      "context": [
+        "renewable energy topic"
+      ],
+      "steps": []
+    }
+  },
+  "p007": {
+    "category": "instruction",
+    "prompt": "Explain the difference between supervised and unsupervised machine learning.",
+    "ground_truth": {
+      "intent": "Explain difference between supervised and unsupervised learning.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "educational",
+        "clear"
+      ],
+      "context": [
+        "machine learning paradigms"
+      ],
+      "steps": []
+    }
+  },
+  "p008": {
+    "category": "instruction",
+    "prompt": "Convert the CSV table below into valid JSON array format.",
+    "ground_truth": {
+      "intent": "Convert CSV formatted data into JSON format.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "technical",
+        "precise"
+      ],
+      "context": [
+        "input CSV table"
+      ],
+      "steps": []
+    }
+  },
+  "p009": {
+    "category": "instruction",
+    "prompt": "Proofread the draft email and correct any grammatical or spelling mistakes.",
+    "ground_truth": {
+      "intent": "Proofread draft email and fix grammar and spelling errors.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "constructive",
+        "helpful"
+      ],
+      "context": [
+        "draft email content"
+      ],
+      "steps": []
+    }
+  },
+  "p010": {
+    "category": "instruction",
+    "prompt": "Draft a professional reply declining the job offer with gratitude.",
+    "ground_truth": {
+      "intent": "Draft a polite job offer rejection email.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "polite",
+        "professional"
+      ],
+      "context": [
+        "received job offer"
+      ],
+      "steps": []
+    }
+  },
+  "p011": {
+    "category": "instruction",
+    "prompt": "Describe the life cycle of a monarch butterfly from egg to adult.",
+    "ground_truth": {
+      "intent": "Describe monarch butterfly biological life cycle stages.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "informative",
+        "educational"
+      ],
+      "context": [
+        "biological metamorphosis"
+      ],
+      "steps": []
+    }
+  },
+  "p012": {
+    "category": "instruction",
+    "prompt": "Refactor this Python function to improve algorithmic time complexity.",
+    "ground_truth": {
+      "intent": "Refactor Python code for better time complexity.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "technical",
+        "analytical"
+      ],
+      "context": [
+        "target Python function"
+      ],
+      "steps": []
+    }
+  },
+  "p013": {
+    "category": "instruction",
+    "prompt": "List three pros and three cons of transitioning to a microservices architecture.",
+    "ground_truth": {
+      "intent": "List three advantages and three disadvantages of microservices.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "balanced",
+        "analytical"
+      ],
+      "context": [
+        "software architecture paradigms"
+      ],
+      "steps": []
+    }
+  },
+  "p014": {
+    "category": "instruction",
+    "prompt": "Write a brief plot synopsis for a mystery novel set in an isolated lighthouse.",
+    "ground_truth": {
+      "intent": "Write mystery novel plot synopsis set in a lighthouse.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "atmospheric",
+        "intriguing"
+      ],
+      "context": [
+        "isolated lighthouse setting"
+      ],
+      "steps": []
+    }
+  },
+  "p015": {
+    "category": "instruction",
+    "prompt": "Identify the logical fallacies present in the provided debate excerpt.",
+    "ground_truth": {
+      "intent": "Identify logical fallacies in debate text.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "critical",
+        "objective"
+      ],
+      "context": [
+        "debate transcript excerpt"
+      ],
+      "steps": []
+    }
+  },
+  "p016": {
+    "category": "instruction",
+    "prompt": "Generate unit test cases for an email address validation utility function.",
+    "ground_truth": {
+      "intent": "Generate comprehensive unit tests for email validator function.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "rigorous",
+        "technical"
+      ],
+      "context": [
+        "email validation specification"
+      ],
+      "steps": []
+    }
+  },
+  "p017": {
+    "category": "instruction",
+    "prompt": "Define the concept of opportunity cost using a relatable everyday example.",
+    "ground_truth": {
+      "intent": "Define opportunity cost with an everyday example.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "accessible",
+        "instructional"
+      ],
+      "context": [
+        "economic principles"
+      ],
+      "steps": []
+    }
+  },
+  "p018": {
+    "category": "instruction",
+    "prompt": "Classify the sentiment of the following customer product reviews as positive, negative, or neutral.",
+    "ground_truth": {
+      "intent": "Classify sentiment of customer reviews into three categories.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "objective",
+        "analytical"
+      ],
+      "context": [
+        "customer product reviews"
+      ],
+      "steps": []
+    }
+  },
+  "p019": {
+    "category": "instruction",
+    "prompt": "Formulate three thoughtful questions to ask the interviewer at the end of a software engineering interview.",
+    "ground_truth": {
+      "intent": "Formulate three candidate questions for software engineering interviewer.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "inquisitive",
+        "professional"
+      ],
+      "context": [
+        "job interview conclusion"
+      ],
+      "steps": []
+    }
+  },
+  "p020": {
+    "category": "instruction",
+    "prompt": "Summarize Newton's three laws of motion with one practical application for each.",
+    "ground_truth": {
+      "intent": "Summarize Newton's laws of motion with practical applications.",
+      "role": "assistant",
+      "constraints": [],
+      "tone": [
+        "educational",
+        "structured"
+      ],
+      "context": [
+        "classical mechanics physics"
+      ],
+      "steps": []
+    }
+  },
+  "p021": {
+    "category": "constraint",
+    "prompt": "Summarize the article in exactly five sentences. Do not use technical terminology. Do not mention the author's name.",
+    "ground_truth": {
+      "intent": "Summarize the article adhering to strict length, vocabulary, and entity omissions.",
+      "role": "assistant",
+      "constraints": [
+        "exactly five sentences",
+        "no technical terminology",
+        "do not mention author's name"
+      ],
+      "tone": [
+        "concise",
+        "accessible"
+      ],
+      "context": [
+        "article content"
+      ],
+      "steps": []
+    }
+  },
+  "p022": {
+    "category": "constraint",
+    "prompt": "Explain quantum computing to a high schooler. Use fewer than 100 words and do not mention qubits or superposition.",
+    "ground_truth": {
+      "intent": "Explain quantum computing simply under word count and banned vocabulary constraints.",
+      "role": "assistant",
+      "constraints": [
+        "under 100 words",
+        "target audience high school student",
+        "do not use word qubits",
+        "do not use word superposition"
+      ],
+      "tone": [
+        "simple",
+        "engaging"
+      ],
+      "context": [
+        "quantum computing concepts"
+      ],
+      "steps": []
+    }
+  },
+  "p023": {
+    "category": "constraint",
+    "prompt": "Write a product description for running shoes. You must not use the words comfortable, fast, or lightweight.",
+    "ground_truth": {
+      "intent": "Write running shoes product copy without banned buzzwords.",
+      "role": "assistant",
+      "constraints": [
+        "must not use word comfortable",
+        "must not use word fast",
+        "must not use word lightweight"
+      ],
+      "tone": [
+        "persuasive",
+        "commercial"
+      ],
+      "context": [
+        "running shoes product"
+      ],
+      "steps": []
+    }
+  },
+  "p024": {
+    "category": "constraint",
+    "prompt": "Provide troubleshooting steps for Wi-Fi failure. Output must be strictly valid JSON without any markdown formatting.",
+    "ground_truth": {
+      "intent": "Provide Wi-Fi troubleshooting in raw JSON format with no markdown.",
+      "role": "assistant",
+      "constraints": [
+        "output strictly valid JSON",
+        "no markdown formatting",
+        "no conversational commentary"
+      ],
+      "tone": [
+        "technical",
+        "programmatic"
+      ],
+      "context": [
+        "Wi-Fi connectivity issue"
+      ],
+      "steps": []
+    }
+  },
+  "p025": {
+    "category": "constraint",
+    "prompt": "Describe the French Revolution in exactly three bullet points. Each bullet must be between 15 and 20 words.",
+    "ground_truth": {
+      "intent": "Summarize French Revolution with strict bullet count and exact word length range per bullet.",
+      "role": "assistant",
+      "constraints": [
+        "exactly three bullet points",
+        "each bullet between 15 and 20 words"
+      ],
+      "tone": [
+        "historical",
+        "factual"
+      ],
+      "context": [
+        "French Revolution"
+      ],
+      "steps": []
+    }
+  },
+  "p026": {
+    "category": "constraint",
+    "prompt": "Write an apology letter to a client. Never admit legal liability and do not offer monetary refunds.",
+    "ground_truth": {
+      "intent": "Draft client apology with strict legal liability exclusions and refund prohibitions.",
+      "role": "assistant",
+      "constraints": [
+        "never admit legal liability",
+        "do not offer monetary refund"
+      ],
+      "tone": [
+        "apologetic",
+        "cautious",
+        "professional"
+      ],
+      "context": [
+        "service disruption incident"
+      ],
+      "steps": []
+    }
+  },
+  "p027": {
+    "category": "constraint",
+    "prompt": "Generate an executive summary of the proposal in under 50 words using only passive voice.",
+    "ground_truth": {
+      "intent": "Generate executive summary with strict length ceiling and passive voice constraint.",
+      "role": "assistant",
+      "constraints": [
+        "under 50 words",
+        "only passive voice syntax"
+      ],
+      "tone": [
+        "formal",
+        "executive"
+      ],
+      "context": [
+        "business proposal text"
+      ],
+      "steps": []
+    }
+  },
+  "p028": {
+    "category": "constraint",
+    "prompt": "List five dinner recipes that are completely gluten-free, dairy-free, and nut-free with at least 25g protein per serving.",
+    "ground_truth": {
+      "intent": "Recommend five dinner recipes meeting multiple dietary exclusions and a minimum protein threshold.",
+      "role": "assistant",
+      "constraints": [
+        "exactly five recipes",
+        "gluten-free",
+        "dairy-free",
+        "nut-free",
+        "at least 25g protein per serving"
+      ],
+      "tone": [
+        "practical",
+        "nutritional"
+      ],
+      "context": [
+        "dinner meal planning"
+      ],
+      "steps": []
+    }
+  },
+  "p029": {
+    "category": "constraint",
+    "prompt": "Write a haiku about autumn. The second line must contain the color crimson.",
+    "ground_truth": {
+      "intent": "Compose autumn haiku with specific color word in line two.",
+      "role": "assistant",
+      "constraints": [
+        "5-7-5 haiku structure",
+        "second line must contain word crimson"
+      ],
+      "tone": [
+        "poetic",
+        "evocative"
+      ],
+      "context": [
+        "autumn season theme"
+      ],
+      "steps": []
+    }
+  },
+  "p030": {
+    "category": "constraint",
+    "prompt": "Explain photosynthesis. Do not use the letter 'e' anywhere in your response.",
+    "ground_truth": {
+      "intent": "Explain photosynthesis under a lipogram constraint forbidding the letter 'e'.",
+      "role": "assistant",
+      "constraints": [
+        "lipogram forbidding letter 'e'",
+        "accurate explanation of photosynthesis"
+      ],
+      "tone": [
+        "educational",
+        "constrained"
+      ],
+      "context": [
+        "photosynthesis process"
+      ],
+      "steps": []
+    }
+  },
+  "p031": {
+    "category": "constraint",
+    "prompt": "Review this resume. Limit feedback to three major weaknesses and do not suggest cosmetic changes.",
+    "ground_truth": {
+      "intent": "Review resume identifying weaknesses while excluding formatting/cosmetic critique.",
+      "role": "assistant",
+      "constraints": [
+        "limit to exactly three major weaknesses",
+        "do not suggest formatting or cosmetic changes"
+      ],
+      "tone": [
+        "constructive",
+        "direct"
+      ],
+      "context": [
+        "candidate resume document"
+      ],
+      "steps": []
+    }
+  },
+  "p032": {
+    "category": "constraint",
+    "prompt": "Write an SQL query to retrieve active users. Do not use subqueries or the JOIN operator.",
+    "ground_truth": {
+      "intent": "Write SQL query retrieving active users avoiding subqueries and joins.",
+      "role": "assistant",
+      "constraints": [
+        "no subqueries",
+        "no JOIN operator",
+        "retrieve active users"
+      ],
+      "tone": [
+        "technical",
+        "code-only"
+      ],
+      "context": [
+        "database schema"
+      ],
+      "steps": []
+    }
+  },
+  "p033": {
+    "category": "constraint",
+    "prompt": "Write an incident report for an outage. Under no circumstances should internal server IP addresses be revealed.",
+    "ground_truth": {
+      "intent": "Write incident report with strict redaction of internal infrastructure IPs.",
+      "role": "assistant",
+      "constraints": [
+        "under no circumstances reveal internal server IP addresses",
+        "maintain factual timeline"
+      ],
+      "tone": [
+        "formal",
+        "security-conscious"
+      ],
+      "context": [
+        "server outage incident"
+      ],
+      "steps": []
+    }
+  },
+  "p034": {
+    "category": "constraint",
+    "prompt": "Draft a motivational speech for high school graduates. Keep the duration under two minutes and avoid cliches like chase your dreams.",
+    "ground_truth": {
+      "intent": "Draft high school graduation speech under duration constraint avoiding specific cliches.",
+      "role": "assistant",
+      "constraints": [
+        "under two minutes speaking duration",
+        "avoid phrase 'chase your dreams'",
+        "avoid common graduation cliches"
+      ],
+      "tone": [
+        "inspiring",
+        "authentic"
+      ],
+      "context": [
+        "high school graduation ceremony"
+      ],
+      "steps": []
+    }
+  },
+  "p035": {
+    "category": "constraint",
+    "prompt": "Summarize the legal contract terms. Use only plain English readable at an eighth-grade level with no Latin phrases.",
+    "ground_truth": {
+      "intent": "Summarize legal contract in eighth-grade reading level without Latin phrases.",
+      "role": "assistant",
+      "constraints": [
+        "eighth-grade reading level",
+        "no Latin phrases",
+        "plain English only"
+      ],
+      "tone": [
+        "accessible",
+        "clear"
+      ],
+      "context": [
+        "legal contract terms"
+      ],
+      "steps": []
+    }
+  },
+  "p036": {
+    "category": "constraint",
+    "prompt": "Create a workout plan for a beginner recovering from knee surgery. Prohibit all high-impact jumping and deep squats.",
+    "ground_truth": {
+      "intent": "Create beginner workout plan strictly excluding knee-straining movements.",
+      "role": "assistant",
+      "constraints": [
+        "prohibit high-impact jumping",
+        "prohibit deep squats",
+        "suitable for knee surgery rehabilitation"
+      ],
+      "tone": [
+        "encouraging",
+        "safety-focused"
+      ],
+      "context": [
+        "beginner recovering from knee surgery"
+      ],
+      "steps": []
+    }
+  },
+  "p037": {
+    "category": "constraint",
+    "prompt": "Write a story opening of 80 words where every sentence begins with the word 'When'.",
+    "ground_truth": {
+      "intent": "Write narrative opening constrained by sentence initial word and length limit.",
+      "role": "assistant",
+      "constraints": [
+        "around 80 words",
+        "every sentence must begin with 'When'"
+      ],
+      "tone": [
+        "narrative",
+        "stylistic"
+      ],
+      "context": [
+        "fiction opening"
+      ],
+      "steps": []
+    }
+  },
+  "p038": {
+    "category": "constraint",
+    "prompt": "Provide three counterarguments to the policy proposal. Do not attack the character of the proposer.",
+    "ground_truth": {
+      "intent": "Provide policy counterarguments restricted to substantive policy rather than ad hominem attacks.",
+      "role": "assistant",
+      "constraints": [
+        "exactly three counterarguments",
+        "no ad hominem attacks or character critiques"
+      ],
+      "tone": [
+        "analytical",
+        "civil"
+      ],
+      "context": [
+        "public policy proposal"
+      ],
+      "steps": []
+    }
+  },
+  "p039": {
+    "category": "constraint",
+    "prompt": "Write a product FAQ entry for international shipping. State costs must not be estimated and delivery guarantees cannot be promised.",
+    "ground_truth": {
+      "intent": "Write international shipping FAQ with strict prohibitions on cost estimates and delivery guarantees.",
+      "role": "assistant",
+      "constraints": [
+        "must not estimate shipping costs",
+        "cannot promise guaranteed delivery dates"
+      ],
+      "tone": [
+        "informative",
+        "legally accurate"
+      ],
+      "context": [
+        "international shipping policy"
+      ],
+      "steps": []
+    }
+  },
+  "p040": {
+    "category": "constraint",
+    "prompt": "Summarize the patient lab results. Use only metric units and do not provide medical diagnosis or prognosis.",
+    "ground_truth": {
+      "intent": "Summarize lab results in metric units while strictly avoiding diagnosis or prognosis.",
+      "role": "assistant",
+      "constraints": [
+        "metric units only",
+        "do not diagnose",
+        "do not offer prognosis"
+      ],
+      "tone": [
+        "objective",
+        "clinical"
+      ],
+      "context": [
+        "patient blood test panel"
+      ],
+      "steps": []
+    }
+  },
+  "p041": {
+    "category": "context",
+    "prompt": "You are responding to a customer who has already contacted support twice regarding a delayed shipment order #9482. Carrier tracking has been stuck in transit for 6 days.",
+    "ground_truth": {
+      "intent": "Respond to customer with full acknowledgment of prior support contacts and delayed carrier tracking.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "empathetic",
+        "accountable"
+      ],
+      "context": [
+        "customer contacted support twice previously",
+        "delayed shipment order #9482",
+        "carrier tracking stuck for 6 days"
+      ],
+      "steps": []
+    }
+  },
+  "p042": {
+    "category": "context",
+    "prompt": "The client is a Tier-1 enterprise financial institution with strict HIPAA and SOC2 compliance mandates evaluating cloud migration to AWS Ireland region.",
+    "ground_truth": {
+      "intent": "Provide cloud migration recommendations tailored to strict financial and data sovereignty compliance mandates.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "consultative",
+        "authoritative"
+      ],
+      "context": [
+        "client is Tier-1 enterprise financial institution",
+        "subject to HIPAA and SOC2 mandates",
+        "migrating to AWS Ireland region"
+      ],
+      "steps": []
+    }
+  },
+  "p043": {
+    "category": "context",
+    "prompt": "Our company recently laid off 15% of engineering staff following a cancelled Series B funding round. Address remaining employees in an internal memo.",
+    "ground_truth": {
+      "intent": "Draft all-hands internal memo addressing workforce reduction after cancelled funding round.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "transparent",
+        "reassuring",
+        "sober"
+      ],
+      "context": [
+        "company laid off 15% engineering staff",
+        "cancelled Series B funding round",
+        "internal memo to retained employees"
+      ],
+      "steps": []
+    }
+  },
+  "p044": {
+    "category": "context",
+    "prompt": "A patient with type 2 diabetes and mild chronic kidney disease is considering starting a ketogenic diet. Evaluate dietary risks given these comorbidities.",
+    "ground_truth": {
+      "intent": "Evaluate clinical risks of ketogenic diet accounting for diabetes and kidney disease comorbidities.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "clinical",
+        "cautious"
+      ],
+      "context": [
+        "patient has type 2 diabetes",
+        "patient has chronic kidney disease",
+        "patient considering ketogenic diet"
+      ],
+      "steps": []
+    }
+  },
+  "p045": {
+    "category": "context",
+    "prompt": "We operate a distributed microservices platform experiencing intermittent 504 gateway timeouts on the checkout service during Black Friday peak traffic.",
+    "ground_truth": {
+      "intent": "Formulate architectural diagnosis and mitigation plan for Black Friday checkout gateway timeouts.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "urgent",
+        "diagnostic"
+      ],
+      "context": [
+        "distributed microservices architecture",
+        "intermittent 504 timeouts on checkout",
+        "Black Friday peak traffic surge"
+      ],
+      "steps": []
+    }
+  },
+  "p046": {
+    "category": "context",
+    "prompt": "The user is an absolute beginner in programming who just installed Python 3.12 on Windows 11 and encountered a 'python is not recognized' command error.",
+    "ground_truth": {
+      "intent": "Guide absolute beginner Windows user through PATH environment variable fix for Python installation.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "supportive",
+        "step-by-step"
+      ],
+      "context": [
+        "user is absolute beginner",
+        "running Python 3.12 on Windows 11",
+        "encountered PATH recognition error"
+      ],
+      "steps": []
+    }
+  },
+  "p047": {
+    "category": "context",
+    "prompt": "The prospective client has a strict budget of $20,000, a hard launch deadline in 6 weeks, and wants a cross-platform mobile app with real-time video chat.",
+    "ground_truth": {
+      "intent": "Assess project feasibility balancing fixed budget, compressed deadline, and complex video feature scope.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "realistic",
+        "strategic"
+      ],
+      "context": [
+        "budget capped at $20,000",
+        "hard launch deadline in 6 weeks",
+        "scope demands cross-platform real-time video chat"
+      ],
+      "steps": []
+    }
+  },
+  "p048": {
+    "category": "context",
+    "prompt": "The target demographic is elderly retirees aged 70+ in rural communities with limited broadband access and low smartphone literacy.",
+    "ground_truth": {
+      "intent": "Design communication and UX approach tailored to rural elderly demographic with connectivity barriers.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "accessible",
+        "respectful"
+      ],
+      "context": [
+        "target demographic elderly retirees 70+",
+        "rural geography with limited broadband",
+        "low smartphone literacy"
+      ],
+      "steps": []
+    }
+  },
+  "p049": {
+    "category": "context",
+    "prompt": "We are a seed-stage B2B SaaS startup with 4 months of runway remaining and an average sales cycle of 90 days. Advise on growth priorities.",
+    "ground_truth": {
+      "intent": "Advise startup founders on survival and sales pipeline priorities under critical runway constraints.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "pragmatic",
+        "decisive"
+      ],
+      "context": [
+        "seed-stage B2B SaaS startup",
+        "4 months runway remaining",
+        "sales cycle is 90 days"
+      ],
+      "steps": []
+    }
+  },
+  "p050": {
+    "category": "context",
+    "prompt": "The dataset exhibits severe class imbalance with positive fraud cases accounting for 0.05% of 10 million transaction records. Recommend modeling strategy.",
+    "ground_truth": {
+      "intent": "Recommend fraud detection modeling strategy addressing extreme class imbalance in large-scale transactions.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "analytical",
+        "rigorous"
+      ],
+      "context": [
+        "extreme class imbalance with 0.05% positive cases",
+        "10 million transaction records",
+        "financial fraud classification task"
+      ],
+      "steps": []
+    }
+  },
+  "p051": {
+    "category": "context",
+    "prompt": "The restaurant has suffered a 20% drop in foot traffic following local road construction that will block direct street parking for the next four months.",
+    "ground_truth": {
+      "intent": "Formulate marketing and delivery strategy to offset traffic loss from prolonged road construction.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "constructive",
+        "resourceful"
+      ],
+      "context": [
+        "restaurant foot traffic dropped 20%",
+        "road construction blocks street parking",
+        "disruption lasts four months"
+      ],
+      "steps": []
+    }
+  },
+  "p052": {
+    "category": "context",
+    "prompt": "The student scored 98% in math, 95% in physics, but 62% in literature, causing overall GPA to dip below honors eligibility. Draft advisory counseling feedback.",
+    "ground_truth": {
+      "intent": "Draft academic counseling advice addressing STEM excellence alongside humanities deficit affecting honors eligibility.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "encouraging",
+        "constructive"
+      ],
+      "context": [
+        "student excels in math (98%) and physics (95%)",
+        "student struggles in literature (62%)",
+        "overall GPA below honors cutoff"
+      ],
+      "steps": []
+    }
+  },
+  "p053": {
+    "category": "context",
+    "prompt": "The API endpoint receives 15,000 requests per second with strict p99 latency SLA of 15ms. The Redis cache hit rate recently fell from 94% to 71%.",
+    "ground_truth": {
+      "intent": "Investigate performance degradation and latency SLA risk resulting from cache hit rate drop under high load.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "technical",
+        "investigative"
+      ],
+      "context": [
+        "15,000 requests per second traffic",
+        "15ms p99 latency SLA",
+        "Redis cache hit rate dropped from 94% to 71%"
+      ],
+      "steps": []
+    }
+  },
+  "p054": {
+    "category": "context",
+    "prompt": "The tenant has lived in the apartment for three years with impeccable payment history, but the property manager just served an unexpected 35% rent increase notice.",
+    "ground_truth": {
+      "intent": "Draft rent negotiation letter leveraging immaculate tenant payment track record against excessive increase.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "firm",
+        "reasonable",
+        "courteous"
+      ],
+      "context": [
+        "tenant resident for three years with perfect payment history",
+        "received unexpected 35% rent increase",
+        "landlord tenant negotiation"
+      ],
+      "steps": []
+    }
+  },
+  "p055": {
+    "category": "context",
+    "prompt": "The applicant has 7 years of backend Java experience but zero experience with Python or machine learning, applying for an AI Systems Engineer position.",
+    "ground_truth": {
+      "intent": "Evaluate resume match and provide transition roadmap for experienced backend engineer entering AI engineering.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "objective",
+        "constructive"
+      ],
+      "context": [
+        "applicant has 7 years Java backend experience",
+        "applicant has zero Python or ML background",
+        "role is AI Systems Engineer"
+      ],
+      "steps": []
+    }
+  },
+  "p056": {
+    "category": "context",
+    "prompt": "The manufacturing facility operates in high-humidity tropical conditions where standard steel bearings corrode within three months instead of expected 18-month lifespan.",
+    "ground_truth": {
+      "intent": "Recommend industrial bearing material and lubrication upgrades suited for tropical high-humidity environment.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "engineering-focused",
+        "practical"
+      ],
+      "context": [
+        "tropical high-humidity manufacturing facility",
+        "steel bearings corrode in 3 months vs 18 months standard",
+        "corrosion failure issue"
+      ],
+      "steps": []
+    }
+  },
+  "p057": {
+    "category": "context",
+    "prompt": "The e-commerce store sells perishable gourmet cheeses shipped with dry ice. Summertime ground shipping heat waves are causing delivery spoilage claims to surge 40%.",
+    "ground_truth": {
+      "intent": "Propose packaging, courier, and cold-chain logistics adjustments to stop cheese spoilage during summer heatwaves.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "logistical",
+        "actionable"
+      ],
+      "context": [
+        "e-commerce seller of perishable gourmet cheeses",
+        "uses dry ice packaging",
+        "summer heatwaves causing 40% rise in spoilage claims"
+      ],
+      "steps": []
+    }
+  },
+  "p058": {
+    "category": "context",
+    "prompt": "The hospital emergency department triage system is seeing unprecedented patient surge following a multi-vehicle highway collision during severe blizzard conditions.",
+    "ground_truth": {
+      "intent": "Establish emergency triage resource allocation protocol during mass casualty incident in severe weather.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "decisive",
+        "urgent",
+        "clinical"
+      ],
+      "context": [
+        "hospital ED facing mass casualty surge",
+        "multi-vehicle highway accident cause",
+        "severe blizzard weather impedes transport"
+      ],
+      "steps": []
+    }
+  },
+  "p059": {
+    "category": "context",
+    "prompt": "The open-source repository has 12,000 GitHub stars but only one maintainer, facing 450 unanswered pull requests and community burnout.",
+    "ground_truth": {
+      "intent": "Advise solo maintainer on community governance, triage automation, and sustainability strategy.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "supportive",
+        "strategic"
+      ],
+      "context": [
+        "popular repo with 12k GitHub stars",
+        "single solo maintainer facing burnout",
+        "450 backlog pull requests"
+      ],
+      "steps": []
+    }
+  },
+  "p060": {
+    "category": "context",
+    "prompt": "The user is migrating a legacy monolithic database with 500 million rows from MySQL 5.6 to PostgreSQL 16 with zero scheduled downtime allowed.",
+    "ground_truth": {
+      "intent": "Design zero-downtime database replication and cutover architecture from legacy MySQL to Postgres.",
+      "role": "specialist",
+      "constraints": [],
+      "tone": [
+        "architectural",
+        "rigorous"
+      ],
+      "context": [
+        "legacy MySQL 5.6 database with 500M rows",
+        "migrating to PostgreSQL 16",
+        "zero scheduled downtime constraint"
+      ],
+      "steps": []
+    }
+  },
+  "p061": {
+    "category": "tone",
+    "prompt": "Explain the service outage to a frustrated customer. Be deeply empathetic, professional, reassuring, and concise.",
+    "ground_truth": {
+      "intent": "Explain outage to angry customer with empathy, professionalism, and conciseness.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "deeply empathetic",
+        "professional",
+        "reassuring",
+        "concise"
+      ],
+      "context": [
+        "service outage affecting customer"
+      ],
+      "steps": []
+    }
+  },
+  "p062": {
+    "category": "tone",
+    "prompt": "Draft a cease-and-desist letter to a copyright infringer. Adopt a stern, formal, unambiguous, and authoritative legal tone.",
+    "ground_truth": {
+      "intent": "Draft legal cease-and-desist notice with stern authoritative tone.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "stern",
+        "formal",
+        "unambiguous",
+        "authoritative"
+      ],
+      "context": [
+        "copyright infringement infringement notice"
+      ],
+      "steps": []
+    }
+  },
+  "p063": {
+    "category": "tone",
+    "prompt": "Write a product announcement for our breakthrough AR glasses. Sound enthusiastic, visionary, inspiring, and electric.",
+    "ground_truth": {
+      "intent": "Write product announcement with passionate and visionary excitement.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "enthusiastic",
+        "visionary",
+        "inspiring",
+        "electric"
+      ],
+      "context": [
+        "breakthrough AR glasses launch"
+      ],
+      "steps": []
+    }
+  },
+  "p064": {
+    "category": "tone",
+    "prompt": "Deliver constructive performance review feedback to an underperforming team member. Maintain a compassionate, encouraging, yet honest tone.",
+    "ground_truth": {
+      "intent": "Provide performance critique balancing compassion, honesty, and encouragement.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "compassionate",
+        "encouraging",
+        "honest",
+        "constructive"
+      ],
+      "context": [
+        "performance evaluation meeting"
+      ],
+      "steps": []
+    }
+  },
+  "p065": {
+    "category": "tone",
+    "prompt": "Draft a crisis press release regarding an executive resignation. Ensure the tone is calm, dignified, measured, and forward-looking.",
+    "ground_truth": {
+      "intent": "Draft executive departure announcement preserving corporate stability and dignity.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "calm",
+        "dignified",
+        "measured",
+        "forward-looking"
+      ],
+      "context": [
+        "executive sudden resignation crisis"
+      ],
+      "steps": []
+    }
+  },
+  "p066": {
+    "category": "tone",
+    "prompt": "Write a children's bedtime story about a sleepy owl. Use a whimsical, gentle, soothing, and rhythmic voice.",
+    "ground_truth": {
+      "intent": "Write bedtime story using whimsical soothing cadence.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "whimsical",
+        "gentle",
+        "soothing",
+        "rhythmic"
+      ],
+      "context": [
+        "bedtime owl story"
+      ],
+      "steps": []
+    }
+  },
+  "p067": {
+    "category": "tone",
+    "prompt": "Decline a collaborative partnership inquiry from a competitor. Remain cordial, diplomatic, firm, and respectful.",
+    "ground_truth": {
+      "intent": "Politely decline competitor partnership inquiry with diplomatic firmness.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "cordial",
+        "diplomatic",
+        "firm",
+        "respectful"
+      ],
+      "context": [
+        "competitor partnership proposal"
+      ],
+      "steps": []
+    }
+  },
+  "p068": {
+    "category": "tone",
+    "prompt": "Write a rally speech for volunteers cleaning up a polluted beach. Speak with infectious passion, camaraderie, and urgent optimism.",
+    "ground_truth": {
+      "intent": "Deliver volunteer beach cleanup rally speech.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "infectious passion",
+        "camaraderie",
+        "urgent optimism"
+      ],
+      "context": [
+        "community beach cleanup event"
+      ],
+      "steps": []
+    }
+  },
+  "p069": {
+    "category": "tone",
+    "prompt": "Deliver an executive briefing on supply chain risks to the board of directors. Keep the tone sober, analytical, objective, and urgent.",
+    "ground_truth": {
+      "intent": "Present supply chain risks to board members objectively and soberly.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "sober",
+        "analytical",
+        "objective",
+        "urgent"
+      ],
+      "context": [
+        "board of directors executive risk briefing"
+      ],
+      "steps": []
+    }
+  },
+  "p070": {
+    "category": "tone",
+    "prompt": "Explain modern slang terms to a grandparent. Sound warm, humorous, patient, and affectionate.",
+    "ground_truth": {
+      "intent": "Explain slang to elderly grandparent with humor and patience.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "warm",
+        "humorous",
+        "patient",
+        "affectionate"
+      ],
+      "context": [
+        "generational slang explanation"
+      ],
+      "steps": []
+    }
+  },
+  "p071": {
+    "category": "tone",
+    "prompt": "Write an obituary honoring a dedicated community doctor. Express profound gratitude, reverence, solemnity, and comfort.",
+    "ground_truth": {
+      "intent": "Compose physician obituary with reverence and community gratitude.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "profound gratitude",
+        "reverent",
+        "solemn",
+        "comforting"
+      ],
+      "context": [
+        "beloved community doctor memorial"
+      ],
+      "steps": []
+    }
+  },
+  "p072": {
+    "category": "tone",
+    "prompt": "Send a follow-up payment reminder for an invoice that is 60 days overdue. Be polite, firm, uncompromising, and direct.",
+    "ground_truth": {
+      "intent": "Send overdue debt collection reminder balancing politeness and uncompromising firmness.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "polite",
+        "firm",
+        "uncompromising",
+        "direct"
+      ],
+      "context": [
+        "invoice overdue by 60 days"
+      ],
+      "steps": []
+    }
+  },
+  "p073": {
+    "category": "tone",
+    "prompt": "Introduce a new office recycling policy. Keep the message playful, engaging, lighthearted, yet persuasive.",
+    "ground_truth": {
+      "intent": "Announce office recycling policy in an upbeat fun style.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "playful",
+        "engaging",
+        "lighthearted",
+        "persuasive"
+      ],
+      "context": [
+        "workplace green recycling initiative"
+      ],
+      "steps": []
+    }
+  },
+  "p074": {
+    "category": "tone",
+    "prompt": "Console a friend who did not receive their dream university admission. Be nurturing, comforting, validating, and resilient.",
+    "ground_truth": {
+      "intent": "Console rejected applicant friend with nurturing validation and resilience.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "nurturing",
+        "comforting",
+        "validating",
+        "resilient"
+      ],
+      "context": [
+        "university rejection letter"
+      ],
+      "steps": []
+    }
+  },
+  "p075": {
+    "category": "tone",
+    "prompt": "Announce an annual company retreat in Hawaii. Sound celebratory, vibrant, energizing, and inclusive.",
+    "ground_truth": {
+      "intent": "Announce corporate Hawaii retreat with infectious celebratory energy.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "celebratory",
+        "vibrant",
+        "energizing",
+        "inclusive"
+      ],
+      "context": [
+        "annual company retreat in Hawaii"
+      ],
+      "steps": []
+    }
+  },
+  "p076": {
+    "category": "tone",
+    "prompt": "Write a restaurant critique of a pretentious fine-dining venue. Employ a sarcastic, witty, sophisticated, and acerbic tone.",
+    "ground_truth": {
+      "intent": "Critique pretentious restaurant using biting wit and sophisticated sarcasm.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "sarcastic",
+        "witty",
+        "sophisticated",
+        "acerbic"
+      ],
+      "context": [
+        "high-end fine dining critique"
+      ],
+      "steps": []
+    }
+  },
+  "p077": {
+    "category": "tone",
+    "prompt": "Address citizens regarding an impending hurricane landfall. Maintain an authoritative, urgent, steady, and protective demeanor.",
+    "ground_truth": {
+      "intent": "Deliver civil emergency hurricane warning with steady authoritative urgency.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "authoritative",
+        "urgent",
+        "steady",
+        "protective"
+      ],
+      "context": [
+        "imminent category 4 hurricane landfall"
+      ],
+      "steps": []
+    }
+  },
+  "p078": {
+    "category": "tone",
+    "prompt": "Welcome a newly hired software engineer on their first day. Radiate warmth, hospitality, encouragement, and genuine excitement.",
+    "ground_truth": {
+      "intent": "Welcome new hire with warm hospitality and team excitement.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "warm",
+        "hospitable",
+        "encouraging",
+        "excited"
+      ],
+      "context": [
+        "employee first day onboarding"
+      ],
+      "steps": []
+    }
+  },
+  "p079": {
+    "category": "tone",
+    "prompt": "Explain why a requested software feature cannot be built. Use a collaborative, transparent, empathetic, and respectful rationale.",
+    "ground_truth": {
+      "intent": "Explain software feature rejection collaboratively and empathetically.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "collaborative",
+        "transparent",
+        "empathetic",
+        "respectful"
+      ],
+      "context": [
+        "product feature rejection decision"
+      ],
+      "steps": []
+    }
+  },
+  "p080": {
+    "category": "tone",
+    "prompt": "Write a farewell note to colleagues upon retiring after 35 years. Express humble nostalgia, heartfelt warmth, and quiet peace.",
+    "ground_truth": {
+      "intent": "Write retirement farewell note with warmth and humble nostalgia.",
+      "role": "communicator",
+      "constraints": [],
+      "tone": [
+        "humble nostalgia",
+        "heartfelt warmth",
+        "quiet peace"
+      ],
+      "context": [
+        "career retirement after 35 years"
+      ],
+      "steps": []
+    }
+  },
+  "p081": {
+    "category": "multi_step",
+    "prompt": "First identify the problem. Then explain its cause. Then provide two possible solutions. Finally recommend the safer option.",
+    "ground_truth": {
+      "intent": "Execute four-stage problem analysis, causal explanation, solution ideation, and risk-averse selection.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "methodical",
+        "analytical"
+      ],
+      "context": [
+        "operational problem scenario"
+      ],
+      "steps": [
+        "identify the problem",
+        "explain its cause",
+        "provide two possible solutions",
+        "recommend the safer option"
+      ]
+    }
+  },
+  "p082": {
+    "category": "multi_step",
+    "prompt": "Step 1: Extract all numerical data from the paragraph. Step 2: Calculate the mean and variance. Step 3: Interpret what the variance reveals.",
+    "ground_truth": {
+      "intent": "Extract numbers, compute descriptive statistics, and interpret distributional variance.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "mathematical",
+        "procedural"
+      ],
+      "context": [
+        "numerical data in paragraph"
+      ],
+      "steps": [
+        "extract all numerical data",
+        "calculate mean and variance",
+        "interpret variance implications"
+      ]
+    }
+  },
+  "p083": {
+    "category": "multi_step",
+    "prompt": "First parse the raw JSON payload. Next filter out expired sessions. After that group remaining sessions by user ID. Finally output the aggregated count per user.",
+    "ground_truth": {
+      "intent": "Process JSON sessions through parsing, filtering, user grouping, and frequency aggregation.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "algorithmic",
+        "precise"
+      ],
+      "context": [
+        "user session payload"
+      ],
+      "steps": [
+        "parse raw JSON payload",
+        "filter out expired sessions",
+        "group sessions by user ID",
+        "output aggregated count per user"
+      ]
+    }
+  },
+  "p084": {
+    "category": "multi_step",
+    "prompt": "Stage 1: Read the patient symptoms. Stage 2: List three differential diagnoses. Stage 3: Order diagnostic tests for each. Stage 4: Highlight critical contraindications.",
+    "ground_truth": {
+      "intent": "Conduct structured clinical differential diagnosis, diagnostic ordering, and contraindication review.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "clinical",
+        "rigorous"
+      ],
+      "context": [
+        "patient clinical presentation"
+      ],
+      "steps": [
+        "read patient symptoms",
+        "list three differential diagnoses",
+        "order diagnostic tests for each diagnosis",
+        "highlight critical contraindications"
+      ]
+    }
+  },
+  "p085": {
+    "category": "multi_step",
+    "prompt": "Begin by summarizing the customer complaint. Second, check our refund policy guidelines. Third, draft the response letter. Lastly, log the ticket resolution code.",
+    "ground_truth": {
+      "intent": "Execute complete customer support escalation and resolution workflow.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "process-oriented",
+        "professional"
+      ],
+      "context": [
+        "customer complaint ticket"
+      ],
+      "steps": [
+        "summarize customer complaint",
+        "check refund policy guidelines",
+        "draft response letter",
+        "log ticket resolution code"
+      ]
+    }
+  },
+  "p086": {
+    "category": "multi_step",
+    "prompt": "First identify the grammatical errors in this sentence. Second, correct them. Third, explain the grammatical rule that was violated.",
+    "ground_truth": {
+      "intent": "Identify syntax errors, apply grammatical corrections, and teach underlying syntax rules.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "instructive",
+        "pedagogical"
+      ],
+      "context": [
+        "flawed sentence text"
+      ],
+      "steps": [
+        "identify grammatical errors",
+        "correct grammatical errors",
+        "explain violated grammatical rule"
+      ]
+    }
+  },
+  "p087": {
+    "category": "multi_step",
+    "prompt": "Step A: Isolate the suspect network subnet. Step B: Scan active IP addresses. Step C: Check open ports. Step D: Generate an alert report.",
+    "ground_truth": {
+      "intent": "Perform network security incident response quarantine, scan, and reporting workflow.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "security-focused",
+        "sequential"
+      ],
+      "context": [
+        "compromised network environment"
+      ],
+      "steps": [
+        "isolate suspect network subnet",
+        "scan active IP addresses",
+        "check open ports on active IPs",
+        "generate alert report"
+      ]
+    }
+  },
+  "p088": {
+    "category": "multi_step",
+    "prompt": "First brainstorm five startup concepts in climate tech. Then evaluate market size for each. Next pick the most viable idea. Finally outline a 30-day MVP roadmap.",
+    "ground_truth": {
+      "intent": "Brainstorm climate concepts, evaluate market sizes, select top idea, and formulate MVP execution plan.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "entrepreneurial",
+        "structured"
+      ],
+      "context": [
+        "climate tech market opportunities"
+      ],
+      "steps": [
+        "brainstorm five startup concepts in climate tech",
+        "evaluate market size for each concept",
+        "select most viable idea",
+        "outline 30-day MVP roadmap"
+      ]
+    }
+  },
+  "p089": {
+    "category": "multi_step",
+    "prompt": "1. Download the transaction logs. 2. Verify SHA-256 checksums. 3. Decrypt the log payload. 4. Parse anomalies into CSV format.",
+    "ground_truth": {
+      "intent": "Run secure audit log pipeline from download through integrity verification, decryption, and anomaly extraction.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "technical",
+        "procedural"
+      ],
+      "context": [
+        "encrypted audit log repository"
+      ],
+      "steps": [
+        "download transaction logs",
+        "verify SHA-256 checksums",
+        "decrypt log payload",
+        "parse anomalies into CSV format"
+      ]
+    }
+  },
+  "p090": {
+    "category": "multi_step",
+    "prompt": "Phase 1: Identify all stakeholders. Phase 2: Map their primary interests and conflicts. Phase 3: Propose a compromise resolution strategy.",
+    "ground_truth": {
+      "intent": "Conduct stakeholder discovery, conflicting interest mapping, and consensus mediation planning.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "strategic",
+        "diplomatic"
+      ],
+      "context": [
+        "organizational restructuring dispute"
+      ],
+      "steps": [
+        "identify all stakeholders",
+        "map primary interests and conflicts",
+        "propose compromise resolution strategy"
+      ]
+    }
+  },
+  "p091": {
+    "category": "multi_step",
+    "prompt": "Start by inspecting the engine spark plugs. Then measure cylinder compression pressure. After that inspect fuel injector spray. Conclude with a fault summary.",
+    "ground_truth": {
+      "intent": "Diagnose internal combustion misfire through physical inspection, compression measurement, fuel test, and summary.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "diagnostic",
+        "mechanical"
+      ],
+      "context": [
+        "engine misfire condition"
+      ],
+      "steps": [
+        "inspect engine spark plugs",
+        "measure cylinder compression pressure",
+        "inspect fuel injector spray pattern",
+        "conclude with fault summary"
+      ]
+    }
+  },
+  "p092": {
+    "category": "multi_step",
+    "prompt": "Step 1: Ingest CSV records. Step 2: Remove rows with null timestamps. Step 3: Normalize currency columns to USD. Step 4: Write to database.",
+    "ground_truth": {
+      "intent": "Execute ETL pipeline data cleaning, currency conversion, and database persistence.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "engineering",
+        "sequential"
+      ],
+      "context": [
+        "unclean financial CSV dataset"
+      ],
+      "steps": [
+        "ingest CSV records",
+        "remove rows with null timestamps",
+        "normalize currency columns to USD",
+        "write clean records to database"
+      ]
+    }
+  },
+  "p093": {
+    "category": "multi_step",
+    "prompt": "First outline the plot structure. Then define character motivations. Next write the dialogue for the climactic confrontation. Finally review pacing.",
+    "ground_truth": {
+      "intent": "Structure narrative plot, establish psychological motivations, write climax dialogue, and refine pacing.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "creative",
+        "methodical"
+      ],
+      "context": [
+        "screenplay scene concept"
+      ],
+      "steps": [
+        "outline plot structure",
+        "define character motivations",
+        "write climax dialogue",
+        "review narrative pacing"
+      ]
+    }
+  },
+  "p094": {
+    "category": "multi_step",
+    "prompt": "1. Formulate a null hypothesis. 2. Choose an appropriate statistical significance test. 3. Compute p-value. 4. State whether to reject or fail to reject.",
+    "ground_truth": {
+      "intent": "Execute formal hypothesis test pipeline from hypothesis definition to test selection, calculation, and statistical decision.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "statistical",
+        "rigorous"
+      ],
+      "context": [
+        "experimental treatment sample data"
+      ],
+      "steps": [
+        "formulate null hypothesis",
+        "choose appropriate statistical test",
+        "compute p-value",
+        "state reject or fail to reject decision"
+      ]
+    }
+  },
+  "p095": {
+    "category": "multi_step",
+    "prompt": "Initial step: Clone the GitHub repository. Second step: Install dependencies with poetry. Third step: Execute pytest suite. Final step: Build Docker container.",
+    "ground_truth": {
+      "intent": "Execute CI/CD build lifecycle steps from repository cloning to testing and containerization.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "DevOps",
+        "ordered"
+      ],
+      "context": [
+        "source code repository"
+      ],
+      "steps": [
+        "clone GitHub repository",
+        "install dependencies with poetry",
+        "execute pytest suite",
+        "build Docker container"
+      ]
+    }
+  },
+  "p096": {
+    "category": "multi_step",
+    "prompt": "First assess immediate airway and breathing. Next stabilize cervical spine. Then check peripheral circulation. Finally prepare for patient transfer.",
+    "ground_truth": {
+      "intent": "Administer systematic trauma assessment prioritizing airway, spine stabilization, circulation, and transfer prep.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "emergency medicine",
+        "critical"
+      ],
+      "context": [
+        "acute trauma victim"
+      ],
+      "steps": [
+        "assess airway and breathing",
+        "stabilize cervical spine",
+        "check peripheral circulation",
+        "prepare for emergency patient transfer"
+      ]
+    }
+  },
+  "p097": {
+    "category": "multi_step",
+    "prompt": "Step 1: Identify all chemical reactants. Step 2: Balance the chemical equation. Step 3: Determine the limiting reagent. Step 4: Calculate theoretical yield in grams.",
+    "ground_truth": {
+      "intent": "Solve stoichiometric chemistry problem through reactant identification, balancing, limiting reagent finding, and yield calculation.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "scientific",
+        "computational"
+      ],
+      "context": [
+        "chemical reaction quantities"
+      ],
+      "steps": [
+        "identify chemical reactants",
+        "balance chemical equation",
+        "determine limiting reagent",
+        "calculate theoretical yield in grams"
+      ]
+    }
+  },
+  "p098": {
+    "category": "multi_step",
+    "prompt": "First audit website SEO metadata. Second analyze page load performance on mobile. Third inspect keyword ranking competition. Fourth deliver prioritized SEO recommendations.",
+    "ground_truth": {
+      "intent": "Conduct SEO website audit spanning metadata, mobile performance, competitor rankings, and prioritized recommendations.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "marketing",
+        "analytical"
+      ],
+      "context": [
+        "client e-commerce website"
+      ],
+      "steps": [
+        "audit website SEO metadata",
+        "analyze mobile page load performance",
+        "inspect competitor keyword rankings",
+        "deliver prioritized SEO recommendations"
+      ]
+    }
+  },
+  "p099": {
+    "category": "multi_step",
+    "prompt": "Part 1: Transcribe audio interview. Part 2: Strip identifying personally identifiable information. Part 3: Code recurring thematic patterns. Part 4: Synthesize qualitative findings.",
+    "ground_truth": {
+      "intent": "Conduct qualitative research workflow from transcription to anonymization, thematic coding, and findings synthesis.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "research",
+        "methodical"
+      ],
+      "context": [
+        "recorded qualitative interviews"
+      ],
+      "steps": [
+        "transcribe audio interview",
+        "strip personally identifiable information",
+        "code recurring thematic patterns",
+        "synthesize qualitative findings"
+      ]
+    }
+  },
+  "p100": {
+    "category": "multi_step",
+    "prompt": "Step 1: Verify user identity via two-factor authentication. Step 2: Check current account authorization permissions. Step 3: Execute password reset. Step 4: Dispatch confirmation notification.",
+    "ground_truth": {
+      "intent": "Execute secure user credential reset verification and dispatch workflow.",
+      "role": "analyst",
+      "constraints": [],
+      "tone": [
+        "security",
+        "procedural"
+      ],
+      "context": [
+        "user account recovery request"
+      ],
+      "steps": [
+        "verify identity via two-factor authentication",
+        "check account authorization permissions",
+        "execute password reset",
+        "dispatch confirmation notification"
+      ]
+    }
+  }
+}

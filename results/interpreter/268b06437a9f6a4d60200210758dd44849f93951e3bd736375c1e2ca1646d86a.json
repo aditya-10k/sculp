@@ -1,0 +1,18 @@
+{
+  "task": "Explain service outage to frustrated customer empathetically, professionally, and concisely",
+  "role": "",
+  "constraints": [],
+  "tone": [
+    "empathetic",
+    "concise",
+    "professional"
+  ],
+  "context": [
+    "Explain service outage to frustrated customer empathetically"
+  ],
+  "required_actions": [
+    "Explain service outage to frustrated customer empathetically, professionally, and concisely"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

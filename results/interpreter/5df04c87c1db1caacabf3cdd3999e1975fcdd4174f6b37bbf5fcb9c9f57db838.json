@@ -1,0 +1,14 @@
+{
+  "task": "Parse JSON, filter expired sessions, group by user ID, output counts",
+  "role": "",
+  "constraints": [
+    "output strictly valid JSON"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Parse JSON, filter expired sessions, group by user ID, output counts"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

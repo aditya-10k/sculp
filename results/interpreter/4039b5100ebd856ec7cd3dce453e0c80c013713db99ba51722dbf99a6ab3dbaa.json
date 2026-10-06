@@ -1,0 +1,12 @@
+{
+  "task": "candidate a blog post energy",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "candidate a blog post energy"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

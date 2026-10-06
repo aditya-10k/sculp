@@ -1,0 +1,14 @@
+{
+  "task": "Write apology letter client",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [
+    "Write apology letter client"
+  ],
+  "required_actions": [
+    "Write apology letter client"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

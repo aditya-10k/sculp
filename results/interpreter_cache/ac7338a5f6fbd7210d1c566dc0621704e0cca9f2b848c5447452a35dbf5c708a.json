@@ -1,0 +1,12 @@
+{
+  "task": "That cat the mouse garden",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "That cat the mouse garden"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

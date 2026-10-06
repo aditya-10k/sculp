@@ -1,0 +1,14 @@
+{
+  "task": "Explain quantum computing high schooler",
+  "role": "",
+  "constraints": [
+    "100 words"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Explain quantum computing high schooler"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

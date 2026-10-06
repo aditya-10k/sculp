@@ -1,0 +1,12 @@
+{
+  "task": "Extract action assignees mentioned meeting minutes",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Extract action assignees mentioned meeting minutes"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

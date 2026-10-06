@@ -1,0 +1,12 @@
+{
+  "task": "Generate summary proposal words passive",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Generate summary proposal words passive"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

@@ -1,0 +1,14 @@
+{
+  "task": "Explain computing schooler 100 words not",
+  "role": "",
+  "constraints": [
+    "100 words"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Explain computing schooler 100 words not"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

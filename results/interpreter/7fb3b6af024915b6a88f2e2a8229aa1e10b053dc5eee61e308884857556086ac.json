@@ -1,0 +1,12 @@
+{
+  "task": "Write description running shoes words comfortable",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Write description running shoes words comfortable"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

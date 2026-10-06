@@ -1,0 +1,14 @@
+{
+  "task": "professional reply declining job offer",
+  "role": "",
+  "constraints": [],
+  "tone": [
+    "professional"
+  ],
+  "context": [],
+  "required_actions": [
+    "professional reply declining job offer"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

@@ -1,0 +1,14 @@
+{
+  "task": "professional declining gratitude",
+  "role": "",
+  "constraints": [],
+  "tone": [
+    "professional"
+  ],
+  "context": [],
+  "required_actions": [
+    "professional declining gratitude"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

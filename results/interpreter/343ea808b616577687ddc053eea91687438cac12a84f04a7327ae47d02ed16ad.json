@@ -1,0 +1,14 @@
+{
+  "task": "troubleshooting WiFi failure Output JSON",
+  "role": "",
+  "constraints": [
+    "output strictly valid JSON"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "troubleshooting WiFi failure Output JSON"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

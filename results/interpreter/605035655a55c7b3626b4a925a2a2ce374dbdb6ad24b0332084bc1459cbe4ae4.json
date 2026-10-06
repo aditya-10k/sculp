@@ -1,0 +1,14 @@
+{
+  "task": "Draft professional reply declining gratitude",
+  "role": "",
+  "constraints": [],
+  "tone": [
+    "professional"
+  ],
+  "context": [],
+  "required_actions": [
+    "Draft professional reply declining gratitude"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

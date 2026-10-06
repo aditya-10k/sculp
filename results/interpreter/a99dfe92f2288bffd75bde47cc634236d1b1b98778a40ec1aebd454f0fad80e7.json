@@ -1,0 +1,12 @@
+{
+  "task": "French Revolution exactly must 15 20",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "French Revolution exactly must 15 20"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

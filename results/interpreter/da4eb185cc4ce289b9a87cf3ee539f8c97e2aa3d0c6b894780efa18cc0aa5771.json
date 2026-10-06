@@ -1,0 +1,12 @@
+{
+  "task": "Describe French Revolution three points words",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Describe French Revolution three points words"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

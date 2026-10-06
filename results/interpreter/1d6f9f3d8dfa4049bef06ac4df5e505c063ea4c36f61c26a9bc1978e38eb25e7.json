@@ -1,0 +1,14 @@
+{
+  "task": "Convert the CSV table into JSON array format",
+  "role": "",
+  "constraints": [
+    "output strictly valid JSON"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Convert the CSV table into JSON array format"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

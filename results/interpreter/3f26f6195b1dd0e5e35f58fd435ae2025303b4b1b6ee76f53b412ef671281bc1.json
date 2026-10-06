@@ -1,0 +1,14 @@
+{
+  "task": "Provide Wi-Fi fix in valid JSON only",
+  "role": "",
+  "constraints": [
+    "output strictly valid JSON"
+  ],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Provide Wi-Fi fix in valid JSON only"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

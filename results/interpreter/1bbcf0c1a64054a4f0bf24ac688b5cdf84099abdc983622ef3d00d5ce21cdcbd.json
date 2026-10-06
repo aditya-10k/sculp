@@ -1,0 +1,12 @@
+{
+  "task": "List five dinner recipes that are completely gluten-, dairy- nut- least 25g protein serving",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "List five dinner recipes that are completely gluten-, dairy- nut- least 25g protein serving"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}

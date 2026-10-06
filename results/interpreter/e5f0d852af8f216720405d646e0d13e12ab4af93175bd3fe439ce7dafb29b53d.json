@@ -1,0 +1,12 @@
+{
+  "task": "Proofread the email and correct grammatical or spelling mistakes",
+  "role": "",
+  "constraints": [],
+  "tone": [],
+  "context": [],
+  "required_actions": [
+    "Proofread the email and correct grammatical or spelling mistakes"
+  ],
+  "ordering_dependencies": [],
+  "raw_response": "[heuristic_reconstruction]"
+}
