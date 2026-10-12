@@ -65,15 +65,15 @@ class BlindInterpreter:
                 self.provider = "mock"
 
         elif self.provider == "groq":
-            try:
-                from groq import Groq
-                api_key = os.getenv("GROQ_API_KEY")
-                if api_key:
-                    self._client = Groq(api_key=api_key)
-                else:
-                    self.provider = "mock"
-            except Exception:
-                self.provider = "mock"
+            from src.interpretation.groq_client import GroqEvaluatorClient
+            from src.interpretation.evaluator_protocols import ProtocolAEvaluator
+            self.groq_client = GroqEvaluatorClient(
+                model_name=self.model_name,
+                temperature=self.temperature,
+                cache_dir=str(self.cache_dir) if self.cache_dir else None
+            )
+            self.proto_a_evaluator = ProtocolAEvaluator(self.groq_client)
+            self._client = self.groq_client
 
     def _get_cache_path(self, compressed_prompt: str) -> Optional[Path]:
         if not self.cache_dir:
@@ -85,6 +85,24 @@ class BlindInterpreter:
         """
         Interprets compressed prompt blind to original context.
         """
+        if self.provider == "groq" and hasattr(self, "proto_a_evaluator"):
+            res = self.proto_a_evaluator.evaluate_standalone(compressed_prompt)
+            components = res.reconstructed_components or {}
+            recon = ReconstructedSemantics(
+                task=components.get("task") or res.inferred_task,
+                role=components.get("role", ""),
+                constraints=components.get("constraints", []),
+                tone=components.get("tone", []),
+                context=components.get("context", []),
+                required_actions=[res.inferred_task] if res.inferred_task else [],
+                ordering_dependencies=components.get("steps", []),
+                raw_response=json.dumps(res.model_dump())
+            )
+            # Attach Protocol A score
+            setattr(recon, "standalone_interpretability", res.standalone_interpretability)
+            setattr(recon, "protocol_a_result", res)
+            return recon
+
         # 1. Check cache
         cache_path = self._get_cache_path(compressed_prompt)
         if cache_path and cache_path.exists():
@@ -102,8 +120,6 @@ class BlindInterpreter:
             recon = self._call_gemini(compressed_prompt)
         elif self.provider == "openai":
             recon = self._call_openai(compressed_prompt)
-        elif self.provider == "groq":
-            recon = self._call_groq(compressed_prompt)
         else:
             recon = self._heuristic_interpretation(compressed_prompt)
 
@@ -119,47 +135,23 @@ class BlindInterpreter:
 
     def _call_gemini(self, compressed_prompt: str) -> ReconstructedSemantics:
         prompt_text = f"{INTERPRETER_SYSTEM_PROMPT}\n\n{INTERPRETER_USER_TEMPLATE.format(compressed_prompt=compressed_prompt)}"
-        try:
-            response = self._client.generate_content(
-                prompt_text,
-                generation_config={"temperature": self.temperature, "response_mime_type": "application/json"}
-            )
-            raw = response.text
-            return self._parse_json_response(raw)
-        except Exception:
-            return self._heuristic_interpretation(compressed_prompt)
+        response = self._client.generate_content(
+            prompt_text,
+            generation_config={"temperature": self.temperature, "response_mime_type": "application/json"}
+        )
+        return self._parse_json_response(response.text)
 
     def _call_openai(self, compressed_prompt: str) -> ReconstructedSemantics:
-        try:
-            response = self._client.chat.completions.create(
-                model=self.model_name,
-                messages=[
-                    {"role": "system", "content": INTERPRETER_SYSTEM_PROMPT},
-                    {"role": "user", "content": INTERPRETER_USER_TEMPLATE.format(compressed_prompt=compressed_prompt)}
-                ],
-                temperature=self.temperature,
-                response_format={"type": "json_object"}
-            )
-            raw = response.choices[0].message.content
-            return self._parse_json_response(raw)
-        except Exception:
-            return self._heuristic_interpretation(compressed_prompt)
-
-    def _call_groq(self, compressed_prompt: str) -> ReconstructedSemantics:
-        try:
-            response = self._client.chat.completions.create(
-                model=self.model_name,
-                messages=[
-                    {"role": "system", "content": INTERPRETER_SYSTEM_PROMPT},
-                    {"role": "user", "content": INTERPRETER_USER_TEMPLATE.format(compressed_prompt=compressed_prompt)}
-                ],
-                temperature=self.temperature,
-                response_format={"type": "json_object"}
-            )
-            raw = response.choices[0].message.content
-            return self._parse_json_response(raw)
-        except Exception:
-            return self._heuristic_interpretation(compressed_prompt)
+        response = self._client.chat.completions.create(
+            model=self.model_name,
+            messages=[
+                {"role": "system", "content": INTERPRETER_SYSTEM_PROMPT},
+                {"role": "user", "content": INTERPRETER_USER_TEMPLATE.format(compressed_prompt=compressed_prompt)}
+            ],
+            temperature=self.temperature,
+            response_format={"type": "json_object"}
+        )
+        return self._parse_json_response(response.choices[0].message.content)
 
     def _parse_json_response(self, text: str) -> ReconstructedSemantics:
         """Clean markdown wrapping and parse into ReconstructedSemantics."""

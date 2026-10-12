@@ -1,7 +1,12 @@
-"""Semantic Collapse threshold and breakpoint detection module."""
+"""Semantic Collapse threshold and breakpoint detection module.
+Implements:
+1. Local steepest-drop breakpoint detection (discrete derivative Delta_i = SF_i - SF_{i-1}).
+2. Operational threshold metrics (first compression level where composite fidelity drops below 0.8 and 0.7).
+3. Explicit handling of uncrossed thresholds and actual achieved compression ratios.
+"""
 
 from __future__ import annotations
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 import numpy as np
 import pandas as pd
 from src.analysis.statistics import bootstrap_ci
@@ -13,7 +18,7 @@ def detect_collapse_breakpoint(
 ) -> Dict[str, Any]:
     """
     Detects the semantic collapse breakpoint along the rate-distortion curve.
-    Identifies maximum negative delta Delta_i = SF_i - SF_{i-1}.
+    Identifies maximum negative marginal gradient Delta_i = SF_i - SF_{i-1}.
     """
     if len(fidelity_values) < 2:
         return {
@@ -28,7 +33,6 @@ def detect_collapse_breakpoint(
         delta = fidelity_values[i] - fidelity_values[i - 1]
         deltas.append((delta, i))
 
-    # Find largest negative drop (minimum delta)
     min_delta, max_drop_idx = min(deltas, key=lambda x: x[0])
 
     collapse_ratio = compression_ratios[max_drop_idx]
@@ -44,9 +48,26 @@ def detect_collapse_breakpoint(
     }
 
 
+def detect_operational_threshold(
+    compression_ratios: List[float],
+    fidelity_values: List[float],
+    threshold: float
+) -> Optional[float]:
+    """
+    Identifies the first compression ratio where fidelity falls strictly below threshold.
+    Returns None if the threshold is never crossed across the evaluated compression regime.
+    These are operational definitions rather than universal semantic-collapse boundaries.
+    """
+    for cr, fid in zip(compression_ratios, fidelity_values):
+        if fid < threshold:
+            return round(float(cr), 4)
+    return None
+
+
 def compute_collapse_thresholds_for_df(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Computes collapse threshold across methods and categories in the experiment dataframe.
+    Computes both local gradient collapse and operational thresholds (tau_0.8, tau_0.7)
+    across methods and categories, incorporating both target and actual compression ratios.
     """
     records = []
     methods = df["method"].unique()
@@ -61,14 +82,21 @@ def compute_collapse_thresholds_for_df(df: pd.DataFrame) -> pd.DataFrame:
             if sub.empty:
                 continue
 
-            # Group by target_removal and compute mean semantic_fidelity
-            grouped = sub.groupby("target_removal")["semantic_fidelity"].mean().reset_index()
-            grouped = grouped.sort_values("target_removal")
+            # Group by target_removal and compute mean actual_removal and semantic_fidelity
+            grouped = sub.groupby("target_removal").agg({
+                "actual_removal": "mean",
+                "semantic_fidelity": "mean"
+            }).reset_index().sort_values("target_removal")
 
             cr_list = grouped["target_removal"].tolist()
+            actual_cr_list = grouped["actual_removal"].tolist()
             sf_list = grouped["semantic_fidelity"].tolist()
 
             bp = detect_collapse_breakpoint(cr_list, sf_list)
+            tau_80 = detect_operational_threshold(cr_list, sf_list, threshold=0.80)
+            tau_70 = detect_operational_threshold(cr_list, sf_list, threshold=0.70)
+            actual_tau_80 = detect_operational_threshold(actual_cr_list, sf_list, threshold=0.80)
+            actual_tau_70 = detect_operational_threshold(actual_cr_list, sf_list, threshold=0.70)
 
             # Prompt-level bootstrap for collapse ratio CI
             prompt_collapses = []
@@ -90,7 +118,11 @@ def compute_collapse_thresholds_for_df(df: pd.DataFrame) -> pd.DataFrame:
                 "ci_upper": ci_high,
                 "pre_collapse_fidelity": bp["pre_collapse_fidelity"],
                 "post_collapse_fidelity": bp["post_collapse_fidelity"],
-                "drop_magnitude": bp["drop_magnitude"]
+                "drop_magnitude": bp["drop_magnitude"],
+                "operational_tau_0_80": tau_80 if tau_80 is not None else "never_crossed",
+                "operational_tau_0_70": tau_70 if tau_70 is not None else "never_crossed",
+                "actual_tau_0_80": actual_tau_80 if actual_tau_80 is not None else "never_crossed",
+                "actual_tau_0_70": actual_tau_70 if actual_tau_70 is not None else "never_crossed",
             })
 
     return pd.DataFrame(records)

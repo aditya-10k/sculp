@@ -32,6 +32,16 @@ METHOD_COLORS = {
     "llmlingua2": "#d35400"
 }
 
+METHOD_LABELS = {
+    "random": "Random Baseline",
+    "embedding": "Embedding LOO",
+    "gradient": "Gradient Attribution",
+    "integrated_gradients": "Integrated Gradients",
+    "llmlingua": "LLMLingua (Fallback Perplexity)",
+    "llmlingua2": "LLMLingua-2 (Fallback Classifier)",
+    "uncompressed": "Uncompressed Baseline"
+}
+
 
 def plot_overall_rate_distortion(df: pd.DataFrame, out_path: str = "results/plots/overall_rate_distortion.png"):
     """Plot semantic fidelity vs compression ratio across all methods."""
@@ -234,3 +244,194 @@ def plot_token_heatmap(
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(out_path)
     plt.close()
+
+
+def plot_actual_rate_distortion_with_auc(df: pd.DataFrame, out_path: str = "results/plots/actual_rate_distortion_auc.png"):
+    """Plot semantic fidelity vs ACTUAL achieved compression with AUC in legend."""
+    plt.figure(figsize=(9.5, 6))
+    methods = df["method"].unique()
+    auc_dict = {}
+
+    for m in methods:
+        sub = df[df["method"] == m].sort_values("actual_removal")
+        # Bin actual removal into 10% bins for clean smoothed curves
+        sub = sub.copy()
+        sub["actual_bin"] = (sub["actual_removal"] * 10).round() / 10.0
+        grouped = sub.groupby("actual_bin")["semantic_fidelity"].mean().reset_index()
+        
+        # Calculate trapezoidal AUC
+        xs = grouped["actual_bin"].values
+        ys = grouped["semantic_fidelity"].values
+        auc_val = float(np.trapz(ys, xs)) if len(xs) > 1 else 0.0
+        auc_dict[m] = auc_val
+        
+        color = METHOD_COLORS.get(m, "#34495e")
+        label = f"{m.replace('_', ' ').title()} (AUC={auc_val:.3f})"
+        plt.plot(grouped["actual_bin"], grouped["semantic_fidelity"], marker="o", linewidth=2.2, label=label, color=color)
+
+    plt.title("Semantic Rate-Distortion: Fidelity vs Actual Achieved Compression", weight="bold")
+    plt.xlabel("Actual Achieved Token Removal Ratio (1 - N_comp / N_orig)")
+    plt.ylabel("Semantic Fidelity Score (SF in [0, 1])")
+    plt.ylim(-0.02, 1.05)
+    plt.xlim(-0.02, 0.85)
+    plt.legend(title="Method (Area Under Curve)", loc="lower left", frameon=True)
+    plt.tight_layout()
+
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(out_path)
+    plt.close()
+
+
+def plot_downstream_task_retention(df: pd.DataFrame, out_path: str = "results/plots/downstream_task_retention.png"):
+    """Plot functional downstream task success retention vs compression ratio."""
+    plt.figure(figsize=(9, 5.5))
+    methods = [m for m in df["method"].unique() if m != "uncompressed"]
+    
+    for m in methods:
+        sub = df[df["method"] == m]
+        grouped = sub.groupby("target_removal")["success_retention"].mean().reset_index()
+        color = METHOD_COLORS.get(m, "#34495e")
+        label = METHOD_LABELS.get(m, m.replace("_", " ").title())
+        plt.plot(grouped["target_removal"], grouped["success_retention"], marker="s", linewidth=2.2, label=label, color=color)
+
+    plt.axhline(1.0, color="#7f8c8d", linestyle="--", alpha=0.7, label="Uncompressed Baseline (1.0)")
+    plt.title("Functional Task-Success Retention vs Lexical Removal", weight="bold")
+    plt.xlabel("Compression Ratio (Target Removal)")
+    plt.ylabel("Task Success Retention (S_comp / S_orig)")
+    plt.ylim(-0.05, 1.10)
+    plt.legend(title="Method", loc="lower left")
+    plt.tight_layout()
+
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(out_path)
+    plt.close()
+
+
+def plot_protocols_comparison(pilot_df: pd.DataFrame, out_path: str = "results/plots/protocol_comparison.png"):
+    """Plot Protocol A (Blind Standalone) vs Protocol B (Reference-Guided) comparison."""
+    plt.figure(figsize=(8, 5))
+    # Reshape
+    value_vars = [c for c in ["protocol_a_interpretability", "protocol_b_composite"] if c in pilot_df.columns]
+    if not value_vars:
+        value_vars = ["proto_a_score", "proto_b_score"]
+        
+    melted = pd.melt(
+        pilot_df,
+        id_vars=["target_removal"],
+        value_vars=value_vars,
+        var_name="protocol",
+        value_name="score"
+    )
+    protocol_map = {
+        "protocol_a_interpretability": "Protocol A (Blind Standalone)",
+        "protocol_b_composite": "Protocol B (Reference-Guided)",
+        "proto_a_score": "Protocol A (Blind Standalone)",
+        "proto_b_score": "Protocol B (Reference-Guided)"
+    }
+    melted["protocol"] = melted["protocol"].map(protocol_map)
+    palette = {"Protocol A (Blind Standalone)": "#e74c3c", "Protocol B (Reference-Guided)": "#2980b9"}
+
+    sns.lineplot(
+        data=melted,
+        x="target_removal",
+        y="score",
+        hue="protocol",
+        style="protocol",
+        markers=True,
+        dashes=False,
+        linewidth=2.5,
+        palette=palette,
+        errorbar="ci"
+    )
+
+    plt.title("Protocol A (Blind Standalone) vs Protocol B (Reference-Guided)", weight="bold")
+    plt.xlabel("Compression Ratio")
+    plt.ylabel("Evaluator Score in [0, 1]")
+    plt.ylim(-0.02, 1.05)
+    plt.legend(title="Evaluation Protocol", loc="center left")
+    plt.tight_layout()
+
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(out_path)
+    plt.close()
+
+
+def plot_attribution_faithfulness_summary(summary_df: pd.DataFrame, out_path: str = "results/plots/attribution_faithfulness.png"):
+    """Bar plot contrasting circular self-consistency vs independent ground-truth validation."""
+    plt.figure(figsize=(10, 5.5))
+    df_plot = summary_df.copy()
+    if "evaluation_type" in df_plot.columns:
+        # Group by method and evaluation_type for Spearman r_s
+        sns.barplot(
+            data=df_plot,
+            x="method",
+            y="mean_spearman_r",
+            hue="evaluation_type",
+            palette={"Self-Consistency (Circular)": "#e74c3c", "Embedding LOO Prediction": "#e67e22", "Independent Empirical Validation": "#2ecc71"}
+        )
+        plt.title("Attribution Faithfulness: Self-Consistency vs Independent Ground-Truth Validation", weight="bold")
+        plt.xlabel("Attribution Method")
+        plt.ylabel("Mean Spearman Rank Correlation (r_s)")
+        plt.ylim(-0.15, 1.05)
+        plt.legend(title="Outcome Target", loc="upper left")
+    else:
+        melted = pd.melt(
+            df_plot,
+            id_vars=["method"],
+            value_vars=["mean_spearman_r", "mean_kendall_tau"],
+            var_name="metric",
+            value_name="correlation"
+        )
+        metric_map = {"mean_spearman_r": "Spearman r_s", "mean_kendall_tau": "Kendall tau"}
+        melted["metric"] = melted["metric"].map(metric_map)
+
+        sns.barplot(
+            data=melted,
+            x="method",
+            y="correlation",
+            hue="metric",
+            palette={"Spearman r_s": "#3498db", "Kendall tau": "#9b59b6"}
+        )
+        plt.title("Attribution Faithfulness: Correlation with Empirical LOO Damage", weight="bold")
+        plt.xlabel("Attribution Method")
+        plt.ylabel("Rank Correlation Coefficient")
+        plt.ylim(-0.1, 1.05)
+        plt.legend(title="Rank Correlation", loc="upper left")
+
+    plt.tight_layout()
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(out_path, bbox_inches="tight")
+    plt.close()
+
+
+def plot_stress_test_outcomes(df: pd.DataFrame, out_path: str = "results/plots/stress_test_outcomes.png"):
+    """Grouped bar chart showing outcome distribution by method across stress tests."""
+    plt.figure(figsize=(10, 5.5))
+    ct = pd.crosstab(df["method"], df["outcome"], normalize="index") * 100
+    outcome_colors = {
+        "PRESERVED": "#27ae60",
+        "AMBIGUOUS": "#f39c12",
+        "REMOVED": "#7f8c8d",
+        "POLARITY_REVERSED": "#c0392b"
+    }
+    cols = [c for c in ["PRESERVED", "AMBIGUOUS", "REMOVED", "POLARITY_REVERSED"] if c in ct.columns]
+    ct = ct[cols]
+    
+    ct.plot(
+        kind="bar",
+        stacked=True,
+        color=[outcome_colors[c] for c in cols],
+        figsize=(10, 5.5)
+    )
+    plt.title("Semantic Stress Test Outcomes by Method (%)", weight="bold")
+    plt.xlabel("Compression Method")
+    plt.ylabel("Percentage of Evaluations (%)")
+    plt.ylim(0, 105)
+    plt.legend(title="Outcome", bbox_to_anchor=(1.02, 1), loc="upper left")
+    plt.xticks(rotation=15, ha="right")
+    plt.tight_layout()
+
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(out_path, bbox_inches="tight")
+    plt.close()
+

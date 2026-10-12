@@ -1,0 +1,31 @@
+prompt_id,category,target_removal,actual_removal,compressed_prompt,protocol_a_interpretability,protocol_a_clarity,protocol_a_actionability,protocol_b_intent,protocol_b_constraints,protocol_b_context,protocol_b_tone,protocol_b_dependencies,protocol_b_composite
+p001,instruction,0.3,0.33333333333333337,That cat chased mouse across garden,0.0,0.0,0.0,1.0,1.0,1.0,1.0,1.0,1.0
+p001,instruction,0.5,0.4444444444444444,That cat chased mouse garden,0.0,0.0,0.0,0.5,1.0,1.0,1.0,1.0,0.9
+p001,instruction,0.7,0.6666666666666667,cat chased mouse,0.0,0.0,0.0,0.5,1.0,0.5,1.0,1.0,0.8
+p002,instruction,0.3,0.33333333333333337,The cat chased mouse across garden,0.2,0.8,0.0,1.0,1.0,1.0,1.0,1.0,1.0
+p002,instruction,0.5,0.4444444444444444,cat chased mouse across garden,0.2,0.9,0.0,1.0,1.0,1.0,1.0,1.0,1.0
+p002,instruction,0.7,0.6666666666666667,cat chased garden,0.1,0.1,0.0,0.0,1.0,0.0,1.0,1.0,0.6
+p021,constraint,0.3,0.28,Summarize the article in exactly five sentences. technical terminology. not mention author' name,0.25,0.4,0.3,0.0,0.0,1.0,0.5,1.0,0.5
+p021,constraint,0.5,0.48,Summarize the article in five sentences. technical terminology author name,0.2,0.2,0.2,0.5,0.0,1.0,1.0,1.0,0.7
+p021,constraint,0.7,0.64,Summarize article five sentences technical terminology author,0.2,0.2,0.1,0.5,0.0,1.0,0.5,1.0,0.6
+p022,constraint,0.3,0.24,Explain quantum computing high schooler. Use 100 words and mention qubits or superposition.,0.6,0.7,0.6,1.0,0.0,1.0,0.5,1.0,0.7
+p022,constraint,0.5,0.4,Explain quantum computing high schooler. 100 words mention qubits superposition,0.3,0.2,0.6,0.5,0.0,1.0,1.0,1.0,0.7
+p022,constraint,0.7,0.6799999999999999,Explain quantum computing schooler words superposition,0.2,0.2,0.2,1.0,0.0,1.0,0.5,1.0,0.7
+p041,context,0.3,0.2727272727272727,You are responding customer contacted support twice regarding delayed shipment order #9482. Carrier tracking stuck in transit 6 days.,0.2,0.3,0.2,0.5,1.0,1.0,0.0,1.0,0.7
+p041,context,0.5,0.48484848484848486,You responding support delayed shipment #9482. Carrier tracking stuck in transit 6 days,0.2,0.1,0.1,0.0,1.0,0.5,0.0,1.0,0.5
+p041,context,0.7,0.7272727272727273,You responding delayed shipment # Carrier tracking stuck days,0.0,0.0,0.0,0.0,1.0,0.5,0.0,1.0,0.5
+p042,context,0.3,0.2857142857142857,The client is a Tier1 financial institution strict HIPAA SOC2 evaluating cloud migration AWS Ireland.,0.2,0.3,0.1,0.0,1.0,1.0,0.0,1.0,0.6
+p042,context,0.5,0.4285714285714286,client is a Tier1 strict HIPAA SOC2 cloud migration AWS Ireland.,0.1,0.1,0.1,0.0,1.0,1.0,0.0,1.0,0.6
+p042,context,0.7,0.7142857142857143,client is Tier HIPAA cloud migration Ireland,0.1,0.1,0.1,0.0,1.0,0.5,0.0,1.0,0.5
+p061,tone,0.3,0.25,Explain the service outage to frustrated customer. Be empathetic professional reassuring concise.,0.5,0.7,0.6,1.0,1.0,1.0,1.0,1.0,1.0
+p061,tone,0.5,0.45833333333333337,Explain service outage to frustrated customer. Be empathetic reassuring,0.4,0.6,0.3,0.5,1.0,1.0,0.5,1.0,0.8
+p061,tone,0.7,0.7083333333333333,Explain service outage frustrated customer.,0.2,0.2,0.1,0.5,1.0,1.0,0.0,1.0,0.7
+p062,tone,0.3,0.25,Draft a cease-and-desist letter a copyright infringer. Adopt unambiguous authoritative legal tone.,0.6,0.7,0.4,1.0,1.0,1.0,1.0,1.0,1.0
+p062,tone,0.5,0.5,Draft a cease--desist letter copyright infringer. Adopt legal.,0.2,0.2,0.2,1.0,1.0,1.0,0.5,1.0,0.9
+p062,tone,0.7,0.65625,Draft a ceasedesist letter copyright infringer.,0.1,0.1,0.1,1.0,1.0,1.0,0.5,1.0,0.9
+p081,multi_step,0.3,0.31818181818181823,First identify the problem Then explain its cause Then two solutions. recommend safer option,0.2,0.3,0.2,1.0,1.0,1.0,0.5,1.0,0.9
+p081,multi_step,0.5,0.5,First identify the problem explain its cause solutions recommend safer option,0.2,0.3,0.2,0.5,1.0,1.0,0.5,0.5,0.7
+p081,multi_step,0.7,0.6818181818181819,First identify the problem its cause safer,0.0,0.0,0.0,0.5,1.0,0.0,0.0,0.5,0.4
+p082,multi_step,0.3,0.31034482758620685,Step 1: Extract all numerical data from the paragraph. Step Calculate mean and variance Step Interpret variance reveals,0.1,0.1,0.1,1.0,1.0,1.0,1.0,1.0,1.0
+p082,multi_step,0.5,0.48275862068965514,Extract numerical data from the paragraph. Step Calculate mean and variance Interpret variance reveals,0.2,0.3,0.2,1.0,1.0,1.0,1.0,1.0,1.0
+p082,multi_step,0.7,0.6896551724137931,Extract numerical data paragraph. Step Calculate mean variance,0.1,0.1,0.1,0.5,1.0,1.0,1.0,0.5,0.8

@@ -45,3 +45,14 @@ class CachedSentenceEncoder:
                 self._cache[t] = e
 
         return torch.stack([self._cache[t] for t in texts])
+
+
+_GLOBAL_ENCODERS: Dict[str, CachedSentenceEncoder] = {}
+
+
+def get_encoder(model_name: str = "sentence-transformers/all-MiniLM-L6-v2") -> CachedSentenceEncoder:
+    """Singleton getter for CachedSentenceEncoder."""
+    if model_name not in _GLOBAL_ENCODERS:
+        _GLOBAL_ENCODERS[model_name] = CachedSentenceEncoder(model_name=model_name)
+    return _GLOBAL_ENCODERS[model_name]
+

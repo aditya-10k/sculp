@@ -90,6 +90,18 @@ class LLMJudge:
                     self.provider = "mock"
             except Exception:
                 self.provider = "mock"
+        elif self.provider == "groq":
+            try:
+                from src.interpretation.evaluator_protocols import ProtocolBEvaluator
+                from src.interpretation.groq_client import GroqEvaluatorClient
+                self.groq_client = GroqEvaluatorClient(
+                    model_name=self.model_name,
+                    cache_dir=str(self.cache_dir) if self.cache_dir else None
+                )
+                self.proto_b_evaluator = ProtocolBEvaluator(self.groq_client)
+                self._client = self.groq_client
+            except Exception:
+                self.provider = "mock"
 
     def evaluate(
         self,
@@ -99,6 +111,29 @@ class LLMJudge:
         tone: list,
         steps: list
     ) -> JudgeScores:
+        if self.provider == "groq" and hasattr(self, "proto_b_evaluator"):
+            from src.data.schema import GroundTruth
+            gt = GroundTruth(
+                intent=original_prompt,
+                constraints=constraints or [],
+                tone=tone or [],
+                context=[],
+                steps=steps or []
+            )
+            res_b = self.proto_b_evaluator.evaluate_preservation(
+                compressed_prompt=compressed_prompt,
+                ground_truth=gt
+            )
+            return JudgeScores(
+                intent=res_b.intent_preservation,
+                constraints=res_b.constraint_preservation,
+                context=res_b.context_preservation,
+                tone=res_b.tone_preservation,
+                dependencies=res_b.dependency_preservation,
+                overall=res_b.composite_preservation,
+                reason="; ".join(res_b.reasons_for_lost) if res_b.reasons_for_lost else "Requirements preserved"
+            )
+
         # Check cache
         if self.cache_dir:
             key = f"{self.provider}:{original_prompt}:{compressed_prompt}"

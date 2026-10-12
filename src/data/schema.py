@@ -20,7 +20,7 @@ class PromptItem(BaseModel):
     id: str = Field(..., description="Unique prompt identifier (e.g. 'p001')")
     category: str = Field(..., description="One of: 'instruction', 'constraint', 'context', 'tone', 'multi_step'")
     prompt: str = Field(..., description="The full prompt text")
-    ground_truth: GroundTruth = Field(..., description="Annotated semantic ground truth")
+    ground_truth: Optional[GroundTruth] = Field(default=None, description="Annotated semantic ground truth")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Optional extra metadata")
 
 

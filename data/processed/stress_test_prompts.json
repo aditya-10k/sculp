@@ -1,0 +1,128 @@
+[
+  {
+    "id": "stress_01a",
+    "pair_id": "pair_01_negation",
+    "feature_type": "negation_prohibition",
+    "variant": "negative",
+    "prompt": "Draft an official apology to the customer. Do NOT mention refunds or compensation under any circumstances.",
+    "critical_requirement": "strict prohibition against mentioning refunds or compensation",
+    "critical_tokens": ["NOT", "refunds", "compensation"]
+  },
+  {
+    "id": "stress_01b",
+    "pair_id": "pair_01_negation",
+    "feature_type": "negation_prohibition",
+    "variant": "positive",
+    "prompt": "Draft an official apology to the customer. Explicitly mention refunds and compensation under all circumstances.",
+    "critical_requirement": "mandatory requirement to mention refunds and compensation",
+    "critical_tokens": ["Explicitly", "refunds", "compensation"]
+  },
+  {
+    "id": "stress_02a",
+    "pair_id": "pair_02_numbers_bounds",
+    "feature_type": "numbers_bounds",
+    "variant": "bound_lower",
+    "prompt": "Summarize the project budget in at most 50 words. Do not exceed $10,000 total expenditure.",
+    "critical_requirement": "upper word count 50 and budget ceiling $10,000",
+    "critical_tokens": ["at most 50 words", "$10,000"]
+  },
+  {
+    "id": "stress_02b",
+    "pair_id": "pair_02_numbers_bounds",
+    "feature_type": "numbers_bounds",
+    "variant": "bound_upper",
+    "prompt": "Summarize the project budget in at least 500 words. Do not exceed $10,000,000 total expenditure.",
+    "critical_requirement": "lower word count 500 and budget ceiling $10,000,000",
+    "critical_tokens": ["at least 500 words", "$10,000,000"]
+  },
+  {
+    "id": "stress_03a",
+    "pair_id": "pair_03_entities_identifiers",
+    "feature_type": "entities_identifiers",
+    "variant": "entity_london",
+    "prompt": "Forward server outage ticket #9482 to senior engineer Sarah Jenkins in the London datacenter immediately.",
+    "critical_requirement": "dispatch ticket #9482 to Sarah Jenkins in London",
+    "critical_tokens": ["#9482", "Sarah Jenkins", "London"]
+  },
+  {
+    "id": "stress_03b",
+    "pair_id": "pair_03_entities_identifiers",
+    "feature_type": "entities_identifiers",
+    "variant": "entity_tokyo",
+    "prompt": "Forward server outage ticket #2849 to senior engineer Mark Davies in the Tokyo datacenter immediately.",
+    "critical_requirement": "dispatch ticket #2849 to Mark Davies in Tokyo",
+    "critical_tokens": ["#2849", "Mark Davies", "Tokyo"]
+  },
+  {
+    "id": "stress_04a",
+    "pair_id": "pair_04_conditional_exceptions",
+    "feature_type": "conditional_exceptions",
+    "variant": "allow_unless",
+    "prompt": "Authorize the wire transfer immediately, UNLESS the account balance is below $500.",
+    "critical_requirement": "authorization conditioned on balance not being below $500",
+    "critical_tokens": ["Authorize", "UNLESS", "below $500"]
+  },
+  {
+    "id": "stress_04b",
+    "pair_id": "pair_04_conditional_exceptions",
+    "feature_type": "conditional_exceptions",
+    "variant": "reject_unless",
+    "prompt": "Reject the wire transfer immediately, UNLESS the account balance is above $500.",
+    "critical_requirement": "rejection conditioned on balance not being above $500",
+    "critical_tokens": ["Reject", "UNLESS", "above $500"]
+  },
+  {
+    "id": "stress_05a",
+    "pair_id": "pair_05_output_format",
+    "feature_type": "output_format",
+    "variant": "json_strict",
+    "prompt": "Output the database diagnosis strictly as raw valid RFC8259 JSON with no markdown code blocks or explanatory text.",
+    "critical_requirement": "pure raw valid JSON without markdown wrapping",
+    "critical_tokens": ["strictly as raw valid RFC8259 JSON", "no markdown"]
+  },
+  {
+    "id": "stress_05b",
+    "pair_id": "pair_05_output_format",
+    "feature_type": "output_format",
+    "variant": "html_table",
+    "prompt": "Output the database diagnosis strictly as an HTML table element with no JSON or markdown formatting.",
+    "critical_requirement": "pure HTML table element without JSON",
+    "critical_tokens": ["HTML table element", "no JSON"]
+  },
+  {
+    "id": "stress_06a",
+    "pair_id": "pair_06_ordering_dependencies",
+    "feature_type": "ordering_dependencies",
+    "variant": "isolate_first",
+    "prompt": "First isolate the affected server. Second, patch the vulnerability. Only then restart production services.",
+    "critical_requirement": "strict sequence: isolate -> patch -> restart",
+    "critical_tokens": ["First isolate", "Second patch", "Only then restart"]
+  },
+  {
+    "id": "stress_06b",
+    "pair_id": "pair_06_ordering_dependencies",
+    "feature_type": "ordering_dependencies",
+    "variant": "restart_first",
+    "prompt": "First restart production services. Second, isolate the affected server. Only then patch the vulnerability.",
+    "critical_requirement": "strict sequence: restart -> isolate -> patch",
+    "critical_tokens": ["First restart", "Second isolate", "Only then patch"]
+  },
+  {
+    "id": "stress_07a",
+    "pair_id": "pair_07_priority_conflicts",
+    "feature_type": "priority_conflicts",
+    "variant": "prioritize_brevity",
+    "prompt": "Summarize the technical briefing. If brevity conflicts with technical precision, prioritize brevity above all else.",
+    "critical_requirement": "conflict resolution favoring brevity over technical precision",
+    "critical_tokens": ["prioritize brevity above all else"]
+  },
+  {
+    "id": "stress_07b",
+    "pair_id": "pair_07_priority_conflicts",
+    "feature_type": "priority_conflicts",
+    "variant": "prioritize_precision",
+    "prompt": "Summarize the technical briefing. If brevity conflicts with technical precision, prioritize technical precision above all else.",
+    "critical_requirement": "conflict resolution favoring technical precision over brevity",
+    "critical_tokens": ["prioritize technical precision above all else"]
+  }
+]
