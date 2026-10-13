@@ -1,0 +1,25 @@
+target_outcome,method_a,method_b,n_clusters,mean_r_a,mean_r_b,mean_diff_r,diff_ci_95,paired_ttest_p,paired_wilcoxon_p,p_holm_adjusted,significant_holm_05
+Sentence-BERT LOO Drop,gradient,embedding,30,0.5429,1.0,-0.4571,"[-0.5326, -0.3843]",7.468250213113615e-13,1.862645149230957e-09,0.0,True
+Sentence-BERT LOO Drop,gradient,integrated_gradients,30,0.5429,0.3832,0.1597,"[0.0798, 0.2333]",0.0003782581691597,0.0001886002719402,0.000378,True
+Sentence-BERT LOO Drop,embedding,integrated_gradients,30,1.0,0.3832,0.6168,"[0.5544, 0.6822]",1.1687545154624853e-17,1.862645149230957e-09,0.0,True
+Sentence-BERT LOO Drop,gradient,random,30,0.5429,0.081,0.4619,"[0.3565, 0.5648]",2.225685579505801e-09,1.30385160446167e-07,0.0,True
+Sentence-BERT LOO Drop,embedding,random,30,1.0,0.081,0.919,"[0.8466, 0.9927]",8.337886006456269e-21,1.862645149230957e-09,0.0,True
+Sentence-BERT LOO Drop,integrated_gradients,random,30,0.3832,0.081,0.3022,"[0.2116, 0.3955]",5.80837029086792e-07,6.910413503646851e-07,1e-06,True
+Reference-Guided Embedding Proxy Drop,gradient,embedding,30,0.4109,0.4938,-0.0828,"[-0.1608, -0.0055]",0.0490721459910076,0.0549216289073228,0.049072,True
+Reference-Guided Embedding Proxy Drop,gradient,integrated_gradients,30,0.4109,0.2465,0.1645,"[0.0900, 0.2453]",0.0002852040555435,0.0002419762313365,0.000856,True
+Reference-Guided Embedding Proxy Drop,embedding,integrated_gradients,30,0.4938,0.2465,0.2473,"[0.1438, 0.3568]",0.0001227137420042,0.0001698974519968,0.000491,True
+Reference-Guided Embedding Proxy Drop,gradient,random,30,0.4109,-0.0004,0.4114,"[0.2966, 0.5211]",6.192737370117543e-08,6.910413503646851e-07,0.0,True
+Reference-Guided Embedding Proxy Drop,embedding,random,30,0.4938,-0.0004,0.4942,"[0.3793, 0.6060]",2.8160673198521392e-09,3.5390257835388184e-08,0.0,True
+Reference-Guided Embedding Proxy Drop,integrated_gradients,random,30,0.2465,-0.0004,0.2469,"[0.1289, 0.3671]",0.0004247182529187,0.0003449581563472,0.000856,True
+Independent Deterministic Requirement Drop,gradient,embedding,30,0.5533,0.5593,-0.0061,"[-0.0855, 0.0802]",0.8889947285838568,0.5940011255443096,0.888995,False
+Independent Deterministic Requirement Drop,gradient,integrated_gradients,30,0.5533,0.3174,0.2359,"[0.1579, 0.3136]",2.4941126810770606e-06,5.973502993583679e-06,1e-05,True
+Independent Deterministic Requirement Drop,embedding,integrated_gradients,30,0.5593,0.3174,0.2419,"[0.1258, 0.3539]",0.0003165121479936,0.0006084088236093,0.00095,True
+Independent Deterministic Requirement Drop,gradient,random,30,0.5533,0.0651,0.4882,"[0.3990, 0.5794]",1.9604770474498745e-11,1.862645149230957e-09,0.0,True
+Independent Deterministic Requirement Drop,embedding,random,30,0.5593,0.0651,0.4943,"[0.3674, 0.6164]",1.8528805475061417e-08,5.718320608139038e-07,0.0,True
+Independent Deterministic Requirement Drop,integrated_gradients,random,30,0.3174,0.0651,0.2523,"[0.1306, 0.3758]",0.0004456602604453,0.0010353628465334,0.00095,True
+Downstream Task-Success Loss,gradient,embedding,15,0.4095,0.3735,0.036,"[-0.0607, 0.1371]",0.5001441881251314,0.42120361328125,1.0,False
+Downstream Task-Success Loss,gradient,integrated_gradients,15,0.4095,0.3335,0.076,"[0.0074, 0.1487]",0.05968119863544322,0.063720703125,0.358087,False
+Downstream Task-Success Loss,embedding,integrated_gradients,15,0.3735,0.3335,0.04,"[-0.0868, 0.1608]",0.5492776751049115,0.67877197265625,1.0,False
+Downstream Task-Success Loss,gradient,random,15,0.4095,0.3981,0.0115,"[-0.0546, 0.0822]",0.760465437232467,0.97796630859375,1.0,False
+Downstream Task-Success Loss,embedding,random,15,0.3735,0.3981,-0.0246,"[-0.1233, 0.0749]",0.6445270084173654,0.638671875,1.0,False
+Downstream Task-Success Loss,integrated_gradients,random,15,0.3335,0.3981,-0.0645,"[-0.1439, 0.0151]",0.15466772314904187,0.15142822265625,0.773339,False

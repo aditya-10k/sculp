@@ -357,23 +357,31 @@ def plot_protocols_comparison(pilot_df: pd.DataFrame, out_path: str = "results/p
 
 
 def plot_attribution_faithfulness_summary(summary_df: pd.DataFrame, out_path: str = "results/plots/attribution_faithfulness.png"):
-    """Bar plot contrasting circular self-consistency vs independent ground-truth validation."""
-    plt.figure(figsize=(10, 5.5))
+    """Bar plot contrasting circular self-consistency, reference-guided embedding proxy,
+    and independent deterministic/functional validation outcomes.
+    """
+    plt.figure(figsize=(11, 5.8))
     df_plot = summary_df.copy()
-    if "evaluation_type" in df_plot.columns:
-        # Group by method and evaluation_type for Spearman r_s
+    if "target_outcome" in df_plot.columns:
+        outcome_palette = {
+            "Sentence-BERT LOO Drop": "#e74c3c",
+            "Reference-Guided Embedding Proxy Drop": "#e67e22",
+            "Independent Deterministic Requirement Drop": "#27ae60",
+            "Downstream Task-Success Loss": "#2980b9",
+            "Ground-Truth Requirement Drop": "#e67e22"
+        }
         sns.barplot(
             data=df_plot,
             x="method",
             y="mean_spearman_r",
-            hue="evaluation_type",
-            palette={"Self-Consistency (Circular)": "#e74c3c", "Embedding LOO Prediction": "#e67e22", "Independent Empirical Validation": "#2ecc71"}
+            hue="target_outcome",
+            palette=outcome_palette
         )
-        plt.title("Attribution Faithfulness: Self-Consistency vs Independent Ground-Truth Validation", weight="bold")
+        plt.title("Attribution Faithfulness: Circular Check vs Reference Proxy vs Independent Outcomes", weight="bold")
         plt.xlabel("Attribution Method")
-        plt.ylabel("Mean Spearman Rank Correlation (r_s)")
-        plt.ylim(-0.15, 1.05)
-        plt.legend(title="Outcome Target", loc="upper left")
+        plt.ylabel("Mean Within-Prompt Spearman Rank Correlation (r_s)")
+        plt.ylim(-0.15, 1.08)
+        plt.legend(title="Outcome Target", loc="upper left", fontsize=9)
     else:
         melted = pd.melt(
             df_plot,

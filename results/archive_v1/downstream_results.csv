@@ -1,0 +1,153 @@
+prompt_id,category,method,target_removal,actual_removal,retention,prompt_text,task_success,success_retention,input_tokens,output_tokens,latency_ms
+p024,constraint,uncompressed,0.0,0.0,1.0,Provide troubleshooting steps for Wi-Fi failure. Output must be strictly valid JSON without any markdown formatting.,1.0,1.0,105,418,1867.39
+p024,constraint,random,0.3,0.31999999999999995,0.68,Provide troubleshooting steps for Wi-Fi failure Output be strictly valid without markdown,0.2,0.2,99,401,849.49
+p024,constraint,embedding,0.3,0.28,0.72,Provide troubleshooting steps for Wi-Fi failure. Output must JSON markdown.,0.5,0.5,99,479,957.62
+p024,constraint,gradient,0.3,0.24,0.76,Provide troubleshooting steps WiFi failure. Output must strictly valid JSON markdown formatting,0.5,0.5,100,501,2310.45
+p024,constraint,integrated_gradients,0.3,0.24,0.76,troubleshooting steps for WiFi failure. Output must valid JSON markdown formatting.,0.5,0.5,102,521,834.87
+p024,constraint,llmlingua,0.3,0.24,0.76,Provide troubleshooting steps for Wi failure Output must strictly valid JSON without markdown formatting,1.0,1.0,100,363,490.63
+p024,constraint,llmlingua2,0.3,0.24,0.76,Provide troubleshooting steps Wi failure Output must strictly valid JSON without any markdown formatting,1.0,1.0,100,359,1482.23
+p024,constraint,random,0.5,0.56,0.44,Provide steps -Fi failure Output strictly valid without markdown,0.0,0.0,96,600,1010.99
+p024,constraint,embedding,0.5,0.43999999999999995,0.56,troubleshooting Wi-Fi failure. Output JSON markdown.,0.2,0.2,97,600,969.93
+p024,constraint,gradient,0.5,0.4,0.6,Provide troubleshooting Wi failure. Output valid JSON markdown formatting,0.2,0.2,96,600,1070.86
+p024,constraint,integrated_gradients,0.5,0.4,0.6,troubleshooting Wi failure. Output valid JSON markdown formatting.,0.2,0.2,98,600,1100.97
+p024,constraint,llmlingua,0.5,0.44,0.56,Provide troubleshooting steps failure Output strictly valid without markdown formatting,0.0,0.0,96,135,583.37
+p024,constraint,llmlingua2,0.5,0.44,0.56,Provide troubleshooting steps failure Output strictly valid without markdown formatting,0.0,0.0,96,135,583.37
+p024,constraint,random,0.7,0.72,0.28,Provide -Fi valid without markdown,0.0,0.0,92,118,507.85
+p024,constraint,embedding,0.7,0.64,0.36,troubleshooting WiFi failure Output JSON,0.2,0.2,94,600,1237.69
+p024,constraint,gradient,0.7,0.56,0.44,troubleshooting Wi Output JSON markdown formatting,0.2,0.2,94,600,1088.27
+p024,constraint,integrated_gradients,0.7,0.56,0.44,troubleshooting. JSON markdown formatting.,0.0,0.0,94,600,1040.82
+p024,constraint,llmlingua,0.7,0.6,0.4,Provide troubleshooting Output strictly markdown formatting,0.2,0.2,92,600,995.45
+p024,constraint,llmlingua2,0.7,0.6,0.4,Provide troubleshooting failure strictly markdown formatting,0.2,0.2,92,592,987.24
+p025,constraint,uncompressed,0.0,0.0,1.0,Describe the French Revolution in exactly three bullet points. Each bullet must be between 15 and 20 words.,1.0,1.0,108,406,2681.22
+p025,constraint,random,0.3,0.30000000000000004,0.7,Describe the French Revolution in three bullet points must between 15 20 words.,1.0,1.0,102,458,3917.73
+p025,constraint,embedding,0.3,0.30000000000000004,0.7,Describe French Revolution exactly three bullet points Each bullet must 15 20 words.,1.0,1.0,102,411,3855.26
+p025,constraint,gradient,0.3,0.30000000000000004,0.7,Describe French Revolution exactly three bullet points. Each bullet must 20 words.,0.0,0.0,101,600,4082.29
+p025,constraint,integrated_gradients,0.3,0.30000000000000004,0.7,Describe the Revolution in exactly bullet points. Each bullet must and words.,0.25,0.25,100,456,5934.68
+p025,constraint,llmlingua,0.3,0.3,0.7,Describe the French Revolution exactly three bullet points Each bullet must between and words,0.0,0.0,100,144,3599.33
+p025,constraint,llmlingua2,0.3,0.3,0.7,Describe French Revolution exactly three bullet points Each bullet must be between and words,0.0,0.0,100,142,507.61
+p025,constraint,random,0.5,0.5,0.5,Describe the Revolution bullet points must between 20 words.,0.0,0.0,97,600,3164.72
+p025,constraint,embedding,0.5,0.5,0.5,Describe French Revolution three points Each bullet 20 words.,0.0,0.0,97,600,5084.88
+p025,constraint,gradient,0.5,0.5,0.5,Describe French Revolution exactly bullet points. bullet must words,0.0,0.0,96,600,5188.31
+p025,constraint,integrated_gradients,0.5,0.5,0.5,Describe the Revolution in exactly bullet. bullet words.,0.0,0.0,96,543,6036.0
+p025,constraint,llmlingua,0.5,0.5,0.5,Describe French Revolution exactly three bullet points Each bullet between,0.0,0.0,96,153,3549.47
+p025,constraint,llmlingua2,0.5,0.5,0.5,Describe French Revolution exactly three bullet points bullet between words,0.0,0.0,96,600,3074.81
+p025,constraint,random,0.7,0.7,0.3,Revolution bullet points must between 20,0.3333,0.3333,94,600,5144.39
+p025,constraint,embedding,0.7,0.7,0.3,Describe French Revolution three points words,0.0,0.0,92,235,4820.54
+p025,constraint,gradient,0.7,0.7,0.3,Describe exactly bullet points. words,0.0,0.0,92,132,1531.19
+p025,constraint,integrated_gradients,0.7,0.7,0.3,Describe the in. bullet.,0.0,0.0,92,598,3082.8
+p025,constraint,llmlingua,0.7,0.7,0.3,Describe French Revolution exactly bullet between,0.3333,0.3333,92,571,5011.89
+p025,constraint,llmlingua2,0.7,0.7,0.3,Describe French Revolution exactly bullet between,0.3333,0.3333,92,571,5011.89
+p023,constraint,uncompressed,0.0,0.0,1.0,"Write a promotional blurb for running shoes. You must not use the words 'comfortable', 'fast', or 'lightweight'.",1.0,1.0,112,365,4534.67
+p023,constraint,random,0.3,0.3214285714285714,0.6785714285714286,"Write a promotional running not use the words 'comfortable', 'fast' or ''.",0.6666666666666667,0.6667,102,394,813.34
+p023,constraint,embedding,0.3,0.2857142857142857,0.7142857142857143,"Write a promotional blurb for running shoes. You not use the words 'comfortable, fast lightweight.",1.0,1.0,106,486,4012.37
+p023,constraint,gradient,0.3,0.2857142857142857,0.7142857142857143,"Write a promotional blurb for running shoes. You must use words comfortable, fast, or lightweight.",0.0,0.0,106,196,3319.87
+p023,constraint,integrated_gradients,0.3,0.2857142857142857,0.7142857142857143,"Write a promotional blurb for running shoes. You must not use words comfortable, fast lightweight'.",0.6666666666666667,0.6667,105,600,3093.32
+p023,constraint,llmlingua,0.3,0.2857,0.7143,Write a promotional blurb for running shoes. You must not use the words 'comfortable fast or lightweight,1.0,1.0,106,446,4600.07
+p023,constraint,llmlingua2,0.3,0.2857,0.7143,"Write promotional blurb running shoes. You must not use words 'comfortable', 'fast or lightweight",1.0,1.0,105,475,4888.6
+p023,constraint,random,0.5,0.5357142857142857,0.4642857142857143,"Write promotional not use words 'comfortable, 'fast' '.",0.0,0.0,98,506,3942.28
+p023,constraint,embedding,0.5,0.5,0.5,"Write promotional blurb for running shoes. words comfortable, fast lightweight.",0.0,0.0,100,201,4617.08
+p023,constraint,gradient,0.5,0.5,0.5,Write promotional blurb running shoes. You must words comfortable fast lightweight.,0.0,0.0,100,146,1293.0
+p023,constraint,integrated_gradients,0.5,0.5,0.5,Write a promotional blurb for running shoes. You must words lightweight.,0.6666666666666667,0.6667,100,182,2612.38
+p023,constraint,llmlingua,0.5,0.4643,0.5357,Write promotional blurb for running shoes You must not use words comfortable fast lightweight,1.0,1.0,101,375,1957.93
+p023,constraint,llmlingua2,0.5,0.4643,0.5357,Write promotional blurb running shoes You must not use words comfortable fast or lightweight,1.0,1.0,101,424,4156.26
+p023,constraint,random,0.7,0.7142857142857143,0.2857142857142857,promotional use words ' 'fast' ',0.0,0.0,95,600,3956.11
+p023,constraint,embedding,0.7,0.7142857142857143,0.2857142857142857,Write promotional running shoes. comfortable fast lightweight,0.6666666666666667,0.6667,94,314,4787.18
+p023,constraint,gradient,0.7,0.6785714285714286,0.32142857142857145,Write promotional blurb shoes. must words lightweight,0.6666666666666667,0.6667,95,193,2485.16
+p023,constraint,integrated_gradients,0.7,0.6785714285714286,0.32142857142857145,Write a promotional blurb. You must.,0.0,0.0,95,318,2628.25
+p023,constraint,llmlingua,0.7,0.6786,0.3214,Write promotional blurb running shoes words comfortable lightweight,0.33333333333333337,0.3333,95,192,2646.09
+p023,constraint,llmlingua2,0.7,0.6786,0.3214,Write promotional blurb running shoes words comfortable lightweight,0.33333333333333337,0.3333,95,192,2646.09
+p005,instruction,uncompressed,0.0,0.0,1.0,Extract all action items and their assignees from the following meeting minutes: Sarah will finalize budget; John will patch server.,1.0,1.0,111,116,2497.05
+p005,instruction,random,0.3,0.28,0.72,Extract action items assignees from the following meeting: Sarah finalize budget John patch server.,1.0,1.0,104,134,1090.14
+p005,instruction,embedding,0.3,0.31999999999999995,0.68,Extract all action items their assignees following meeting minutes: Sarah budget John will patch server,1.0,1.0,104,177,618.57
+p005,instruction,gradient,0.3,0.28,0.72,Extract action items assignees meeting minutes: Sarah finalize budget; John will patch server.,1.0,1.0,104,209,1324.21
+p005,instruction,integrated_gradients,0.3,0.28,0.72,Extract all action items assignees following meeting minutes: will finalize budget will patch server.,0.5,0.5,104,503,3132.79
+p005,instruction,llmlingua,0.3,0.28,0.72,Extract action items their assignees from following meeting minutes Sarah will finalize budget John patch server,1.0,1.0,104,151,4195.44
+p005,instruction,llmlingua2,0.3,0.28,0.72,Extract action items their assignees from following meeting minutes Sarah will finalize budget John patch server,1.0,1.0,104,151,4195.44
+p005,instruction,random,0.5,0.56,0.44,action from the following meeting: budget John patch server.,1.0,1.0,97,390,1832.22
+p005,instruction,embedding,0.5,0.52,0.48,Extract action items assignees meeting minutes: Sarah budget patch server,0.0,0.0,99,600,3079.76
+p005,instruction,gradient,0.5,0.48,0.52,Extract action items assignees minutes Sarah finalize budget; patch server,1.0,1.0,99,456,6857.16
+p005,instruction,integrated_gradients,0.5,0.48,0.52,Extract all action assignees minutes: finalize budget patch server.,0.5,0.5,99,431,2749.31
+p005,instruction,llmlingua,0.5,0.44,0.56,Extract action items assignees following meeting minutes Sarah finalize budget John server,1.0,1.0,100,183,3603.95
+p005,instruction,llmlingua2,0.5,0.44,0.56,Extract action items their assignees following meeting minutes Sarah finalize budget server,1.0,1.0,100,358,2852.81
+p005,instruction,random,0.7,0.72,0.28,action from the following meeting John server,0.5,0.5,93,176,2578.55
+p005,instruction,embedding,0.7,0.72,0.28,Extract action items meeting budget patch server,0.5,0.5,93,271,1599.19
+p005,instruction,gradient,0.7,0.64,0.36,Extract action items assignees finalize budget server,0.0,0.0,95,600,4013.86
+p005,instruction,integrated_gradients,0.7,0.64,0.36,Extract action assignees finalize patch server.,0.5,0.5,95,265,4574.08
+p005,instruction,llmlingua,0.7,0.64,0.36,Extract assignees following meeting minutes Sarah finalize,1.0,1.0,95,202,2506.22
+p005,instruction,llmlingua2,0.7,0.64,0.36,Extract action assignees following meeting minutes finalize,0.5,0.5,95,104,2219.07
+p004,instruction,uncompressed,0.0,0.0,1.0,Translate this English contract clause into French while preserving precise legal terminology: The party shall indemnify and hold harmless.,1.0,1.0,108,343,1769.7
+p004,instruction,random,0.3,0.25,0.75,Translate this English contract clause French while preserving precise legal terminology: indemnify and.,0.0,0.0,102,238,363.2
+p004,instruction,embedding,0.3,0.25,0.75,Translate this English contract clause French while: party shall indemnify and hold harmless.,1.0,1.0,102,177,2647.78
+p004,instruction,gradient,0.3,0.25,0.75,Translate English contract clause French preserving precise legal terminology party shall indemnify hold harmless.,1.0,1.0,102,287,1733.24
+p004,instruction,integrated_gradients,0.3,0.25,0.75,Translate this English contract clause French legal terminology The party shall indemnify hold harmless.,1.0,1.0,102,214,3664.85
+p004,instruction,llmlingua,0.3,0.25,0.75,Translate English contract clause French while preserving precise legal terminology The party shall indemnify harmless,1.0,1.0,102,374,1791.57
+p004,instruction,llmlingua2,0.3,0.25,0.75,Translate English contract clause into French while preserving precise legal terminology party shall indemnify harmless,1.0,1.0,102,234,3404.47
+p004,instruction,random,0.5,0.41666666666666663,0.5833333333333334,this English contract French precise legal terminology: indemnify and.,0.0,0.0,98,600,3023.97
+p004,instruction,embedding,0.5,0.41666666666666663,0.5833333333333334,Translate contract clause French: party shall indemnify and harmless.,1.0,1.0,98,137,4518.93
+p004,instruction,gradient,0.5,0.41666666666666663,0.5833333333333334,Translate contract clause legal terminology party shall indemnify hold harmless.,1.0,1.0,98,381,2801.13
+p004,instruction,integrated_gradients,0.5,0.41666666666666663,0.5833333333333334,Translate this English contract clause party shall indemnify hold harmless.,1.0,1.0,98,275,2685.23
+p004,instruction,llmlingua,0.5,0.4583,0.5417,Translate English contract clause French preserving precise terminology indemnify harmless,1.0,1.0,97,600,2910.63
+p004,instruction,llmlingua2,0.5,0.4583,0.5417,Translate English contract clause French preserving precise terminology indemnify harmless,1.0,1.0,97,600,2910.63
+p004,instruction,random,0.7,0.625,0.375,this English: indemnify and.,1.0,1.0,93,367,5827.17
+p004,instruction,embedding,0.7,0.625,0.375,Translate contract clause French indemnify harmless,0.0,0.0,93,600,3085.46
+p004,instruction,gradient,0.7,0.625,0.375,Translate contract party shall indemnify harmless,0.5,0.5,93,273,4647.59
+p004,instruction,integrated_gradients,0.7,0.625,0.375,Translate party shall indemnify harmless.,0.5,0.5,93,287,2616.41
+p004,instruction,llmlingua,0.7,0.625,0.375,Translate English French preserving terminology indemnify,1.0,1.0,93,282,3722.8
+p004,instruction,llmlingua2,0.7,0.625,0.375,Translate contract preserving terminology indemnify harmless,1.0,1.0,93,150,2584.92
+p041,context,uncompressed,0.0,0.0,1.0,"Given the quarterly earnings report showing Q3 revenue of $4.2B with 18% EBITDA margin, summarize the operating profit trajectory.",1.0,1.0,114,346,1744.25
+p041,context,random,0.3,0.25806451612903225,0.7419354838709677,"quarterly earnings Q3 of $4.2B 18% EBITDA margin, summarize the trajectory.",1.0,1.0,107,305,683.39
+p041,context,embedding,0.3,0.25806451612903225,0.7419354838709677,"Given earnings Q3 revenue 4.2B with 18 EBITDA margin, summarize operating profit trajectory.",1.0,1.0,107,496,2915.09
+p041,context,gradient,0.3,0.25806451612903225,0.7419354838709677,"Given quarterly earnings report showing Q3 revenue $2B EBITDA margin, summarize operating profit trajectory.",1.0,1.0,105,563,5004.78
+p041,context,integrated_gradients,0.3,0.25806451612903225,0.7419354838709677,"Given quarterly earnings report Q3 revenue of.2B EBITDA margin, summarize operating profit trajectory.",1.0,1.0,105,243,4673.24
+p041,context,llmlingua,0.3,0.2258,0.7742,Given the quarterly earnings report showing Q3 revenue of 2B with EBITDA margin summarize the operating profit trajectory,1.0,1.0,107,160,2635.25
+p041,context,llmlingua2,0.3,0.2258,0.7742,Given quarterly earnings report showing Q3 revenue $4.2B 18 EBITDA margin summarize operating profit trajectory,1.0,1.0,107,393,1867.33
+p041,context,random,0.5,0.4838709677419355,0.5161290322580645,"earnings Q3 of $42B % margin, summarize the trajectory.",1.0,1.0,101,251,3691.46
+p041,context,embedding,0.5,0.3870967741935484,0.6129032258064516,Given Q3 revenue 4.2B 18 EBITDA margin summarize operating profit trajectory,1.0,1.0,103,475,2833.43
+p041,context,gradient,0.5,0.3870967741935484,0.6129032258064516,Given quarterly earnings Q3 revenue 2B EBITDA margin summarize operating profit trajectory.,1.0,1.0,102,600,3791.84
+p041,context,integrated_gradients,0.5,0.3870967741935484,0.6129032258064516,"quarterly earnings Q3 revenue.2B EBITDA, summarize operating profit trajectory.",0.2,0.2,102,600,6028.87
+p041,context,llmlingua,0.5,0.4839,0.5161,Given quarterly earnings report showing revenue EBITDA margin summarize operating profit trajectory,1.0,1.0,98,274,4742.21
+p041,context,llmlingua2,0.5,0.4839,0.5161,Given quarterly earnings report showing revenue EBITDA margin summarize operating profit trajectory,1.0,1.0,98,274,4742.21
+p041,context,random,0.7,0.7741935483870968,0.22580645161290322,"of $42B, trajectory.",1.0,1.0,93,135,2583.2
+p041,context,embedding,0.7,0.6129032258064516,0.3870967741935484,Given Q3. EBITDA summarize profit trajectory,1.0,1.0,94,319,1465.93
+p041,context,gradient,0.7,0.6129032258064516,0.3870967741935484,Given quarterly earnings Q3 EBITDA summarize operating,1.0,1.0,94,250,3651.15
+p041,context,integrated_gradients,0.7,0.5806451612903225,0.41935483870967744,quarterly Q3 2B EBITDA summarize trajectory.,1.0,1.0,97,321,1651.28
+p041,context,llmlingua,0.7,0.6774,0.3226,Given quarterly earnings showing revenue summarize operating trajectory,1.0,1.0,94,211,3641.02
+p041,context,llmlingua2,0.7,0.6774,0.3226,quarterly earnings report showing revenue summarize operating trajectory,1.0,1.0,95,114,1391.97
+p061,tone,uncompressed,0.0,0.0,1.0,"Draft an executive apology to enterprise clients regarding the recent cloud outage, adhering strictly to a formal and professional tone.",1.0,1.0,108,600,3052.52
+p061,tone,random,0.3,0.29166666666666663,0.7083333333333334,"Draft executive apology to clients regarding the recent cloud outage, adhering formal and.",1.0,1.0,101,600,1935.5
+p061,tone,embedding,0.3,0.29166666666666663,0.7083333333333334,Draft an executive apology to enterprise clients recent cloud outage adhering strictly formal tone.,1.0,1.0,101,600,6023.61
+p061,tone,gradient,0.3,0.29166666666666663,0.7083333333333334,Draft executive apology enterprise clients regarding recent cloud outage adhering strictly formal professional tone.,1.0,1.0,101,600,5012.91
+p061,tone,integrated_gradients,0.3,0.29166666666666663,0.7083333333333334,"Draft an executive apology enterprise clients cloud outage, adhering strictly formal professional tone.",1.0,1.0,101,600,5152.56
+p061,tone,llmlingua,0.3,0.2917,0.7083,Draft executive apology enterprise clients regarding the recent cloud outage adhering strictly formal professional tone,1.0,1.0,101,600,4768.01
+p061,tone,llmlingua2,0.3,0.2917,0.7083,Draft executive apology enterprise clients regarding recent cloud outage adhering strictly formal and professional tone,1.0,1.0,101,600,4962.97
+p061,tone,random,0.5,0.5,0.5,"Draft apology to clients regarding the cloud outage, formal and",1.0,1.0,97,600,6000.77
+p061,tone,embedding,0.5,0.5,0.5,Draft executive apology to enterprise clients cloud outage strictly tone.,1.0,1.0,97,600,5146.8
+p061,tone,gradient,0.5,0.45833333333333337,0.5416666666666666,Draft executive apology enterprise clients regarding cloud outage adhering strictly tone,1.0,1.0,97,600,4926.3
+p061,tone,integrated_gradients,0.5,0.45833333333333337,0.5416666666666666,"Draft an executive apology clients outage, adhering strictly tone.",1.0,1.0,97,219,4725.14
+p061,tone,llmlingua,0.5,0.4583,0.5417,Draft executive apology enterprise clients regarding recent outage adhering strictly professional,1.0,1.0,97,556,3045.71
+p061,tone,llmlingua2,0.5,0.4583,0.5417,executive apology enterprise clients regarding recent outage adhering strictly formal professional,1.0,1.0,98,600,5143.35
+p061,tone,random,0.7,0.7083333333333333,0.2916666666666667,"Draft apology to clients regarding cloud,",1.0,1.0,93,600,5137.45
+p061,tone,embedding,0.7,0.6666666666666667,0.3333333333333333,Draft executive apology clients cloud outage.,1.0,1.0,93,600,5105.41
+p061,tone,gradient,0.7,0.6666666666666667,0.3333333333333333,Draft apology enterprise cloud adhering strictly tone,1.0,1.0,93,600,4775.91
+p061,tone,integrated_gradients,0.7,0.625,0.375,"Draft an apology outage, adhering.",1.0,1.0,93,600,5070.21
+p061,tone,llmlingua,0.7,0.6667,0.3333,Draft executive enterprise regarding adhering strictly professional,1.0,1.0,93,600,4994.43
+p061,tone,llmlingua2,0.7,0.6667,0.3333,executive apology enterprise regarding adhering strictly professional,1.0,1.0,94,600,6144.85
+p081,multi_step,uncompressed,0.0,0.0,1.0,"List the 3-step security procedure to handle compromised credentials: first revoke active tokens, second rotate keys, third audit access logs.",0.5,1.0,112,256,4640.97
+p081,multi_step,random,0.3,0.3571428571428571,0.6428571428571429,"the 3-step security procedure compromised credentials first active second rotate keys, third audit logs.",0.5,1.0,104,308,736.7
+p081,multi_step,embedding,0.3,0.2857142857142857,0.7142857142857143,List the -step security procedure to handle compromised credentials: revoke active tokens rotate keys audit.,1.0,1.0,104,319,1483.78
+p081,multi_step,gradient,0.3,0.2857142857142857,0.7142857142857143,"List the procedure credentials: first revoke tokens, second rotate keys, third audit access logs.",1.0,1.0,104,322,3751.6
+p081,multi_step,integrated_gradients,0.3,0.2857142857142857,0.7142857142857143,"List -step security procedure handle compromised credentials revoke active tokens, rotate keys third access logs.",1.0,1.0,104,600,3031.58
+p081,multi_step,llmlingua,0.3,0.2857,0.7143,List step security procedure handle compromised credentials first revoke active tokens second rotate keys third audit access logs,1.0,1.0,104,206,4577.91
+p081,multi_step,llmlingua2,0.3,0.2857,0.7143,List step security procedure handle compromised credentials first revoke active tokens second rotate keys third audit access logs,1.0,1.0,104,206,4577.91
+p081,multi_step,random,0.5,0.5,0.5,"the 3step security procedure credentials active second rotate, audit logs.",0.5,1.0,100,600,3066.26
+p081,multi_step,embedding,0.5,0.4642857142857143,0.5357142857142857,List the - to handle compromised credentials: revoke tokens keys audit.,0.0,0.0,99,279,4672.13
+p081,multi_step,gradient,0.5,0.4642857142857143,0.5357142857142857,": revoke tokens, second rotate keys, third audit access logs.",0.5,1.0,99,600,4065.48
+p081,multi_step,integrated_gradients,0.5,0.4642857142857143,0.5357142857142857,List -step security procedure credentials revoke tokens rotate keys access logs.,0.0,0.0,99,600,4737.28
+p081,multi_step,llmlingua,0.5,0.4643,0.5357,List security procedure handle compromised credentials first revoke active tokens second rotate access,1.0,1.0,99,202,4485.89
+p081,multi_step,llmlingua2,0.5,0.4643,0.5357,security procedure handle compromised credentials first revoke active tokens second rotate third access,1.0,1.0,99,184,2684.75
+p081,multi_step,random,0.7,0.6785714285714286,0.32142857142857145,"3step credentials active rotate, logs.",0.0,0.0,94,600,2069.03
+p081,multi_step,embedding,0.7,0.6428571428571428,0.35714285714285715,List the - compromised credentials: revoke tokens,1.0,1.0,94,600,5028.85
+p081,multi_step,gradient,0.7,0.6785714285714286,0.32142857142857145,"revoke second rotate keys, third audit logs",0.0,0.0,95,600,6074.98
+p081,multi_step,integrated_gradients,0.7,0.6428571428571428,0.35714285714285715,List -step security revoke tokens keys.,0.0,0.0,94,600,5041.49
+p081,multi_step,llmlingua,0.7,0.6786,0.3214,List security procedure handle compromised credentials revoke active,1.0,1.0,94,600,5121.1
+p081,multi_step,llmlingua2,0.7,0.6429,0.3571,security procedure handle compromised credentials revoke active tokens,0.0,0.0,94,600,5155.69

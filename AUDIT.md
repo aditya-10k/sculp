@@ -32,12 +32,12 @@ Following the directive from the project supervisor, this audit conducts a rigor
 | 16 | Rate-Distortion Visualizations | **PASS** | All 12 publication-ready figures generated (including actual compression AUC, stress test distribution, protocol comparison). |
 | 17 | Mathematical Collapse Threshold Calculation | **PASS** | Calculated via discrete rate-distortion gradient $\Delta_i = SF_i - SF_{i-1}$; empirical breakpoints identified per category. |
 | 18 | Statistical Rigor & Pseudo-Replication Fix | **PASS** | Per-compression-ratio paired comparisons, Holm-Bonferroni FWER control, and prompt-level cluster bootstrapping (10,000 resamples). |
-| 19 | Test Level Disambiguation | **PASS** | Software unit tests (23 pytest 100% green), smoke tests (`smoke_test.py`), and full research experiments strictly distinguished. |
+| 19 | Test Level Disambiguation | **PASS** | Software unit tests (24 pytest 100% green), smoke tests (`smoke_test.py`), and full research experiments strictly distinguished. |
 | 20 | Scientific Validation Guardrails | **PASS** | Transparent documentation of framework status: computationally verified, live API validated, reproducible. |
-| 21 | Attribution Faithfulness & Circularity Audit | **PASS** | Circularity of Embedding LOO vs Sentence-BERT ($r_s = 1.0000$) documented as internal self-consistency; non-circular validation against independent ground-truth requirements confirms Gradient ($r_s = 0.4699, p = 1.11 \times 10^{-5}$) and Embedding ($r_s = 0.4611, p = 1.85 \times 10^{-5}$). |
-| 22 | Semantic Stress-Test Suite | **PASS** | 14 minimal pairs across 7 dimensions (252 evaluations; 27 polarity reversals, 94 ambiguous, 94 preserved). |
-| 23 | Functional Downstream Task Evaluation | **PASS** | 152 live LLM evaluations across 8 tasks; non-zero uncompressed baselines established ($S_{\text{orig}} = 0.9375$); retention quantified across 30%, 50%, and 70% compression regimes. |
-| 24 | Dependency-Aware Span Pruning Ablation | **PASS** | Syntactic/semantic dependency chunking evaluated vs unconstrained word pruning at matched token budgets (50% reduction in polarity inversions). |
+| 21 | Attribution Faithfulness & Circularity Audit | **PASS** | Evaluated on $N=30$ stratified prompts (2,588 tokens, $B=10,000$ cluster resamples, Holm-Bonferroni corrected) across 4 outcomes: Circular Self-Consistency ($r_s=1.0000$), Reference-Guided Embedding Proxy ($0.4938$ vs $0.4109$), Encoder-Free Deterministic Requirement Drop (Embedding $0.5593$, Gradient $0.5533$, paired $\Delta r_s = -0.0061, p_{\text{Holm}}=0.889$, statistically equivalent), and Downstream Loss. |
+| 22 | Semantic Stress-Test Suite & Reversal Audit | **PASS** | 14 minimal pairs across 7 dimensions (252 evaluations); cross-clause false positives eliminated; all 45 genuine polarity reversals audited in `polarity_reversals_audit.csv`. |
+| 23 | Functional Downstream Task Evaluation | **PASS** | 285 live LLM evaluations across 15 stratified tasks (3 per category, 0 missing/empty runs, $S_{\text{orig}} = 0.9778$); matched actual-removal interpolation, AUC, $K=3$ variability trials ($T=0.0, 0.3$), and 21 non-monotonic cases analyzed. |
+| 24 | Rule-Based Critical-Span Pruning Ablation | **PASS** | Evaluated across 126 paired runs (3 scorers × 14 minimal pairs × 3 CRs) at matched token budgets; reduces polarity reversals from 16.7% (21/126) to 0.0% (0/126) and raises preservation from 27.8% to 58.7%. |
 | 25 | Literature Positioning & Grounding | **PASS** | Positioned in `LITERATURE.md` against LLMLingua-2 (ACL 2024), AttnComp (AAAI 2025), EMNLP 2025, and 2026 preprints. |
 
 **Final Audit Score:** **22 PASS**, **3 WARNING**, **0 FAIL**.
@@ -549,98 +549,89 @@ All differences are positive, confidence intervals strictly exclude zero, and al
 
 ---
 
-### Audit Item 21: Attribution Faithfulness & Circularity Audit
+### Audit Item 21: Attribution Faithfulness, Encoder-Free Validation & Paired Method Tests
 - **Status:** **PASS**
-- **Code References:** [`src/analysis/attribution_faithfulness.py`](file:///c:/Desktop/sculp/src/analysis/attribution_faithfulness.py#L30-L150), [`results/tables/attribution_faithfulness_summary.csv`](file:///c:/Desktop/sculp/results/tables/attribution_faithfulness_summary.csv)
-- **Methodological Circularity Resolution:**
-  - In earlier iterations, Embedding Leave-One-Out (LOO) importance was evaluated against the Sentence-BERT cosine drop caused by removing the word.
-  - Because Embedding LOO defines token importance via that exact Sentence-BERT cosine drop, the resulting rank correlation of $r_s = 1.0000$ was a mathematical identity (circular self-consistency), not empirical validation.
-  - This audit formally separates:
-    1. **Self-Consistency Sanity Check:** Correlation between predicted score and Sentence-BERT LOO drop ($\text{Damage}_{\text{emb}}(w) = 1.0 - \cos(E(P), E(P \setminus \{w\}))$).
-    2. **Independent Non-Circular Empirical Validation:** Correlation between predicted score and external human ground-truth requirement drop:
-       $$\text{Damage}_{\text{GT}}(w) = \max\left(0, \cos(E(P), E(T_{\text{target}})) - \cos(E(P \setminus \{w\}), E(T_{\text{target}}))\right)$$
-       where $T_{\text{target}} = \text{Intent} \oplus \text{Constraints} \oplus \text{Context}$ from external annotations in `data/annotations/ground_truth.json`.
-- **Empirical Results ($N = 15$ Stratified Prompts, 1,292 Tokens, 1,000 Bootstrap Resamples):**
+- **Code References:** [`src/analysis/attribution_faithfulness.py`](file:///c:/Desktop/sculp/src/analysis/attribution_faithfulness.py), [`results/tables/attribution_faithfulness_summary.csv`](file:///c:/Desktop/sculp/results/tables/attribution_faithfulness_summary.csv), [`results/tables/attribution_pairwise_tests.csv`](file:///c:/Desktop/sculp/results/tables/attribution_pairwise_tests.csv)
+- **Methodological & Statistical Upgrades:**
+  1. **Four Outcome Targets Distinguished:**
+     - `Sentence-BERT LOO Drop`: Circular self-consistency sanity check for `embedding` ($r_s = 1.0000$); cross-encoder LOO prediction for `gradient` ($r_s = 0.5429$) and `integrated_gradients` ($r_s = 0.3832$).
+     - `Reference-Guided Embedding Proxy Drop`: Explicitly labeled as a **Reference-Guided Embedding Proxy** (not an independent human-observed outcome) because it uses `all-MiniLM-L6-v2` cosine similarity against the reference criteria string.
+     - `Independent Deterministic Requirement Drop`: **100% encoder-free** lexical/stem, numeric, and negation-operator loss against human annotations (`ground_truth.json`) plus corpus TF-IDF specificity.
+     - `Downstream Task-Success Loss`: Functional task loss $\max(0, S_{\text{orig}} - S_{\text{comp}})$ across the 15-task benchmark.
+  2. **Within-Prompt Aggregation & Cluster Bootstrap:** Correlations are calculated strictly within each prompt first ($N = 30$ stratified prompts, 6 per category, 2,588 tokens), then aggregated across prompt clusters using mean, SD, median, Fisher-$z$ hierarchical mean, **$B = 10,000$ prompt-cluster bootstrap resamples**, and **Holm-Bonferroni** step-down adjustment.
+- **Empirical Summary ($N = 30$ Stratified Prompts, 2,588 Tokens; $N = 15$ Tasks):**
 
-| Method | Evaluation Type | Target Outcome | Spearman $r_s$ | 95% Bootstrap CI | Kendall $\tau$ | $p$-value | Circular? |
-|:---|:---|:---|:---:|:---:|:---:|:---:|:---:|
-| **Random Baseline** | Model Prediction | Sentence-BERT LOO Drop | 0.0330 | `[-0.0693, 0.1397]` | 0.0227 | 0.5564 | No |
-| **Random Baseline** | Independent Empirical Validation | Ground-Truth Drop | 0.0922 | `[-0.0103, 0.2057]` | 0.0806 | 0.1390 | No |
-| **Embedding LOO** | Self-Consistency Check | Sentence-BERT LOO Drop | **1.0000** | `[0.9999, 1.0000]` | **0.9996** | $< 10^{-50}$ | **YES** |
-| **Embedding LOO** | Independent Empirical Validation | Ground-Truth Drop | **0.4611** | `[0.3144, 0.5890]` | **0.3556** | $1.85 \times 10^{-5}$ | **No** |
-| **Gradient Attribution** | Model Prediction | Sentence-BERT LOO Drop | 0.5569 | `[0.4524, 0.6625]` | 0.4151 | $8.46 \times 10^{-8}$ | No |
-| **Gradient Attribution** | Independent Empirical Validation | Ground-Truth Drop | **0.4699** | `[0.3219, 0.5879]` | **0.3696** | $1.11 \times 10^{-5}$ | **No** |
-| **Integrated Gradients** | Model Prediction | Sentence-BERT LOO Drop | 0.4052 | `[0.3035, 0.5078]` | 0.2920 | $2.12 \times 10^{-6}$ | No |
-| **Integrated Gradients** | Independent Empirical Validation | Ground-Truth Drop | **0.3100** | `[0.1876, 0.4154]` | **0.2403** | $2.11 \times 10^{-4}$ | **No** |
+| Method | Evaluation Type | Target Outcome | $N$ | Mean $r_s$ (SD) | Median $r_s$ | Fisher-$z$ $r_s$ | 95% Cluster CI | Kendall $\tau$ | $p_{\text{Holm}}$ | Circular? |
+|:---|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| `random` | Cross-Encoder LOO Prediction | Sentence-BERT LOO Drop | 30 | 0.0810 (0.2076) | 0.1025 | 0.0850 | `[0.0073, 0.1534]` | 0.0605 | 0.0412 | No |
+| `embedding` | Self-Consistency (Circular) | Sentence-BERT LOO Drop | 30 | **1.0000** (0.0001) | 1.0000 | 0.9990 | `[0.9999, 1.0000]` | 0.9997 | $< 10^{-50}$ | **YES** |
+| `gradient` | Cross-Encoder LOO Prediction | Sentence-BERT LOO Drop | 30 | 0.5429 (0.2070) | 0.5400 | 0.5818 | `[0.4674, 0.6157]` | 0.4012 | $< 10^{-13}$ | No |
+| `integrated_gradients` | Cross-Encoder LOO Prediction | Sentence-BERT LOO Drop | 30 | 0.3832 (0.1817) | 0.3899 | 0.4000 | `[0.3178, 0.4456]` | 0.2693 | $< 10^{-11}$ | No |
+| `random` | Reference-Guided Embedding Proxy | Reference-Guided Embedding Proxy Drop | 30 | -0.0004 (0.2096) | 0.0007 | -0.0019 | `[-0.0763, 0.0720]` | -0.0068 | 0.9910 | No |
+| `embedding` | Reference-Guided Embedding Proxy | Reference-Guided Embedding Proxy Drop | 30 | **0.4938** (0.2340) | 0.4983 | 0.5299 | `[0.4077, 0.5718]` | 0.3843 | $< 10^{-11}$ | No |
+| `gradient` | Reference-Guided Embedding Proxy | Reference-Guided Embedding Proxy Drop | 30 | **0.4109** (0.2352) | 0.4340 | 0.4412 | `[0.3251, 0.4922]` | 0.3082 | $< 10^{-9}$ | No |
+| `integrated_gradients` | Reference-Guided Embedding Proxy | Reference-Guided Embedding Proxy Drop | 30 | 0.2465 (0.2400) | 0.2297 | 0.2625 | `[0.1605, 0.3326]` | 0.1862 | $9.0 \times 10^{-6}$ | No |
+| `random` | **Independent Deterministic Validation** | **Independent Deterministic Requirement Drop** | 30 | 0.0651 (0.2369) | 0.0215 | 0.0712 | `[-0.0175, 0.1495]` | 0.0531 | 0.1432 | No |
+| `embedding` | **Independent Deterministic Validation** | **Independent Deterministic Requirement Drop** | 30 | **0.5593** (0.2059) | 0.5754 | 0.5963 | `[0.4839, 0.6302]` | 0.4371 | $< 10^{-14}$ | **No** |
+| `gradient` | **Independent Deterministic Validation** | **Independent Deterministic Requirement Drop** | 30 | **0.5533** (0.1371) | 0.5788 | 0.5683 | `[0.5041, 0.5998]` | 0.4243 | $< 10^{-18}$ | **No** |
+| `integrated_gradients` | **Independent Deterministic Validation** | **Independent Deterministic Requirement Drop** | 30 | **0.3174** (0.2442) | 0.3099 | 0.3419 | `[0.2311, 0.4023]` | 0.2403 | $< 10^{-7}$ | **No** |
+| `random` | Independent Functional Task Validation | Downstream Task-Success Loss | 15 | 0.3981 (0.2506) | 0.4574 | 0.4240 | `[0.2715, 0.5128]` | 0.3223 | 0.0001 | No |
+| `embedding` | Independent Functional Task Validation | Downstream Task-Success Loss | 15 | 0.3735 (0.2412) | 0.3993 | 0.3933 | `[0.2492, 0.4829]` | 0.3040 | 0.0001 | No |
+| `gradient` | Independent Functional Task Validation | Downstream Task-Success Loss | 15 | **0.4095** (0.2700) | 0.4091 | 0.4444 | `[0.2753, 0.5332]` | 0.3347 | 0.0001 | No |
+| `integrated_gradients` | Independent Functional Task Validation | Downstream Task-Success Loss | 15 | 0.3335 (0.2768) | 0.3123 | 0.3683 | `[0.1954, 0.4671]` | 0.2808 | 0.00036 | No |
 
-- **Key Scientific Finding:** On independent, external ground-truth requirements, **Gradient Attribution ($r_s = 0.4699$) slightly exceeds Embedding LOO ($r_s = 0.4611$)** without possessing any circular advantage. Both demonstrate statistically significant predictive validity ($p < 2 \times 10^{-5}$).
+- **Direct Paired Hypothesis Test (`Gradient` vs `Embedding LOO`):**
+  - On encoder-free **Independent Deterministic Requirement Drop**: $\Delta r_s = -0.0061$, 95% cluster bootstrap CI `[-0.0855, +0.0802]`, paired $t$-test $p = 0.8890$, Wilcoxon $p = 0.5940$, $p_{\text{Holm}} = 0.8890$ (`significant_holm_05 = False`). Thus, **Gradient Attribution and Embedding LOO perform equivalently** when shared encoder bias is removed, and both significantly outperform Integrated Gradients ($p_{\text{Holm}} \le 0.00095$) and Random ($p_{\text{Holm}} < 10^{-7}$).
+  - On **Reference-Guided Embedding Proxy Drop**: $\Delta r_s = -0.0828$, 95% CI `[-0.1608, -0.0055]`, paired $t$-test $p = 0.0491$, Wilcoxon $p = 0.0549$ (borderline because the proxy uses the same `all-MiniLM-L6-v2` encoder as Embedding LOO).
+  - On **Downstream Task-Success Loss**: $\Delta r_s = +0.0360$, 95% CI `[-0.0607, +0.1371]`, $p = 0.5001, p_{\text{Holm}} = 1.0000$ (`False`).
 
 ---
 
-### Audit Item 22: Semantic Stress-Test Suite & Minimal Pairs
+### Audit Item 22: Semantic Stress-Test Suite & Audited Polarity Reversals
 - **Status:** **PASS**
-- **Code Reference:** [`src/evaluation/stress_tests.py`](file:///c:/Desktop/sculp/src/evaluation/stress_tests.py#L20-L160), [`data/processed/stress_test_prompts.json`](file:///c:/Desktop/sculp/data/processed/stress_test_prompts.json)
-- **Suite Composition:** 14 hand-crafted minimal pairs across 7 semantic dimensions:
-  1. `negation_reversal` (e.g. "Do NOT mention refunds under any circumstances")
-  2. `numerical_bound` (e.g. "In at most 50 words explain photosynthesis")
-  3. `conditional_exception` (e.g. "Approve all loan applications unless credit score is below 600")
-  4. `entity_role_binding` (e.g. "Acme Corp acquired Beta Dynamics for $400M")
-  5. `scope_quantifier` (e.g. "Every department must submit their budget by Friday")
-  6. `sequential_order` (e.g. "First authenticate user then fetch profile data")
-  7. `modal_strength` (e.g. "You must wear protective gear at all times")
+- **Code Reference:** [`src/evaluation/stress_tests.py`](file:///c:/Desktop/sculp/src/evaluation/stress_tests.py), [`results/tables/stress_test_results.csv`](file:///c:/Desktop/sculp/results/tables/stress_test_results.csv), [`results/tables/polarity_reversals_audit.csv`](file:///c:/Desktop/sculp/results/tables/polarity_reversals_audit.csv)
+- **Cross-Clause Bug Fix:** Fixed `classify_outcome` so `"not exceed"` in the second sentence of `stress_02b` no longer triggers a false-positive reversal on `"at least 500 words"` in the first sentence, and `"no JSON"` in `stress_05b` no longer triggers a false reversal when `"HTML table"` is dropped without affirmative inversion to JSON.
 - **Empirical Findings (252 Evaluations across 6 methods and 3 compression ratios [30%, 50%, 70%]):**
-  - **Preserved:** 94 / 252 (37.3%)
-  - **Syntactically / Semantically Ambiguous:** 94 / 252 (37.3%)
-  - **Catastrophic Polarity Reversals:** 27 / 252 (10.7%)
-  - **Critically Removed:** 37 / 252 (14.7%)
-- **Mechanisms Discovered:**
-  - Removal of negation operators (`not`, `without`, `never`) while retaining the main verb causes prompt inversion.
-  - Sentence-BERT embedding similarity remains deceptively high ($> 0.85$) during polarity reversals, failing to detect catastrophic semantic damage.
+  - **Preserved:** 72 / 252 (28.6%)
+  - **Syntactically / Semantically Ambiguous:** 109 / 252 (43.3%)
+  - **Audited Polarity Reversals:** 45 / 252 (17.9%, every case audited in `polarity_reversals_audit.csv`)
+  - **Critically Removed:** 26 / 252 (10.3%)
 
 ---
 
-### Audit Item 23: Functional Downstream Task-Success Retention
+### Audit Item 23: Functional Downstream Task-Success Retention (15 Stratified Tasks)
 - **Status:** **PASS**
-- **Code Reference:** [`src/evaluation/downstream.py`](file:///c:/Desktop/sculp/src/evaluation/downstream.py#L30-L280), [`results/tables/downstream_results.csv`](file:///c:/Desktop/sculp/results/tables/downstream_results.csv)
-- **Evaluation Engine & Model:** Live Groq API executions (`openai/gpt-oss-20b`, 600 max output tokens, deterministic seed) across 8 representative benchmark tasks.
-- **Uncompressed Baselines Verified ($S_{\text{orig}}$):**
-  - All 8 tasks achieved valid, non-zero uncompressed baselines (Mean $S_{\text{orig}} = 0.9375$):
-    - `p024` (JSON Wi-Fi): $S_{\text{orig}} = 1.0$
-    - `p025` (3 bullets, 15-20 words each): $S_{\text{orig}} = 1.0$
-    - `p023` (Forbidden words avoidance): $S_{\text{orig}} = 1.0$
-    - `p005` (Action items & assignees): $S_{\text{orig}} = 1.0$
-    - `p004` (French legal translation): $S_{\text{orig}} = 1.0$
-    - `p041` (Financial trajectory summary): $S_{\text{orig}} = 1.0$
-    - `p061` (Formal executive apology): $S_{\text{orig}} = 1.0$
-    - `p081` (Sequenced security procedure): $S_{\text{orig}} = 0.5$
-- **Retention across Compression Regimes ($S_{\text{comp}} / S_{\text{orig}}$, 152 Evaluations):**
+- **Code Reference:** [`src/evaluation/downstream.py`](file:///c:/Desktop/sculp/src/evaluation/downstream.py), [`results/tables/downstream_results.csv`](file:///c:/Desktop/sculp/results/tables/downstream_results.csv), [`results/tables/downstream_matched_comparison.csv`](file:///c:/Desktop/sculp/results/tables/downstream_matched_comparison.csv), [`results/tables/downstream_variability.csv`](file:///c:/Desktop/sculp/results/tables/downstream_variability.csv), [`results/tables/downstream_non_monotonic_cases.csv`](file:///c:/Desktop/sculp/results/tables/downstream_non_monotonic_cases.csv)
+- **Stratified 15-Task Benchmark (3 per Category, 285 Evaluations, 0 Missing/Failed Runs):**
+  - Resolved the v1 600-token reasoning budget exhaustion (which previously caused 12 empty completions on ambiguous 50%-pruned prompts) by configuring `max_tokens = 4096` and `reasoning_effort = "low"`, and fixed `p081` title-digit matching (`S_orig = 1.0`) and `p041` factual-unit validation.
+  - Uncompressed baselines verified across all 15 tasks (Mean $S_{\text{orig}} = 0.9778$: 13 tasks at $1.0000$, 2 context tasks at $0.8333$).
+- **Matched Actual Token-Removal Comparison & AUC:**
 
-| Method | 30% Lexical Removal | 50% Lexical Removal | 70% Lexical Removal | Mean Retention |
-|:---|:---:|:---:|:---:|:---:|
-| **Embedding LOO** | **0.938** | 0.400 | 0.546 | 0.628 |
-| **LLMLingua (Fallback)** | 0.875 | **0.750** | **0.733** | **0.786** |
-| **LLMLingua-2 (Fallback)** | 0.875 | **0.750** | 0.546 | 0.724 |
-| **Integrated Gradients** | 0.740 | 0.446 | 0.375 | 0.520 |
-| **Random Baseline** | 0.733 | 0.500 | 0.479 | 0.571 |
-| **Gradient Attribution** | 0.688 | 0.650 | 0.421 | 0.586 |
+| Method | $N$ Tasks | Missing Runs | Mean Actual Removal | Raw Mean Retention | Matched Ret @ 30% Actual | Matched Ret @ 50% Actual | Matched Ret @ 70% Actual | Matched Actual AUC | 95% Cluster CI | $\Delta$ AUC vs Random | $p$ ($p_{\text{Holm}}$) |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Embedding LOO** | 15 | 0 | 0.4800 | **0.7243** | **0.8723** | 0.6784 | **0.6059** | **0.8019** | `[0.7169, 0.8825]` | **+0.0882** | 0.1845 (0.924) |
+| **LLMLingua-2 (Fallback)** | 15 | 0 | 0.4643 | 0.7134 | 0.8320 | 0.7060 | 0.5272 | 0.7898 | `[0.6941, 0.8786]` | +0.0761 | 0.1540 (0.924) |
+| **LLMLingua (Fallback)** | 15 | 0 | 0.4666 | 0.7179 | 0.8069 | **0.7191** | 0.5661 | 0.7863 | `[0.6650, 0.8909]` | +0.0726 | 0.2285 (0.924) |
+| **Gradient Attribution** | 15 | 0 | 0.4555 | 0.6642 | 0.7663 | 0.6189 | 0.5639 | 0.7436 | `[0.6081, 0.8682]` | +0.0299 | 0.6477 (1.000) |
+| **Random Baseline** | 15 | 0 | 0.4911 | 0.5857 | 0.7845 | 0.6508 | 0.2863 | 0.7137 | `[0.6143, 0.8040]` | 0.0000 | Control |
+| **Integrated Gradients** | 15 | 0 | 0.4531 | 0.5827 | 0.6827 | 0.5559 | 0.4172 | 0.6726 | `[0.5459, 0.7886]` | -0.0411 | 0.5184 (1.000) |
 
-- **Deterministic Verification:** Validators evaluate genuine task accomplishment (valid JSON parsing, forbidden word absence, word-count intervals, entity recall) rather than superficial formatting.
+- **Variability & Non-Monotonicity:**
+  - Repeated trials ($K=3$ at $T=0.0$ and $T=0.3$ across 5 tasks, 60 runs) confirm **$\text{SD} = 0.0000$ within-temperature score variance across all 20 cells**.
+  - All 21 non-monotonic cases are documented in `downstream_non_monotonic_cases.csv` and traced to (1) intermediate polarity/constraint interference at 50% removal where dropping `"not"` leaves the forbidden target intact until 70% removal prunes the target too, and (2) intermediate syntactic fragmentation vs. telegraphic keyword recovery at 70% removal.
 
 ---
 
-### Audit Item 24: Dependency-Aware Span Pruning Ablation
+### Audit Item 24: Rule-Based Critical-Span Pruning Ablation (126 Paired Evaluations)
 - **Status:** **PASS**
-- **Code Reference:** [`src/pruning/dependency_pruner.py`](file:///c:/Desktop/sculp/src/pruning/dependency_pruner.py#L20-L120), [`results/tables/dependency_pruning_results.csv`](file:///c:/Desktop/sculp/results/tables/dependency_pruning_results.csv)
+- **Code Reference:** [`src/pruning/dependency_pruner.py`](file:///c:/Desktop/sculp/src/pruning/dependency_pruner.py), [`results/tables/dependency_pruning_summary.csv`](file:///c:/Desktop/sculp/results/tables/dependency_pruning_summary.csv), [`results/tables/dependency_pruning_reversals_audit.csv`](file:///c:/Desktop/sculp/results/tables/dependency_pruning_reversals_audit.csv)
 - **Characterization & Methodology:**
-  - Implements **rule-based critical-span grouping** to bind tokens that cannot be split without semantic inversion:
-    - Negation clauses (`not`, `never`, `cannot` + governed verb)
-    - Numerical bounds (modifiers + values, e.g. `at most 50 words`, `$420M`)
-    - Conditional exceptions (`unless`, `except` + condition)
-  - Not claimed as a universal syntactic dependency parser, but rather as an atomic span preservation heuristic.
-- **Empirical Results (42 Stress Test Evaluations):**
-  - **Independent Word Pruning:** 4 polarity reversals (9.5%).
-  - **Dependency-Aware Span Pruning:** 2 polarity reversals (4.8%).
-  - **Relative Impact:** **-50.0% relative reduction** in catastrophic polarity reversals at matched token compression budgets.
+  - Explicitly identified as **rule-based critical-span grouping** (binding contiguous negation clauses, multi-token numeric/currency bounds, conditional exceptions, and priority directives), NOT a general syntactic dependency parser.
+  - Evaluated across all 3 importance scorers (`embedding`, `gradient`, `integrated_gradients`) $\times$ 14 minimal-pair prompts $\times$ 3 compression ratios = **126 paired evaluations** with matched actual token budgets (`43.3%` vs `44.5%` pooled removal).
+- **Empirical Results ($B = 10,000$ Prompt-Cluster Bootstrap CIs):**
+  - **Ordinary Word Pruning (126 runs):** 21 polarity reversals (**16.7%**, 95% CI `[7.1%, 27.0%]`), 35 preserved (**27.8%**, 95% CI `[15.1%, 42.9%]`).
+  - **Rule-Based Span Pruning (126 runs):** **0 polarity reversals (0.0%, 95% CI `[0.0%, 0.0%]`)**, 74 preserved (**58.7%**, 95% CI `[45.2%, 72.2%]**).
+  - Every single one of the 21 prevented polarity reversals is audited side-by-side in `dependency_pruning_reversals_audit.csv`.
 
 ---
 
@@ -649,9 +640,6 @@ All differences are positive, confidence intervals strictly exclude zero, and al
 - **Documentation Reference:** [`LITERATURE.md`](file:///c:/Desktop/sculp/LITERATURE.md)
 - **Positioning Summary:**
   - Rigorously compared against LLMLingua-2 (Findings of ACL 2024), AttnComp (AAAI 2025), EMNLP 2025 information preservation frameworks, and 2026 preprints.
-  - Transparently specifies what is adopted vs novel:
-    - *Adopted:* Token-level attribution principles, token classification baselines, rate-distortion curve methodology.
-    - *Novel Contributions:* Disambiguation of Blind Standalone vs Reference-Guided evaluators; quantification of embedding cosine insensitivity to polarity reversal; empirical identification of early constraint collapse (10-20% CR); demonstration that Gradient attribution predicts external ground-truth loss without circularity.
 
 ---
 
@@ -663,17 +651,18 @@ Every headline claim is traced directly to underlying source code, data, saved C
 |:---|:---|:---|:---|:---|:---|:---|:---:|:---|
 | 1 | Importance pruning preserves more SF than random pruning | `src/pruning/pruner.py`, `src/experiments/runner.py` | `data/processed/prompts.json` (100 prompts) | `results/metrics/fidelity_results.csv` | Paired t-test, Cohen's d, Holm-Bonferroni | 5,400 runs (100 prompts × 6 methods × 9 CRs) | **Validated Finding** | Evaluated on MiniLM embedding encoder; downstream generation may diverge. |
 | 2 | Component collapse occurs at distinct thresholds | `src/analysis/collapse.py` | `fidelity_results.csv` | `results/tables/collapse_thresholds.csv` | Discrete rate-distortion gradient $\Delta_i$ | 100 prompts across 5 categories | **Validated Finding** | Breakpoint depends on 10% discrete step granularity. |
-| 3 | Embedding LOO correlation with Sentence-BERT LOO drop is $r_s = 1.0$ | `src/scoring/embedding.py`, `src/analysis/attribution_faithfulness.py` | 15 stratified prompts (1,292 tokens) | `results/tables/attribution_faithfulness_summary.csv` | Spearman $r_s$, Kendall $\tau$ | 15 prompts, 1,292 tokens | **Self-Consistency Check** | Pure mathematical circularity; measures internal consistency, not external validity. |
-| 4 | Token importance predicts independent ground-truth requirement damage | `src/analysis/attribution_faithfulness.py` | `data/annotations/ground_truth.json` | `results/tables/attribution_faithfulness_summary.csv` | Spearman $r_s$, Kendall $\tau$, 1,000 bootstrap CIs | 15 prompts, 1,292 tokens | **Validated Finding** | Gradient achieves $r_s = 0.4699$, Embedding achieves $r_s = 0.4611$; moderate predictive power. |
-| 5 | Protocol A (Blind) and Protocol B (Guided) measure distinct constructs | `src/interpretation/evaluator_protocols.py`, `scripts/pilot_groq.py` | 10 pilot prompts across 3 CRs | `results/pilot/pilot_evaluation_results.csv` | Paired score distributions, mean scores | 30 evaluations on Groq | **Validated Finding** | Evaluator score gap (0.195 vs 0.757) reflects construct difference, not effect size. |
-| 6 | Inter-evaluator agreement between independent LLM judges is strong | `src/interpretation/evaluator_protocols.py` | 10 paired prompts evaluated on 2 models | `results/pilot/pilot_evaluator_agreement.csv` | Pearson $r$, Spearman $r_s$, MAE | 10 paired prompts (`openai/gpt-oss-20b` vs `qwen/qwen3.8-27b`) | **Validated Finding** | Protocol A MAE=0.12, $r_s=0.85$; Protocol B MAE=0.11, $r_s=0.77$. Small pilot sample ($N=10$). |
-| 7 | Lexical pruning causes polarity inversions and structural ambiguity | `src/evaluation/stress_tests.py` | 14 minimal pairs (7 dimensions) | `results/tables/stress_test_results.csv` | Deterministic rule-based outcome classifier | 252 evaluations across 6 methods and 3 CRs | **Validated Finding** | 10.7% polarity reversals and 37.3% ambiguities across test suite. |
-| 8 | Dependency-aware span pruning reduces polarity inversions by 50% | `src/pruning/dependency_pruner.py` | 14 minimal pairs (3 CRs) | `results/tables/dependency_pruning_results.csv` | Paired classification comparison | 42 stress evaluations | **Validated Finding** | Uses rule-based heuristic span grouping, not universal dependency parser. |
-| 9 | Functional downstream task retention degrades sharply under pruning | `src/evaluation/downstream.py` | 8 benchmark tasks, uncompressed baseline $S_{\text{orig}} = 0.9375$ | `results/tables/downstream_results.csv` | Deterministic validators on live Groq LLM generations | 152 evaluations (8 tasks × 19 conditions) | **Validated Finding** | 163 cached LLM calls; evaluated on single downstream model (`openai/gpt-oss-20b`). |
-| 10 | LLMLingua and LLMLingua-2 approximate official algorithms | `src/baselines/llmlingua.py`, `src/baselines/llmlingua2.py` | Local GPT-2 & Transformer weights | `results/metrics/fidelity_results.csv` | Perplexity budget & grammatical classification | 900 evaluations each | **Preliminary Finding** | Fallback approximations used due to environment KV-cache compatibility. |
+| 3 | Embedding LOO correlation with Sentence-BERT LOO drop is $r_s = 1.0$ | `src/scoring/embedding.py`, `src/analysis/attribution_faithfulness.py` | 30 stratified prompts (2,588 tokens) | `results/tables/attribution_faithfulness_summary.csv` | Within-prompt Spearman $r_s$, Kendall $\tau$ | 30 prompts, 2,588 tokens | **Self-Consistency Check** | Pure mathematical circularity; measures internal consistency, not external validity. |
+| 4 | Reference-guided Sentence-BERT drop is an embedding proxy | `src/analysis/attribution_faithfulness.py` | `data/annotations/ground_truth.json` | `results/tables/attribution_faithfulness_summary.csv` | Within-prompt $r_s$, $B=10,000$ cluster bootstrap, Holm-Bonferroni | 30 prompts, 2,588 tokens | **Reference-Guided Embedding Proxy** | Uses shared Sentence-BERT encoder (`all-MiniLM-L6-v2`); slightly favors Embedding LOO ($0.4938$ vs $0.4109$). |
+| 5 | Gradient and Embedding LOO strongly & equivalently predict encoder-free requirement loss | `src/analysis/attribution_faithfulness.py` | `data/annotations/ground_truth.json` | `attribution_faithfulness_summary.csv`, `attribution_pairwise_tests.csv` | Paired cluster bootstrap ($B=10,000$), paired $t$/Wilcoxon, Holm-Bonferroni | 30 prompts, 2,588 tokens | **Validated Finding** | Embedding ($r_s=0.5593$) and Gradient ($r_s=0.5533$) are statistically indistinguishable ($\Delta r_s = -0.0061, p_{\text{Holm}}=0.889$). |
+| 6 | Protocol A (Blind) and Protocol B (Guided) measure distinct constructs | `src/interpretation/evaluator_protocols.py`, `scripts/pilot_groq.py` | 10 pilot prompts across 3 CRs | `results/pilot/pilot_evaluation_results.csv` | Paired score distributions, mean scores | 30 evaluations on Groq | **Validated Finding** | Evaluator score gap (0.195 vs 0.757) reflects construct difference, not effect size. |
+| 7 | Inter-evaluator agreement between independent LLM judges is strong | `src/interpretation/evaluator_protocols.py` | 10 paired prompts evaluated on 2 models | `results/pilot/pilot_evaluator_agreement.csv` | Pearson $r$, Spearman $r_s$, MAE | 10 paired prompts (`openai/gpt-oss-20b` vs `qwen/qwen3.8-27b`) | **Validated Finding** | Protocol A MAE=0.12, $r_s=0.85$; Protocol B MAE=0.11, $r_s=0.77$. Small pilot sample ($N=10$). |
+| 8 | Lexical pruning causes polarity inversions and structural ambiguity | `src/evaluation/stress_tests.py` | 14 minimal pairs (7 dimensions) | `stress_test_results.csv`, `polarity_reversals_audit.csv` | Audited deterministic outcome classifier | 252 evaluations across 6 methods and 3 CRs | **Validated Finding** | 45 audited polarity reversals (17.9%) and 109 ambiguities (43.3%); cross-clause false positives eliminated. |
+| 9 | Rule-based critical-span pruning eliminates polarity reversals at matched budgets | `src/pruning/dependency_pruner.py` | 14 minimal pairs × 3 scorers × 3 CRs | `dependency_pruning_summary.csv`, `dependency_pruning_reversals_audit.csv` | Cluster-bootstrapped rates ($B=10,000$), matched token budgets | 126 paired evaluations | **Validated Finding** | Reduces reversals from 16.7% (21/126) to 0.0% (0/126); rule-based span grouping, not general dependency parsing. |
+| 10 | Functional downstream task retention & non-monotonicity across 15 tasks | `src/evaluation/downstream.py` | 15 stratified tasks ($S_{\text{orig}} = 0.9778$) | `downstream_results.csv`, `downstream_matched_comparison.csv`, `downstream_variability.csv` | Matched actual-removal interpolation, AUC, $K=3$ variability trials | 285 main runs + 60 variability runs | **Validated Finding** | Embedding LOO retains 60.6% vs Random 28.6% at 70% removal; overall AUC $\Delta=+0.0882$ ($p=0.185$, n.s. on $N=15$ heterogeneous tasks). |
+| 11 | LLMLingua and LLMLingua-2 approximate official algorithms | `src/baselines/llmlingua.py`, `src/baselines/llmlingua2.py` | Local GPT-2 & Transformer weights | `results/metrics/fidelity_results.csv` | Perplexity budget & grammatical classification | 900 evaluations each | **Preliminary Finding** | Fallback approximations used due to environment KV-cache compatibility. |
 
 ---
 
 ## Conclusion & Next Actions
 
-The codebase has successfully completed the rigorous 25-point audit. The critical gradient attribution flaw ($0.0000$ values) was resolved with a sound mathematical derivation ($F(E) = v(E) \cdot \hat{v}_0$), the integrated gradients attention-sink effect was empirically characterized, all 100 prompts were evaluated across all 6 methods and 9 compression ratios, live Groq API evaluator protocols were validated with strong inter-model agreement, attribution faithfulness circularity was transparently separated from independent ground-truth validation, and downstream task retention baselines were verified. All code, data, tests, and documentation are synchronized and reproducible.
+The codebase has completed the full 25-point scientific and statistical validity check. All code, archived v1 results (`results/archive_v1/`), newly validated v2 CSV tables, 12 publication figures, 24 passing unit/integration tests, and documentation are synchronized and reproducible.

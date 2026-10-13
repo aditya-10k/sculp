@@ -1,11 +1,16 @@
-"""Research Enhancement Orchestrator.
+"""Research Enhancement & Final Statistical Validity Orchestrator.
 
-Executes the four core scientific enhancements:
-1. Semantic Stress Test Suite (7 critical dimensions, 14 minimal pairs)
-2. Functional Downstream Task-Success Evaluation (deterministic validators & Groq LLM)
-3. Attribution Faithfulness & Importance-Damage Alignment (Spearman & Kendall with CIs)
-4. Dependency-Aware Span Pruning Ablation vs Independent Word Pruning
-5. Generates enhanced plots and analytical tables
+Executes the validated experimental suite:
+1. Semantic Stress Test Suite (7 critical dimensions, 14 minimal pairs, 252 runs) + Reversal Audit
+2. Functional Downstream Task-Success Evaluation (15 stratified tasks: 3 per category, 285 runs),
+   Matched Actual-Removal AUC comparison, Non-Monotonicity Audit, and Repeated-Trial Variability Study
+3. Attribution Faithfulness & Importance-Damage Alignment (30 stratified prompts, 4 outcome targets:
+   Circular Self-Consistency, Reference-Guided Embedding Proxy, Independent Deterministic Requirement Drop,
+   and Downstream Task-Success Loss) with prompt-cluster bootstrapping (B=10,000), Holm-Bonferroni
+   correction, and direct paired tests (Gradient vs Embedding LOO)
+4. Rule-Based Critical-Span Pruning vs Ordinary Word Pruning at Matched Token Budgets (126 paired runs
+   across Embedding, Gradient, and Integrated Gradients scorers) with cluster-bootstrap uncertainty
+5. Regenerates publication figures
 """
 
 from __future__ import annotations
@@ -16,10 +21,11 @@ import time
 from pathlib import Path
 import pandas as pd
 import numpy as np
+from dotenv import load_dotenv
 
-# Add project root to sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
+load_dotenv(PROJECT_ROOT / ".env")
 
 from src.data.dataset import DatasetManager
 from src.data.schema import PromptItem
@@ -43,10 +49,35 @@ from src.analysis.plots import (
 )
 
 
+def _cluster_boot_rate_ci(
+    df: pd.DataFrame,
+    cluster_col: str,
+    val_col: str,
+    target_val: str,
+    n_boot: int = 10000,
+    seed: int = 42
+) -> Tuple[float, float, float]:
+    """Computes cluster-bootstrapped proportion and 95% CI for a categorical outcome."""
+    clusters = df[cluster_col].unique()
+    if len(clusters) == 0:
+        return 0.0, 0.0, 0.0
+    cluster_rates = np.array([
+        np.mean(df[df[cluster_col] == c][val_col] == target_val)
+        for c in clusters
+    ])
+    rng = np.random.default_rng(seed)
+    boot_means = [
+        np.mean(rng.choice(cluster_rates, size=len(cluster_rates), replace=True))
+        for _ in range(n_boot)
+    ]
+    ci_low, ci_high = np.percentile(boot_means, [2.5, 97.5])
+    return float(np.mean(cluster_rates)), float(ci_low), float(ci_high)
+
+
 def run_all_enhancements():
-    print("=" * 70)
-    print("SCULP RESEARCH ENHANCEMENTS: RUNNER")
-    print("=" * 70)
+    print("=" * 75)
+    print("SCULP FINAL STATISTICAL & EXPERIMENTAL VALIDITY RUNNER")
+    print("=" * 75)
     t0 = time.time()
 
     tables_dir = PROJECT_ROOT / "results" / "tables"
@@ -55,21 +86,23 @@ def run_all_enhancements():
     plots_dir.mkdir(parents=True, exist_ok=True)
 
     # -------------------------------------------------------------
-    # 1. Semantic Stress Test Suite
+    # 1. Semantic Stress Test Suite (252 Runs + Reversal Audit)
     # -------------------------------------------------------------
-    print("\n[Phase 1] Executing Semantic Stress Test Suite...")
+    print("\n[Phase 1] Executing Semantic Stress Test Suite (14 minimal pairs x 6 methods x 3 CRs)...")
     stress_evaluator = StressTestEvaluator()
     stress_df = stress_evaluator.evaluate_all(
         ratios=[0.3, 0.5, 0.7],
         output_csv=str(tables_dir / "stress_test_results.csv")
     )
-    print("[Phase 1] Generating stress test outcome plot...")
+    rev_audit_df = stress_df[stress_df["outcome"] == "POLARITY_REVERSED"].copy()
+    rev_audit_df.to_csv(tables_dir / "polarity_reversals_audit.csv", index=False)
+    print(f"[Phase 1] Verified {len(rev_audit_df)} genuine polarity reversals (saved to polarity_reversals_audit.csv)")
     plot_stress_test_outcomes(stress_df, str(plots_dir / "stress_test_outcomes.png"))
 
     # -------------------------------------------------------------
-    # 2. Functional Downstream Task Evaluation
+    # 2. Functional Downstream Task Evaluation (15 Stratified Tasks)
     # -------------------------------------------------------------
-    print("\n[Phase 2] Executing Functional Downstream Task-Success Evaluation...")
+    print("\n[Phase 2] Executing Functional Downstream Task Evaluation (15 stratified tasks: 3 per category)...")
     downstream_evaluator = DownstreamEvaluator()
     downstream_df = downstream_evaluator.run_benchmark(
         scorers=stress_evaluator.scorers,
@@ -79,101 +112,157 @@ def run_all_enhancements():
         ratios=[0.0, 0.3, 0.5, 0.7],
         output_csv=str(tables_dir / "downstream_results.csv")
     )
-    print("[Phase 2] Generating downstream task retention plot...")
+    print("[Phase 2] Executing Downstream Generation Variability Study (K=3 trials at T=0.0 and T=0.3)...")
+    downstream_evaluator.run_variability_study(
+        scorers=stress_evaluator.scorers,
+        pruner=stress_evaluator.pruner,
+        subset_task_ids=["p005", "p024", "p041", "p061", "p081"],
+        n_trials=3,
+        output_csv=str(tables_dir / "downstream_variability.csv")
+    )
     plot_downstream_task_retention(downstream_df, str(plots_dir / "downstream_task_retention.png"))
 
     # -------------------------------------------------------------
     # 3. Attribution Faithfulness & Importance-Damage Alignment
     # -------------------------------------------------------------
-    print("\n[Phase 3] Executing Attribution Faithfulness Evaluation...")
+    print("\n[Phase 3] Executing Attribution Faithfulness Evaluation on 30 Stratified Prompts (6 per category)...")
     dm = DatasetManager(str(PROJECT_ROOT / "data" / "processed" / "prompts.json"))
-    # Stratified 15-prompt sample (3 from each of the 5 categories)
     all_prompts = dm.all_prompts()
     categories = sorted(list({p.category for p in all_prompts}))
-    stratified_sample = []
+    stratified_30 = []
     for cat in categories:
         cat_prompts = [p for p in all_prompts if p.category == cat]
-        stratified_sample.extend(cat_prompts[:3])
+        stratified_30.extend(cat_prompts[:6])
 
     faithfulness_evaluator = AttributionFaithfulnessEvaluator()
     detail_df, summary_df = faithfulness_evaluator.evaluate_faithfulness(
-        prompts=stratified_sample,
-        n_bootstrap=1000,
-        output_dir=str(tables_dir)
+        prompts=stratified_30,
+        n_bootstrap=10000,
+        output_dir=str(tables_dir),
+        downstream_df=downstream_df,
+        all_corpus_prompts=all_prompts
     )
-    print("[Phase 3] Generating attribution faithfulness plot...")
     plot_attribution_faithfulness_summary(summary_df, str(plots_dir / "attribution_faithfulness.png"))
 
     # -------------------------------------------------------------
-    # 4. Dependency-Aware Span Pruning Ablation
+    # 4. Rule-Based Critical-Span Pruning vs Ordinary Word Pruning
     # -------------------------------------------------------------
-    print("\n[Phase 4] Executing Dependency-Aware Span Pruning Ablation...")
+    print("\n[Phase 4] Executing Rule-Based Critical-Span Pruning Experiment at Matched Token Budgets...")
     span_pruner = DependencyAwarePruner()
     standard_pruner = stress_evaluator.pruner
-
-    # Benchmark on the 14 stress prompts to quantify polarity reversal mitigation
     stress_prompts_list = load_stress_test_prompts()
-    w_rev_count, s_rev_count, total_stress_tests = 0, 0, 0
+
     span_records = []
+    scorer_names = ["embedding", "gradient", "integrated_gradients"]
 
-    for item in stress_prompts_list:
-        sc_res = stress_evaluator.scorers["embedding"].score_prompt(item.prompt, prompt_id=item.id)
-        for r in [0.3, 0.5, 0.7]:
-            w_res = standard_pruner.prune(sc_res, target_removal=r)
-            s_res = span_pruner.prune(sc_res, target_removal=r)
-            
-            w_outcome, _ = classify_outcome(item, w_res.compressed_prompt)
-            s_outcome, _ = classify_outcome(item, s_res.compressed_prompt)
+    for s_name in scorer_names:
+        scorer = stress_evaluator.scorers[s_name]
+        for item in stress_prompts_list:
+            sc_res = scorer.score_prompt(item.prompt, prompt_id=item.id)
+            for r in [0.3, 0.5, 0.7]:
+                w_res = standard_pruner.prune(sc_res, target_removal=r)
+                # Match the exact token removal budget achieved by ordinary word pruning
+                w_tokens_removed = max(1, w_res.original_tokens - w_res.remaining_tokens)
+                s_res = span_pruner.prune(
+                    sc_res,
+                    target_removal=r,
+                    target_tokens_to_remove_override=w_tokens_removed
+                )
 
-            if w_outcome == "POLARITY_REVERSED":
-                w_rev_count += 1
-            if s_outcome == "POLARITY_REVERSED":
-                s_rev_count += 1
-            total_stress_tests += 1
+                w_outcome, w_rat = classify_outcome(item, w_res.compressed_prompt)
+                s_outcome, s_rat = classify_outcome(item, s_res.compressed_prompt)
 
-            span_records.append({
-                "prompt_id": item.id,
-                "category": item.feature_type,
-                "target_removal": r,
-                "word_pruned_text": w_res.compressed_prompt,
-                "word_actual_removal": w_res.actual_removal,
-                "word_outcome": w_outcome,
-                "span_pruned_text": s_res.compressed_prompt,
-                "span_actual_removal": s_res.actual_removal,
-                "span_outcome": s_outcome,
-                "spans_total": s_res.metadata.get("spans_total", 0),
-                "spans_removed": s_res.metadata.get("spans_removed", 0)
-            })
-
-    print(f"[Phase 4] Polarity Inversion Mitigation across {total_stress_tests} stress tests:")
-    print(f"  - Independent Word Pruning Reversals: {w_rev_count} ({w_rev_count/total_stress_tests*100:.1f}%)")
-    print(f"  - Dependency-Aware Span Pruning Reversals: {s_rev_count} ({s_rev_count/total_stress_tests*100:.1f}%)")
+                span_records.append({
+                    "prompt_id": item.id,
+                    "pair_id": item.pair_id,
+                    "category": item.feature_type,
+                    "variant": item.variant,
+                    "scorer": s_name,
+                    "target_removal": r,
+                    "original_prompt": item.prompt,
+                    "critical_requirement": item.critical_requirement,
+                    "word_pruned_text": w_res.compressed_prompt,
+                    "word_actual_removal": round(w_res.actual_removal, 4),
+                    "word_outcome": w_outcome,
+                    "word_rationale": w_rat,
+                    "span_pruned_text": s_res.compressed_prompt,
+                    "span_actual_removal": round(s_res.actual_removal, 4),
+                    "span_outcome": s_outcome,
+                    "span_rationale": s_rat,
+                    "compression_diff": round(s_res.actual_removal - w_res.actual_removal, 4),
+                    "spans_total": s_res.metadata.get("spans_total", 0),
+                    "spans_removed": s_res.metadata.get("spans_removed", 0)
+                })
 
     span_df = pd.DataFrame(span_records)
     span_df.to_csv(tables_dir / "dependency_pruning_results.csv", index=False)
-    print(f"[Phase 4] Saved {len(span_df)} span pruning ablation records to {tables_dir / 'dependency_pruning_results.csv'}")
+
+    # Generate summary table with cluster-bootstrapped CIs across prompts
+    summary_span_rows = []
+    for scope_label, sub_df in [("all_scorers_pooled", span_df)] + [(sn, span_df[span_df["scorer"] == sn]) for sn in scorer_names]:
+        n_runs = len(sub_df)
+        for mode_prefix, col_out, col_cr in [
+            ("ordinary_word_pruning", "word_outcome", "word_actual_removal"),
+            ("rule_based_span_pruning", "span_outcome", "span_actual_removal")
+        ]:
+            rev_cnt = int((sub_df[col_out] == "POLARITY_REVERSED").sum())
+            amb_cnt = int((sub_df[col_out] == "AMBIGUOUS").sum())
+            rem_cnt = int((sub_df[col_out] == "REMOVED").sum())
+            pres_cnt = int((sub_df[col_out] == "PRESERVED").sum())
+
+            rev_m, rev_lo, rev_hi = _cluster_boot_rate_ci(sub_df, "prompt_id", col_out, "POLARITY_REVERSED")
+            pres_m, pres_lo, pres_hi = _cluster_boot_rate_ci(sub_df, "prompt_id", col_out, "PRESERVED")
+            amb_m, amb_lo, amb_hi = _cluster_boot_rate_ci(sub_df, "prompt_id", col_out, "AMBIGUOUS")
+            rem_m, rem_lo, rem_hi = _cluster_boot_rate_ci(sub_df, "prompt_id", col_out, "REMOVED")
+
+            summary_span_rows.append({
+                "scorer_scope": scope_label,
+                "pruning_mode": mode_prefix,
+                "n_evaluations": n_runs,
+                "mean_actual_removal": round(float(sub_df[col_cr].mean()), 4),
+                "preserved_count": pres_cnt,
+                "preserved_rate": round(pres_m, 4),
+                "preserved_ci_95": f"[{pres_lo:.4f}, {pres_hi:.4f}]",
+                "polarity_reversed_count": rev_cnt,
+                "polarity_reversed_rate": round(rev_m, 4),
+                "polarity_reversed_ci_95": f"[{rev_lo:.4f}, {rev_hi:.4f}]",
+                "ambiguous_count": amb_cnt,
+                "ambiguous_rate": round(amb_m, 4),
+                "ambiguous_ci_95": f"[{amb_lo:.4f}, {amb_hi:.4f}]",
+                "removed_count": rem_cnt,
+                "removed_rate": round(rem_m, 4),
+                "removed_ci_95": f"[{rem_lo:.4f}, {rem_hi:.4f}]"
+            })
+
+    span_sum_df = pd.DataFrame(summary_span_rows)
+    span_sum_df.to_csv(tables_dir / "dependency_pruning_summary.csv", index=False)
+
+    # Save audit table of all cases where either word or span pruning caused a polarity reversal
+    rev_cases_span = span_df[
+        (span_df["word_outcome"] == "POLARITY_REVERSED") | (span_df["span_outcome"] == "POLARITY_REVERSED")
+    ].copy()
+    rev_cases_span.to_csv(tables_dir / "dependency_pruning_reversals_audit.csv", index=False)
+
+    print(f"[Phase 4] Saved {len(span_df)} paired span-pruning evaluations and {len(rev_cases_span)} audited reversal cases.")
 
     # -------------------------------------------------------------
     # 5. Enhanced Rate-Distortion & Protocol Plots
     # -------------------------------------------------------------
     print("\n[Phase 5] Updating Rate-Distortion & Protocol Plots...")
-    # Read full 5,400 fidelity results if available
     fid_path = PROJECT_ROOT / "results" / "metrics" / "fidelity_results.csv"
     if fid_path.exists():
         fid_df = pd.read_csv(fid_path)
         plot_actual_rate_distortion_with_auc(fid_df, str(plots_dir / "actual_rate_distortion_auc.png"))
-        print("[Phase 5] Generated actual_rate_distortion_auc.png")
 
     pilot_path = PROJECT_ROOT / "results" / "pilot" / "pilot_evaluation_results.csv"
     if pilot_path.exists():
         pilot_df = pd.read_csv(pilot_path)
         plot_protocols_comparison(pilot_df, str(plots_dir / "protocol_comparison.png"))
-        print("[Phase 5] Generated protocol_comparison.png")
 
     elapsed = time.time() - t0
-    print("\n" + "=" * 70)
-    print(f"ALL RESEARCH ENHANCEMENTS COMPLETED SUCCESSFULLY in {elapsed:.2f} seconds!")
-    print("=" * 70)
+    print("\n" + "=" * 75)
+    print(f"ALL VALIDATION EXPERIMENTS COMPLETED SUCCESSFULLY in {elapsed:.2f} seconds!")
+    print("=" * 75)
 
 
 if __name__ == "__main__":

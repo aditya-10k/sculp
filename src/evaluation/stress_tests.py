@@ -60,69 +60,85 @@ def classify_outcome(
 ) -> Tuple[str, str]:
     """Classifies the compression outcome into PRESERVED, REMOVED, POLARITY_REVERSED, or AMBIGUOUS.
     
+    Every POLARITY_REVERSED classification is strictly verified against the specific
+    clause structure of the original prompt so that cross-clause tokens (e.g. 'not exceed'
+    in a second sentence) never trigger false-positive inversions on the first sentence.
+    
     Returns:
         (classification, rationale)
     """
     text_lower = compressed_text.lower().strip()
-    words = set(re.findall(r"\b\w+\b", text_lower))
     ft = item.feature_type
-    
+
     if ft == "negation_prohibition":
-        # Check for negation words
-        has_negation = bool(re.search(r"\b(not|no|never|don't|dont|cannot)\b", text_lower))
+        has_negation = bool(re.search(r"\b(not|no|never|don't|dont|cannot|without)\b", text_lower))
         has_mention = bool(re.search(r"\b(mention|include|state|note)\b", text_lower))
         has_target = bool(re.search(r"\b(refund|refunds|compensation)\b", text_lower))
-        
+
         if item.variant == "negative":
-            # Original: "Do NOT mention refunds or compensation"
+            # Original: "Draft an official apology to the customer. Do NOT mention refunds or compensation under any circumstances."
             if not has_negation and has_mention and has_target:
-                return "POLARITY_REVERSED", "Negation dropped while mention and target retained; prompt now mandates mentioning refunds"
+                return "POLARITY_REVERSED", "Negation ('NOT') dropped while 'mention' and 'refunds/compensation' retained; directive inverted to mandatory mention"
             elif has_negation and has_target:
-                return "PRESERVED", "Negation and prohibited target both retained"
+                return "PRESERVED", "Negation operator and prohibited target ('refunds/compensation') both retained"
             elif not has_target:
-                return "REMOVED", "Target prohibition completely omitted"
+                return "REMOVED", "Prohibited target ('refunds/compensation') completely removed"
             else:
-                return "AMBIGUOUS", "Ambiguous negation fragments without clear imperative direction"
+                return "AMBIGUOUS", "Negation and verb dropped leaving bare noun ('refunds/compensation') without clear prohibition"
         else:
-            # Original: "Explicitly mention refunds and compensation"
-            has_explicit = bool(re.search(r"\b(explicitly|must|always)\b", text_lower))
+            # Original: "Draft an official apology to the customer. Explicitly mention refunds and compensation under all circumstances."
             if has_negation and (has_mention or has_target):
-                return "POLARITY_REVERSED", "Spurious negation introduced or aligned against mandatory directive"
+                return "POLARITY_REVERSED", "Negation introduced against affirmative requirement"
             elif has_mention and has_target:
-                return "PRESERVED", "Affirmative mention directive and target retained"
+                return "PRESERVED", "Affirmative 'mention' verb and target ('refunds/compensation') retained"
             elif not has_target:
-                return "REMOVED", "Affirmative requirement targets removed"
+                return "REMOVED", "Affirmative target ('refunds/compensation') completely removed"
             else:
-                return "AMBIGUOUS", "Incomplete affirmative specification"
+                return "AMBIGUOUS", "Action verb ('mention') dropped leaving bare target nouns"
 
     elif ft == "numbers_bounds":
-        has_50 = "50" in compressed_text
-        has_10k = bool(re.search(r"10,?000", compressed_text))
-        has_500 = "500" in compressed_text
-        has_10m = bool(re.search(r"10,?000,?000", compressed_text))
-        has_at_most = bool(re.search(r"\b(at most|maximum|max|under|below|not exceed)\b", text_lower))
-        has_at_least = bool(re.search(r"\b(at least|minimum|min|above|over|exceeding)\b", text_lower))
-        
+        # Both variants contain two clauses:
+        # Clause 1: word count bound ("at most 50 words" vs "at least 500 words")
+        # Clause 2: expenditure ceiling ("Do not exceed $10,000" vs "Do not exceed $10,000,000")
+        has_exceed = bool(re.search(r"\bexceed(?:ing)?\b", text_lower))
+        has_not_exceed = bool(re.search(r"\b(?:not|no|never)\s+exceed(?:ing)?\b", text_lower))
+        has_unnegated_exceed = has_exceed and not has_not_exceed
+        has_expenditure_or_amt = bool(re.search(r"\b(expenditure|budget|10|000)\b", text_lower))
+
         if item.variant == "bound_lower":
-            # bound: at most 50 words, <= $10,000
-            if has_50 and has_10k and has_at_most:
-                return "PRESERVED", "Both upper bounds (50 words, $10k) and ceiling qualifiers preserved"
-            elif has_50 and has_at_least:
-                return "POLARITY_REVERSED", "Bound modifier inverted from 'at most' to 'at least'"
+            # Original: "Summarize the project budget in at most 50 words. Do not exceed $10,000 total expenditure."
+            has_50 = bool(re.search(r"\b50\b", text_lower))
+            has_10k = bool(re.search(r"10\s*,?\s*000\b", text_lower))
+            has_word_ceiling = bool(re.search(r"\b(at\s+most|most|maximum|max|under|below)\s+50\b", text_lower))
+            has_word_floor = bool(re.search(r"\b(at\s+least|least|minimum|min|over|above)\s+50\b", text_lower))
+
+            if has_unnegated_exceed and has_expenditure_or_amt:
+                return "POLARITY_REVERSED", "Negation 'not' dropped before 'exceed', inverting 'Do not exceed $10,000 expenditure' into imperative 'exceed ... expenditure'"
+            elif has_word_floor:
+                return "POLARITY_REVERSED", "Word count ceiling ('at most 50') inverted to floor ('at least 50')"
+            elif has_50 and has_word_ceiling and has_not_exceed and has_10k:
+                return "PRESERVED", "Both upper word bound ('most 50') and negated budget ceiling ('not exceed $10,000') preserved"
             elif not has_50 and not has_10k:
-                return "REMOVED", "Both numerical bounds stripped completely"
+                return "REMOVED", "Both numerical thresholds (50 words and $10,000) removed"
             else:
-                return "AMBIGUOUS", "Numerical bounds partially lost or quantifier missing"
+                return "AMBIGUOUS", "Numeric values partially retained but bound qualifier ('at most') or full dollar figure fragmented"
         else:
-            # bound: at least 500 words, <= $10,000,000
-            if has_500 and has_10m and has_at_least:
-                return "PRESERVED", "Both lower bound (500 words) and ceiling ($10m) preserved"
-            elif has_500 and has_at_most:
-                return "POLARITY_REVERSED", "Bound modifier inverted from 'at least' to 'at most'"
+            # Original: "Summarize the project budget in at least 500 words. Do not exceed $10,000,000 total expenditure."
+            has_500 = bool(re.search(r"\b500\b", text_lower))
+            has_10m = bool(re.search(r"10\s*,?\s*000\s*,?\s*000\b", text_lower))
+            has_word_floor = bool(re.search(r"\b(at\s+least|least|minimum|min|over|above)\s+500\b", text_lower))
+            has_word_ceiling = bool(re.search(r"\b(at\s+most|most|maximum|max|under|below)\s+500\b", text_lower))
+
+            if has_unnegated_exceed and has_expenditure_or_amt:
+                return "POLARITY_REVERSED", "Negation 'not' dropped before 'exceed', inverting 'Do not exceed $10,000,000 expenditure' into imperative 'exceed ... expenditure'"
+            elif has_word_ceiling:
+                return "POLARITY_REVERSED", "Word count floor ('at least 500') inverted to ceiling ('at most 500')"
+            elif has_500 and has_word_floor and has_not_exceed and has_10m:
+                return "PRESERVED", "Both lower word bound ('least 500') and negated budget ceiling ('not exceed $10,000,000') preserved"
             elif not has_500 and not has_10m:
-                return "REMOVED", "Both numerical boundaries stripped"
+                return "REMOVED", "Both numerical thresholds (500 words and $10,000,000) removed"
             else:
-                return "AMBIGUOUS", "Numerical thresholds fragmented or quantifier missing"
+                return "AMBIGUOUS", "Numeric values partially retained but bound qualifier ('at least') or full dollar figure fragmented"
 
     elif ft == "entities_identifiers":
         if item.variant == "entity_london":
@@ -149,59 +165,78 @@ def classify_outcome(
     elif ft == "conditional_exceptions":
         has_unless = bool(re.search(r"\b(unless|except|if|provided)\b", text_lower))
         has_500 = "500" in compressed_text
+        has_below = "below" in text_lower or "under" in text_lower
+        has_above = "above" in text_lower or "over" in text_lower
+
         if item.variant == "allow_unless":
+            # Original: "Authorize the wire transfer immediately, UNLESS the account balance is below $500."
             has_auth = "authorize" in text_lower
-            if has_auth and not has_unless and not has_500:
-                return "POLARITY_REVERSED", "Exception clause dropped; conditional authorization transformed into unconditional authorization"
-            elif has_auth and has_unless and has_500:
-                return "PRESERVED", "Authorization action and UNLESS boundary condition preserved"
+            if has_auth and not has_unless:
+                return "POLARITY_REVERSED", "Exception operator ('UNLESS') dropped while 'Authorize' retained; conditional authorization inverted into unconditional authorization"
+            elif has_auth and has_unless and has_below and has_500:
+                return "PRESERVED", "Authorization action and full 'UNLESS ... below $500' exception preserved"
             elif not has_auth and not has_unless:
                 return "REMOVED", "Core transaction action and conditional logic removed"
             else:
-                return "AMBIGUOUS", "Fragmented conditional statement with unclear boundary logic"
+                return "AMBIGUOUS", "Conditional marker retained but threshold direction ('below') or amount ('$500') incomplete"
         else:
+            # Original: "Reject the wire transfer immediately, UNLESS the account balance is above $500."
             has_reject = "reject" in text_lower
-            if has_reject and not has_unless and not has_500:
-                return "POLARITY_REVERSED", "Exception clause dropped; conditional rejection transformed into unconditional rejection"
-            elif has_reject and has_unless and has_500:
-                return "PRESERVED", "Rejection action and UNLESS boundary condition preserved"
+            if has_reject and not has_unless:
+                return "POLARITY_REVERSED", "Exception operator ('UNLESS') dropped while 'Reject' retained; conditional rejection inverted into unconditional rejection"
+            elif has_reject and has_unless and has_above and has_500:
+                return "PRESERVED", "Rejection action and full 'UNLESS ... above $500' exception preserved"
             elif not has_reject and not has_unless:
                 return "REMOVED", "Core action and exception removed"
             else:
-                return "AMBIGUOUS", "Fragmented conditional statement with unclear logic"
+                return "AMBIGUOUS", "Conditional marker retained but threshold direction ('above') or amount ('$500') incomplete"
 
     elif ft == "output_format":
-        has_json = "json" in text_lower
-        has_html = "html" in text_lower or "table" in text_lower
-        has_no_md = bool(re.search(r"\b(no markdown|raw|rfc8259)\b", text_lower))
+        has_json = bool(re.search(r"\bjson\b", text_lower))
+        has_negated_json = bool(re.search(r"\b(?:no|not|without|never)\s+(?:\w+\s+)?json\b", text_lower))
+        has_affirmative_json = has_json and not has_negated_json
+
+        has_md = bool(re.search(r"\bmarkdown\b", text_lower))
+        has_negated_md = bool(re.search(r"\b(?:no|not|without|never)\s+(?:json\s+or\s+|(?:\w+\s+){0,2})?markdown\b", text_lower))
+        has_affirmative_md = has_md and not has_negated_md
+
+        has_html = bool(re.search(r"\b(html|table)\b", text_lower))
+        has_raw_valid = bool(re.search(r"\b(raw|valid|rfc8259)\b", text_lower))
+
         if item.variant == "json_strict":
-            if has_html and not has_json:
-                return "POLARITY_REVERSED", "Format altered to conflicting format (HTML)"
-            elif has_json and has_no_md:
-                return "PRESERVED", "JSON specification and formatting restrictions preserved"
-            elif has_json and not has_no_md:
-                return "AMBIGUOUS", "JSON mentioned but raw formatting / no-markdown constraint dropped"
+            # Original: "Output the database diagnosis strictly as raw valid RFC8259 JSON with no markdown code blocks or explanatory text."
+            if not has_json and has_affirmative_md:
+                return "POLARITY_REVERSED", "Required 'JSON' dropped and 'no' dropped before 'markdown', inverting format to Markdown"
+            elif has_affirmative_json and has_negated_md:
+                return "PRESERVED", "Affirmative JSON directive and 'no markdown' prohibition both preserved"
+            elif has_affirmative_json and has_affirmative_md:
+                return "AMBIGUOUS", "Negation 'no' dropped before 'markdown', leaving conflicting 'JSON markdown' terms"
+            elif has_affirmative_json and not has_md:
+                return "PRESERVED" if has_raw_valid else "AMBIGUOUS", "JSON format retained (markdown prohibition omitted)"
             else:
-                return "REMOVED", "Formatting directives completely removed"
+                return "REMOVED", "JSON formatting directive removed"
         else:
-            if has_json and not has_html:
-                return "POLARITY_REVERSED", "Format altered to conflicting format (JSON)"
-            elif has_html:
-                return "PRESERVED", "HTML table directive preserved"
+            # Original: "Output the database diagnosis strictly as an HTML table element with no JSON or markdown formatting."
+            if not has_html and (has_affirmative_json or has_affirmative_md):
+                return "POLARITY_REVERSED", "Required 'HTML table' dropped and negation 'no' dropped before 'JSON/markdown', inverting format requirement to JSON/Markdown"
+            elif has_html and has_negated_json:
+                return "PRESERVED", "Affirmative 'HTML table' directive and 'no JSON' prohibition both preserved"
+            elif has_html and has_affirmative_json:
+                return "AMBIGUOUS", "Negation 'no' dropped before 'JSON', leaving conflicting 'HTML table JSON' nouns"
+            elif has_html and not has_json:
+                return "PRESERVED", "Affirmative 'HTML table' format directive preserved"
             else:
-                return "REMOVED", "Format specifications removed"
+                return "REMOVED", "Required 'HTML table' target removed (without affirmative inversion to JSON)"
 
     elif ft == "ordering_dependencies":
-        # Check ordering markers and sequence
         has_first = "first" in text_lower
         has_second = "second" in text_lower
         has_then = bool(re.search(r"\b(then|after|finally)\b", text_lower))
         has_isolate = "isolate" in text_lower
         has_patch = "patch" in text_lower
         has_restart = "restart" in text_lower
-        
+
         if item.variant == "isolate_first":
-            # Expect isolate before patch before restart
             pos_iso = text_lower.find("isolate")
             pos_patch = text_lower.find("patch")
             pos_restart = text_lower.find("restart")
@@ -211,57 +246,57 @@ def classify_outcome(
                 elif pos_restart < pos_iso or pos_patch < pos_iso:
                     return "POLARITY_REVERSED", "Action sequence reversed or permuted, violating causal safety"
                 else:
-                    return "AMBIGUOUS", "Actions preserved but ordering qualifiers weakened"
+                    return "AMBIGUOUS", "All three actions retained but explicit ordering qualifiers ('First', 'Second', 'Only then') dropped"
             elif not has_isolate and not has_patch and not has_restart:
                 return "REMOVED", "Sequential workflow steps eliminated"
             else:
-                return "AMBIGUOUS", "Partial workflow steps retained without clear sequence"
+                return "AMBIGUOUS", "Partial workflow steps retained without complete sequence"
         else:
             pos_restart = text_lower.find("restart")
             pos_iso = text_lower.find("isolate")
             pos_patch = text_lower.find("patch")
             if pos_restart != -1 and pos_iso != -1 and pos_patch != -1:
                 if pos_restart < pos_iso < pos_patch and (has_first or has_second or has_then):
-                    return "PRESERVED", "Strict sequence restart -> isolate -> patch preserved"
+                    return "PRESERVED", "Strict sequence restart -> isolate -> patch and ordering markers preserved"
                 elif pos_iso < pos_restart:
                     return "POLARITY_REVERSED", "Action sequence inverted"
                 else:
-                    return "AMBIGUOUS", "Actions preserved but ordering qualifiers weakened"
+                    return "AMBIGUOUS", "All three actions retained but explicit ordering qualifiers dropped"
             elif not has_isolate and not has_patch and not has_restart:
                 return "REMOVED", "Sequential workflow steps eliminated"
             else:
-                return "AMBIGUOUS", "Partial workflow steps retained"
+                return "AMBIGUOUS", "Partial workflow steps retained without complete sequence"
 
     elif ft == "priority_conflicts":
         has_brevity = "brevity" in text_lower
-        has_precision = "precision" in text_lower or "technical" in text_lower
+        has_precision = "precision" in text_lower
         has_prioritize = bool(re.search(r"\b(prioritize|priority|above all|favor)\b", text_lower))
-        
-        if item.variant == "prioritize_brevity":
-            pos_prio = text_lower.find("prioritize")
-            pos_brev = text_lower.find("brevity")
-            pos_prec = text_lower.find("precision")
-            if has_prioritize and has_brevity and (pos_prec == -1 or (pos_brev != -1 and abs(pos_prio - pos_brev) < 30)):
-                return "PRESERVED", "Explicit resolution prioritizing brevity over precision preserved"
-            elif has_prioritize and has_precision and not has_brevity:
-                return "POLARITY_REVERSED", "Priority inverted to technical precision due to brevity deletion"
-            elif not has_brevity and not has_precision:
-                return "REMOVED", "Conflict resolution directives removed"
-            else:
-                return "AMBIGUOUS", "Both criteria present without unambiguous priority winner"
-        else:
-            pos_prio = text_lower.find("prioritize")
-            pos_prec = text_lower.find("precision")
-            if has_prioritize and has_precision and ("brevity" not in text_lower or (pos_prec != -1 and abs(pos_prio - pos_prec) < 30)):
-                return "PRESERVED", "Explicit resolution prioritizing precision over brevity preserved"
-            elif has_prioritize and has_brevity and not has_precision:
-                return "POLARITY_REVERSED", "Priority inverted to brevity due to precision deletion"
-            elif not has_brevity and not has_precision:
-                return "REMOVED", "Conflict resolution directives removed"
-            else:
-                return "AMBIGUOUS", "Both criteria present without unambiguous priority winner"
 
-    # Default fallback
+        # Check which noun immediately follows 'prioritize'
+        prioritize_brevity_match = bool(re.search(r"\bprioritize\s+(?:\w+\s+)?brevity\b", text_lower))
+        prioritize_precision_match = bool(re.search(r"\bprioritize\s+(?:technical\s+)?precision\b", text_lower))
+
+        if item.variant == "prioritize_brevity":
+            # Original: "Summarize the technical briefing. If brevity conflicts with technical precision, prioritize brevity above all else."
+            if prioritize_brevity_match:
+                return "PRESERVED", "Explicit directive 'prioritize brevity' preserved"
+            elif prioritize_precision_match or (has_prioritize and has_precision and not has_brevity):
+                return "POLARITY_REVERSED", "Target 'brevity' dropped after 'prioritize' while 'precision' retained, inverting priority to precision"
+            elif not has_brevity and not has_precision:
+                return "REMOVED", "Conflict resolution directives removed"
+            else:
+                return "AMBIGUOUS", "Criteria mentioned without clear 'prioritize brevity' binding"
+        else:
+            # Original: "Summarize the technical briefing. If brevity conflicts with technical precision, prioritize technical precision above all else."
+            if prioritize_precision_match:
+                return "PRESERVED", "Explicit directive 'prioritize [technical] precision' preserved"
+            elif prioritize_brevity_match or (has_prioritize and has_brevity and not has_precision):
+                return "POLARITY_REVERSED", "Target 'precision' dropped while 'brevity' and 'prioritize' retained, inverting priority to brevity"
+            elif not has_brevity and not has_precision:
+                return "REMOVED", "Conflict resolution directives removed"
+            else:
+                return "AMBIGUOUS", "Criteria mentioned without clear 'prioritize precision' binding"
+
     return "AMBIGUOUS", "Unclassified compression outcome"
 
 
@@ -305,15 +340,6 @@ class StressTestEvaluator:
         print(f"[StressTest] Evaluating {len(prompts)} stress test prompts across {len(all_methods)} methods and {len(ratios)} ratios...")
 
         for item in prompts:
-            prompt_obj = PromptItem(
-                id=item.id,
-                category=item.feature_type,
-                prompt=item.prompt,
-                ground_truth=None,
-                metadata={"pair_id": item.pair_id, "variant": item.variant}
-            )
-
-            # Score with attribution scorers
             scored_map = {}
             for s_name, scorer in self.scorers.items():
                 scored_map[s_name] = scorer.score_prompt(item.prompt, prompt_id=item.id)

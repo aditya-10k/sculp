@@ -1,0 +1,9 @@
+method,evaluation_type,target_outcome,n_prompts,mean_spearman_r,spearman_ci_95,mean_kendall_tau,kendall_ci_95,spearman_p_val,is_circular
+random,Embedding LOO Prediction,Sentence-BERT LOO Drop,15,0.033,"[-0.0693, 0.1397]",0.0227,"[-0.0457, 0.0950]",0.5564148935685229,False
+random,Independent Empirical Validation,Ground-Truth Requirement Drop,15,0.0922,"[-0.0103, 0.2057]",0.0806,"[0.0033, 0.1579]",0.13901678619208102,False
+embedding,Self-Consistency (Circular),Sentence-BERT LOO Drop,15,1.0,"[0.9999, 1.0000]",0.9996,"[0.9991, 1.0000]",5.317672878248453e-57,True
+embedding,Independent Empirical Validation,Ground-Truth Requirement Drop,15,0.4611,"[0.3144, 0.5890]",0.3556,"[0.2366, 0.4621]",1.8512317463693908e-05,False
+gradient,Embedding LOO Prediction,Sentence-BERT LOO Drop,15,0.5569,"[0.4524, 0.6625]",0.4151,"[0.3285, 0.5064]",8.459937682832928e-08,False
+gradient,Independent Empirical Validation,Ground-Truth Requirement Drop,15,0.4699,"[0.3219, 0.5879]",0.3696,"[0.2634, 0.4694]",1.1125543851357194e-05,False
+integrated_gradients,Embedding LOO Prediction,Sentence-BERT LOO Drop,15,0.4052,"[0.3035, 0.5078]",0.292,"[0.2138, 0.3669]",2.1161185398927447e-06,False
+integrated_gradients,Independent Empirical Validation,Ground-Truth Requirement Drop,15,0.31,"[0.1876, 0.4154]",0.2403,"[0.1485, 0.3345]",0.00021100317615101814,False

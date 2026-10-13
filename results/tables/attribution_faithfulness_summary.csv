@@ -1,9 +1,17 @@
-method,evaluation_type,target_outcome,n_prompts,mean_spearman_r,spearman_ci_95,mean_kendall_tau,kendall_ci_95,spearman_p_val,is_circular
-random,Embedding LOO Prediction,Sentence-BERT LOO Drop,15,0.033,"[-0.0693, 0.1397]",0.0227,"[-0.0457, 0.0950]",0.5564148935685229,False
-random,Independent Empirical Validation,Ground-Truth Requirement Drop,15,0.0922,"[-0.0103, 0.2057]",0.0806,"[0.0033, 0.1579]",0.13901678619208102,False
-embedding,Self-Consistency (Circular),Sentence-BERT LOO Drop,15,1.0,"[0.9999, 1.0000]",0.9996,"[0.9991, 1.0000]",5.317672878248453e-57,True
-embedding,Independent Empirical Validation,Ground-Truth Requirement Drop,15,0.4611,"[0.3144, 0.5890]",0.3556,"[0.2366, 0.4621]",1.8512317463693908e-05,False
-gradient,Embedding LOO Prediction,Sentence-BERT LOO Drop,15,0.5569,"[0.4524, 0.6625]",0.4151,"[0.3285, 0.5064]",8.459937682832928e-08,False
-gradient,Independent Empirical Validation,Ground-Truth Requirement Drop,15,0.4699,"[0.3219, 0.5879]",0.3696,"[0.2634, 0.4694]",1.1125543851357194e-05,False
-integrated_gradients,Embedding LOO Prediction,Sentence-BERT LOO Drop,15,0.4052,"[0.3035, 0.5078]",0.292,"[0.2138, 0.3669]",2.1161185398927447e-06,False
-integrated_gradients,Independent Empirical Validation,Ground-Truth Requirement Drop,15,0.31,"[0.1876, 0.4154]",0.2403,"[0.1485, 0.3345]",0.00021100317615101814,False
+method,evaluation_type,target_outcome,n_prompts,mean_spearman_r,sd_spearman_r,median_spearman_r,fisher_z_spearman_r,spearman_ci_95,mean_kendall_tau,kendall_ci_95,spearman_p_val,wilcoxon_p_val,uses_embedding_encoder,is_circular,spearman_p_holm
+random,Cross-Encoder LOO Prediction,Sentence-BERT LOO Drop,30,0.081,0.2076,0.1025,0.085,"[0.0073, 0.1534]",0.0605,"[0.0104, 0.1109]",0.0411904916988759,0.0635564886033535,True,False,0.04119
+embedding,Self-Consistency (Circular),Sentence-BERT LOO Drop,30,1.0,0.0001,1.0,0.999,"[0.9999, 1.0000]",0.9997,"[0.9995, 0.9999]",3.6430342277030076e-120,6.004776915290488e-07,True,True,0.0
+gradient,Cross-Encoder LOO Prediction,Sentence-BERT LOO Drop,30,0.5429,0.207,0.54,0.5818,"[0.4674, 0.6157]",0.4012,"[0.3406, 0.4634]",1.0202686957729687e-14,1.862645149230957e-09,True,False,0.0
+integrated_gradients,Cross-Encoder LOO Prediction,Sentence-BERT LOO Drop,30,0.3832,0.1817,0.3899,0.4,"[0.3178, 0.4456]",0.2693,"[0.2187, 0.3188]",2.272245134736559e-12,1.862645149230957e-09,True,False,0.0
+random,Reference-Guided Embedding Proxy,Reference-Guided Embedding Proxy Drop,30,-0.0004,0.2096,0.0007,-0.0019,"[-0.0763, 0.0720]",-0.0068,"[-0.0640, 0.0477]",0.9910204771702926,0.8871948085725307,True,False,0.99102
+embedding,Reference-Guided Embedding Proxy,Reference-Guided Embedding Proxy Drop,30,0.4938,0.234,0.4983,0.5299,"[0.4077, 0.5718]",0.3843,"[0.3129, 0.4507]",2.2522077228398817e-12,5.587935447692871e-09,True,False,0.0
+gradient,Reference-Guided Embedding Proxy,Reference-Guided Embedding Proxy Drop,30,0.4109,0.2352,0.434,0.4412,"[0.3251, 0.4922]",0.3082,"[0.2418, 0.3741]",1.7730324626750328e-10,2.60770320892334e-08,True,False,0.0
+integrated_gradients,Reference-Guided Embedding Proxy,Reference-Guided Embedding Proxy Drop,30,0.2465,0.24,0.2297,0.2625,"[0.1605, 0.3326]",0.1862,"[0.1213, 0.2530]",4.4811226177772336e-06,6.917864084243774e-06,True,False,9e-06
+random,Independent Deterministic Validation,Independent Deterministic Requirement Drop,30,0.0651,0.2369,0.0215,0.0712,"[-0.0175, 0.1495]",0.0531,"[-0.0093, 0.1162]",0.1431515509931989,0.1556677184998989,False,False,0.143152
+embedding,Independent Deterministic Validation,Independent Deterministic Requirement Drop,30,0.5593,0.2059,0.5754,0.5963,"[0.4839, 0.6302]",0.4371,"[0.3713, 0.5016]",4.158218148748079e-15,1.862645149230957e-09,False,False,0.0
+gradient,Independent Deterministic Validation,Independent Deterministic Requirement Drop,30,0.5533,0.1371,0.5788,0.5683,"[0.5041, 0.5998]",0.4243,"[0.3854, 0.4615]",1.0780641733110112e-19,1.862645149230957e-09,False,False,0.0
+integrated_gradients,Independent Deterministic Validation,Independent Deterministic Requirement Drop,30,0.3174,0.2442,0.3099,0.3419,"[0.2311, 0.4023]",0.2403,"[0.1740, 0.3067]",7.821672778650534e-08,8.326023817062378e-07,False,False,0.0
+random,Independent Functional Task Validation,Downstream Task-Success Loss,15,0.3981,0.2506,0.4574,0.424,"[0.2715, 0.5128]",0.3223,"[0.2175, 0.4187]",2.509319006473125e-05,0.00030517578125,False,False,0.0001
+embedding,Independent Functional Task Validation,Downstream Task-Success Loss,15,0.3735,0.2412,0.3993,0.3933,"[0.2492, 0.4829]",0.304,"[0.2039, 0.3938]",3.261829842002117e-05,0.00030517578125,False,False,0.0001
+gradient,Independent Functional Task Validation,Downstream Task-Success Loss,15,0.4095,0.27,0.4091,0.4444,"[0.2753, 0.5332]",0.3347,"[0.2253, 0.4369]",4.04010660180727e-05,0.00030517578125,False,False,0.0001
+integrated_gradients,Independent Functional Task Validation,Downstream Task-Success Loss,15,0.3335,0.2768,0.3123,0.3683,"[0.1954, 0.4671]",0.2808,"[0.1710, 0.3886]",0.0003632014297857033,0.0006103515625,False,False,0.000363
