@@ -149,18 +149,20 @@ class AttributionFaithfulnessEvaluator:
         text: str,
         gt_stems: Dict[str, Set[str]],
         corpus_idf: Dict[str, float],
-        orig_operator_counts: Dict[str, int]
+        orig_operator_counts: Dict[str, int],
+        weights: Optional[Dict[str, float]] = None,
+        op_weight: float = 2.5,
+        content_weight: float = 0.5,
+        use_idf: bool = True
     ) -> float:
         """Computes encoder-free deterministic requirement retention score R_det(text, G).
         
         Combines:
-        1. Component-weighted human ground-truth stem coverage (weighted by corpus IDF):
-           - Constraints & Steps: weight 2.5
-           - Context & Intent: weight 1.8
-           - Tone: weight 1.2
+        1. Component-weighted human ground-truth stem coverage (optionally weighted by corpus IDF):
+           - Default: Constraints & Steps: 2.5, Context & Intent: 1.8, Tone: 1.2
         2. Exact retention of critical functional operators (negations, numeric bounds,
-           step sequence markers, format identifiers): weight 2.5
-        3. Content-word IDF specificity for non-stopword domain terms: weight 0.5
+           step sequence markers, format identifiers): default weight 2.5
+        3. Content-word specificity for non-stopword domain terms: default weight 0.5
         """
         raw_tokens = re.findall(r"[\$#]?\w+", text.lower())
         present_stems = {_stem(t) for t in raw_tokens if _stem(t)}
@@ -168,18 +170,20 @@ class AttributionFaithfulnessEvaluator:
         total_score = 0.0
 
         # 1. Human ground-truth stem recall weighted by component criticality and IDF
-        weights = {
-            "constraints": 2.5,
-            "steps": 2.5,
-            "context": 1.8,
-            "intent": 1.8,
-            "tone": 1.2
-        }
+        if weights is None:
+            weights = {
+                "constraints": 2.5,
+                "steps": 2.5,
+                "context": 1.8,
+                "intent": 1.8,
+                "tone": 1.2
+            }
         for comp, w_mult in weights.items():
             req_stems = gt_stems.get(comp, set())
             for s in req_stems:
                 if s in present_stems:
-                    total_score += w_mult * corpus_idf.get(s, 1.5)
+                    idf_val = corpus_idf.get(s, 1.5) if use_idf else 1.0
+                    total_score += w_mult * idf_val
 
         # 2. Critical operator / number count preservation
         curr_op_counts: Dict[str, int] = {}
@@ -190,12 +194,15 @@ class AttributionFaithfulnessEvaluator:
 
         for op, orig_cnt in orig_operator_counts.items():
             kept_cnt = min(orig_cnt, curr_op_counts.get(op, 0))
-            total_score += 2.5 * kept_cnt * corpus_idf.get(_stem(op), 1.8)
+            idf_val = corpus_idf.get(_stem(op), 1.8) if use_idf else 1.0
+            total_score += op_weight * kept_cnt * idf_val
 
         # 3. Domain content-word specificity (distinguishes content words from grammatical stopwords)
-        for s in present_stems:
-            if s not in STOPWORDS and len(s) >= 3:
-                total_score += 0.5 * corpus_idf.get(s, 1.0)
+        if content_weight > 0:
+            for s in present_stems:
+                if s not in STOPWORDS and len(s) >= 3:
+                    idf_val = corpus_idf.get(s, 1.0) if use_idf else 1.0
+                    total_score += content_weight * idf_val
 
         return total_score
 
@@ -706,3 +713,139 @@ class AttributionFaithfulnessEvaluator:
             f"summary ({len(summary_df)} rows), and pairwise tests ({len(pairwise_df)} rows)"
         )
         return detail_df, summary_df
+
+    def run_requirement_sensitivity_analysis(
+        self,
+        prompts: List[PromptItem],
+        attr_df: Optional[pd.DataFrame] = None,
+        corpus_idf: Optional[Dict[str, float]] = None,
+        output_csv: Optional[str] = None
+    ) -> pd.DataFrame:
+        """Runs sensitivity analysis of deterministic requirement loss across 4 weighting schemes.
+        
+        Evaluates whether method rank order (Embedding LOO vs Gradient vs IG vs Random)
+        changes under reasonable alternative parameterizations:
+        1. Default Criticality: Constraints/Steps=2.5, Context/Intent=1.8, Tone=1.2, Ops=2.5, Content=0.5, with IDF
+        2. Uniform Equal: All components=1.0, Ops=1.0, Content=1.0, with IDF
+        3. Operator-Heavy: Ops=4.0, Constraints/Steps=2.0, Context/Intent=1.0, Tone=0.5, Content=0.2, with IDF
+        4. Pure Component Recall: All components=1.0, Ops=1.0, Content=0.0, All IDF=1.0
+        
+        Note: This metric is strictly an encoder-free rule-based proxy against ground-truth
+        annotations, NOT human-observed semantic damage.
+        """
+        if corpus_idf is None:
+            corpus_idf = self._build_corpus_idf(prompts)
+
+        if attr_df is None:
+            csv_path = Path("results/tables/attribution_faithfulness.csv")
+            if csv_path.exists():
+                attr_df = pd.read_csv(csv_path)
+
+        schemes = {
+            "default_criticality": {
+                "description": "Default Criticality (Constraints/Steps 2.5, Context/Intent 1.8, Tone 1.2, Ops 2.5, Content 0.5, IDF)",
+                "weights": {"constraints": 2.5, "steps": 2.5, "context": 1.8, "intent": 1.8, "tone": 1.2},
+                "op_w": 2.5, "content_w": 0.5, "use_idf": True
+            },
+            "uniform_equal": {
+                "description": "Uniform Equal (All Components 1.0, Ops 1.0, Content 1.0, IDF)",
+                "weights": {"constraints": 1.0, "steps": 1.0, "context": 1.0, "intent": 1.0, "tone": 1.0},
+                "op_w": 1.0, "content_w": 1.0, "use_idf": True
+            },
+            "operator_heavy": {
+                "description": "Operator-Heavy (Ops 4.0, Constraints/Steps 2.0, Context/Intent 1.0, Tone 0.5, Content 0.2, IDF)",
+                "weights": {"constraints": 2.0, "steps": 2.0, "context": 1.0, "intent": 1.0, "tone": 0.5},
+                "op_w": 4.0, "content_w": 0.2, "use_idf": True
+            },
+            "pure_component_recall_no_idf": {
+                "description": "Pure Component Recall (Components 1.0, Ops 1.0, Content 0.0, No IDF)",
+                "weights": {"constraints": 1.0, "steps": 1.0, "context": 1.0, "intent": 1.0, "tone": 1.0},
+                "op_w": 1.0, "content_w": 0.0, "use_idf": False
+            }
+        }
+
+        # Cache tokenized prompts and ground truth info
+        prompt_data = []
+        for p in prompts:
+            _, words_orig, _ = self.tokenizer_wrapper.tokenize_and_align(p.prompt)
+            if len(words_orig) < 3:
+                continue
+            gt_stems = self._extract_gt_requirement_stems(p.ground_truth)
+            raw_tokens = re.findall(r"[\$#]?\w+", p.prompt.lower())
+            orig_ops: Dict[str, int] = {}
+            for t in raw_tokens:
+                if t in CRITICAL_OPERATORS or any(c.isdigit() for c in t):
+                    orig_ops[t] = orig_ops.get(t, 0) + 1
+            
+            # Precompute LOO prompt strings for each word
+            loo_prompts = [TokenizerWrapper.remove_word_spans(p.prompt, [w]) for w in words_orig]
+            prompt_data.append({
+                "item": p,
+                "words_orig": words_orig,
+                "gt_stems": gt_stems,
+                "orig_ops": orig_ops,
+                "loo_prompts": loo_prompts
+            })
+
+        method_names = ["embedding", "gradient", "integrated_gradients", "random"]
+        rows = []
+
+        for s_name, cfg in schemes.items():
+            m_corrs = {m: [] for m in method_names}
+            for pd_item in prompt_data:
+                p = pd_item["item"]
+                gt_stems = pd_item["gt_stems"]
+                orig_ops = pd_item["orig_ops"]
+                loo_prompts = pd_item["loo_prompts"]
+                
+                base_s = self.compute_deterministic_requirement_score(
+                    p.prompt, gt_stems, corpus_idf, orig_ops,
+                    weights=cfg["weights"], op_weight=cfg["op_w"],
+                    content_weight=cfg["content_w"], use_idf=cfg["use_idf"]
+                )
+                damages = []
+                for loo_p in loo_prompts:
+                    l_s = self.compute_deterministic_requirement_score(
+                        loo_p, gt_stems, corpus_idf, orig_ops,
+                        weights=cfg["weights"], op_weight=cfg["op_w"],
+                        content_weight=cfg["content_w"], use_idf=cfg["use_idf"]
+                    )
+                    dmg = max(0.0, (base_s - l_s) / max(base_s, 1e-6))
+                    damages.append(dmg)
+
+                for m in method_names:
+                    if attr_df is not None:
+                        sub = attr_df[(attr_df["prompt_id"] == p.id) & (attr_df["method"] == m)]
+                        preds = list(sub["predicted_score"])
+                    else:
+                        preds = []
+                    
+                    sp_r, _ = self._safe_rank_corr(preds, damages)
+                    m_corrs[m].append(sp_r)
+
+            row = {
+                "scheme_id": s_name,
+                "scheme_description": cfg["description"],
+                "n_prompts": len(prompt_data),
+            }
+            for m in method_names:
+                row[f"{m}_mean_spearman"] = round(float(np.mean(m_corrs[m])), 4)
+                row[f"{m}_median_spearman"] = round(float(np.median(m_corrs[m])), 4)
+
+            # Pairwise diff between gradient and embedding
+            diff_grad_emb = np.array(m_corrs["gradient"]) - np.array(m_corrs["embedding"])
+            t_res = stats.ttest_1samp(diff_grad_emb, 0.0) if np.std(diff_grad_emb, ddof=1) > 1e-12 else (0.0, 1.0)
+            p_val = float(t_res.pvalue) if hasattr(t_res, "pvalue") else float(t_res[1])
+            row["gradient_minus_embedding_mean"] = round(float(np.mean(diff_grad_emb)), 4)
+            row["gradient_vs_embedding_p_val"] = round(p_val, 4)
+
+            ranked = sorted(method_names, key=lambda x: row[f"{x}_mean_spearman"], reverse=True)
+            row["method_rank_order"] = " > ".join(ranked)
+            rows.append(row)
+
+        res_df = pd.DataFrame(rows)
+        if output_csv:
+            out_p = Path(output_csv)
+            out_p.parent.mkdir(parents=True, exist_ok=True)
+            res_df.to_csv(out_p, index=False)
+        return res_df

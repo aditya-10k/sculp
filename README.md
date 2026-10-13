@@ -121,7 +121,10 @@ The empirical collapse threshold $r^*$ is identified via the discrete rate-disto
 Token importance correlations are computed **within individual prompts first** ($N = 30$ stratified prompts, 6 per category, 2,588 tokens), then aggregated across prompt clusters via **$B = 10,000$ cluster bootstrap resamples** and **Holm-Bonferroni** step-down multiple-testing correction across four distinct outcomes:
 1. **Sentence-BERT LOO Drop (Circular Self-Consistency Check):** For Embedding LOO, $r_s = 1.0000$ by mathematical definition.
 2. **Reference-Guided Embedding Proxy Drop:** Sentence-BERT cosine drop relative to human reference text; explicitly labeled as an embedding proxy because it uses the `all-MiniLM-L6-v2` encoder.
-3. **Independent Deterministic Requirement Drop (Encoder-Free):** 100% deterministic lexical/stem, numeric, and negation-operator requirement drop against `ground_truth.json` with zero neural encoders.
+3. **Independent Deterministic Requirement Drop (Encoder-Free):** 100% deterministic lexical/stem, numeric, and negation-operator requirement drop against `ground_truth.json` with zero neural encoders:
+   $$R_{\text{det}}(\text{text}, G) = \sum_{c \in \mathcal{C}} w_c \sum_{s \in \text{stems}(G_c) \cap \text{text}} \text{IDF}(s) + w_{\text{op}} \sum_{\text{op} \in \text{ops}(G)} \min\left(\text{cnt}_{\text{text}}(\text{op}), \text{cnt}_{\text{orig}}(\text{op})\right) \cdot \text{IDF}(\text{op}) + w_{\text{content}} \sum_{s \in \text{content-stems}(\text{text})} \text{IDF}(s)$$
+   Default component weights: Constraints ($2.5$), Steps ($2.5$), Context ($1.8$), Intent ($1.8$), Tone ($1.2$), Operators ($2.5$), Content ($0.5$). Token LOO damage: $\Delta_i = \max(0, [R_{\text{orig}} - R_{P \setminus \{w_i\}}] / R_{\text{orig}})$.
+   *Methodological Disclaimer:* Strictly an **encoder-free rule-based proxy** against ground-truth annotations; strictly **NOT human-observed semantic damage**.
 4. **Downstream Task-Success Loss:** Functional task loss ($S_{\text{orig}} - S_{\text{comp}}$) across the 15-task benchmark.
 
 | Method | Target Outcome | $N$ Clusters | Mean Spearman $r_s$ (SD) | Median $r_s$ | 95% Cluster Bootstrap CI | Kendall $\tau$ | Holm-Adjusted $p$ | Circular? |
@@ -140,6 +143,8 @@ Token importance correlations are computed **within individual prompts first** (
 | **Random Baseline** | Downstream Task Loss (Exploratory Macro) | 15 | 0.3426 (0.1897) | 0.3608 | `[0.2471, 0.4313]` | 0.2844 | 0.0000 | No |
 
 *Direct Paired Test (`Gradient` vs `Embedding LOO`):* On encoder-free **Independent Deterministic Requirement Drop**, direct paired cluster testing shows that **no statistically significant difference was detected between Gradient Attribution ($r_s = 0.5533$) and Embedding LOO ($r_s = 0.5593$) ($\Delta r_s = -0.0061$, 95% CI `[-0.0855, +0.0802]`, paired $t$-test $p = 0.8890$, Wilcoxon $p = 0.5940$, $p_{\text{Holm}} = 0.8890$)**, while both significantly outperform Integrated Gradients ($p_{\text{Holm}} \le 0.00095$) and Random ($p_{\text{Holm}} < 10^{-7}$). Equivalence is not claimed because no formal equivalence margin was pre-specified.
+
+*Sensitivity Analysis Across Alternative Weights (`results/tables/requirement_sensitivity_analysis.csv`):* Evaluated across 4 weighting schemes (Default Criticality, Uniform Equal 1.0, Operator-Heavy 4.0, Pure Component Recall with no IDF). Gradient and Embedding LOO remain virtually tied at $r_s \approx 0.49 - 0.58$ ($|\Delta r_s| \le 0.031$, paired $p \ge 0.51$) across all 4 schemes, confirming the finding is invariant to component weights.
 
 *Note on Downstream Task Loss Alignment:* This analysis measures exploratory macro-level association between total removed importance mass and whole-prompt task loss across multi-token compressed variants, confounded by overall compression ratio (Random $r_s = 0.3426$, $p_{\text{Holm}} = 1.0000$), NOT token-level counterfactual faithfulness validation.
 
@@ -179,21 +184,21 @@ Evaluated across 14 minimal pairs (7 dimensions) at 30%, 50%, and 70% compressio
 
 ### 6. Rule-Based Critical-Span Pruning Ablation (126 Paired Runs)
 
-To prevent orphaned verb and numeric-bound inversions, `DependencyAwarePruner` implements **rule-based critical-span grouping** (`negation_clause`, `numerical_bound`, `conditional_exception`, `priority_directive`) and is evaluated against ordinary word pruning across **all 3 importance scorers (`embedding`, `gradient`, `integrated_gradients`) $\times$ 14 minimal pairs $\times$ 3 CRs = 126 paired evaluations** at matched actual token budgets:
-- Evaluations cluster on the 14 intact prompt items to account for repeated measurements across compression levels and scorers.
-- For 0 observed reversals under span pruning, the defensible **Wilson score 95% confidence interval on prompt clusters is $[0.0000, 0.2153]$ ($[0.0\%, 21.5\%]$)** (Rule of Three upper bound $3/14 = 0.2143$).
+To prevent orphaned verb and numeric-bound inversions, `DependencyAwarePruner` implements **rule-based critical-span grouping** (`negation_clause`, `numerical_bound`, `conditional_exception`, `priority_directive`) and is evaluated against ordinary word pruning across **all 3 importance scorers (`embedding`, `gradient`, `integrated_gradients`) $\times$ 7 minimal-contrast pairs (14 prompts) $\times$ 3 CRs = 126 paired evaluations** at matched actual token budgets:
+- Evaluations cluster on the **seven minimal-contrast pairs (`pair_id`) as the independent resampling units** ($N=7$).
+- For 0 observed reversals under span pruning, the defensible **Wilson score 95% confidence interval on minimal-pair clusters is $[0.0000, 0.3543]$ ($[0.0\%, 35.4\%]$)** (Rule of Three upper bound $3/7 = 0.4286$ or $42.9\%$).
 
-| Scorer Scope | Pruning Mode | $N$ Clusters | $N$ Runs | Mean Actual Removal | Polarity Reversals (95% Cluster CI) | Preserved Rate (95% Cluster CI) |
-|:---|:---|:---:|:---:|:---:|:---:|:---:|
-| **All 3 Scorers Pooled** | Ordinary Word Pruning | 14 | 126 | 0.4446 | **21 / 126 (16.7% `[7.1%, 27.0%]`)** | 35 / 126 (27.8% `[15.1%, 42.9%]`) |
-| **All 3 Scorers Pooled** | **Rule-Based Span Pruning** | 14 | 126 | 0.4332 | **0 / 126 (0.0% `[0.0%, 21.5%]`)** | **74 / 126 (58.7% `[45.2%, 72.2%]`)** |
-| `embedding` | Ordinary vs Span Pruning | 14 | 42 | 0.464 vs 0.460 | **6 (14.3%) $\rightarrow$ 0 (0.0% `[0.0%, 21.5%]`)** | **13 (31.0%) $\rightarrow$ 26 (61.9%)** |
-| `gradient` | Ordinary vs Span Pruning | 14 | 42 | 0.436 vs 0.420 | **8 (19.0%) $\rightarrow$ 0 (0.0% `[0.0%, 21.5%]`)** | **11 (26.2%) $\rightarrow$ 23 (54.8%)** |
-| `integrated_gradients` | Ordinary vs Span Pruning | 14 | 42 | 0.435 vs 0.419 | **7 (16.7%) $\rightarrow$ 0 (0.0% `[0.0%, 21.5%]`)** | **11 (26.2%) $\rightarrow$ 25 (59.5%)** |
+| Scorer Scope | Pruning Mode | Cluster Unit | $N$ Clusters | $N$ Runs | Mean Actual Removal | Polarity Reversals (95% Cluster CI) | Preserved Rate (95% Cluster CI) |
+|:---|:---|:---|:---:|:---:|:---:|:---:|:---:|
+| **All 3 Scorers Pooled** | Ordinary Word Pruning | `pair_id` | 7 | 126 | 0.4446 | **21 / 126 (16.7% `[6.4%, 27.8%]`)** | 35 / 126 (27.8% `[11.9%, 46.8%]`) |
+| **All 3 Scorers Pooled** | **Rule-Based Span Pruning** | `pair_id` | 7 | 126 | 0.4332 | **0 / 126 (0.0% `[0.0%, 35.4%]`)** | **74 / 126 (58.7% `[41.3%, 77.0%]`)** |
+| `embedding` | Ordinary vs Span Pruning | `pair_id` | 7 | 42 | 0.464 vs 0.460 | **6 (14.3%) $\rightarrow$ 0 (0.0% `[0.0%, 35.4%]`)** | **13 (31.0%) $\rightarrow$ 26 (61.9%)** |
+| `gradient` | Ordinary vs Span Pruning | `pair_id` | 7 | 42 | 0.436 vs 0.420 | **8 (19.0%) $\rightarrow$ 0 (0.0% `[0.0%, 35.4%]`)** | **11 (26.2%) $\rightarrow$ 23 (54.8%)** |
+| `integrated_gradients` | Ordinary vs Span Pruning | `pair_id` | 7 | 42 | 0.435 vs 0.419 | **7 (16.7%) $\rightarrow$ 0 (0.0% `[0.0%, 35.4%]`)** | **11 (26.2%) $\rightarrow$ 25 (59.5%)** |
 
-*Paired Prompt-Cluster Statistical Results (`results/tables/dependency_pruning_paired_tests.csv`):*
-- **Reversal Reduction:** $\Delta_{\text{rev}} = \mathbf{+16.7\%}$ ($+0.1667$), 95% cluster CI `[+7.1%, +27.0%]`, paired $t(13) = 3.220, p = 0.0067$, Wilcoxon $p = 0.0156$.
-- **Preservation Gain:** $\Delta_{\text{pres}} = \mathbf{+31.0\%}$ ($+0.3095$), 95% cluster CI `[+17.5%, +45.2%]`, paired $t(13) = 4.192, p = 0.00105$.
+*Paired Minimal-Pair Cluster Statistical Results (`results/tables/dependency_pruning_paired_tests.csv`):*
+- **Reversal Reduction:** $\Delta_{\text{rev}} = \mathbf{+16.7\%}$ ($+0.1667$), 95% pair-cluster CI `[+6.4%, +27.8%]`, paired $t(6) = 2.867, p = 0.0286$, Wilcoxon signed-rank $p = 0.0625$ (the discrete floor for $N=5$ non-tied pairs in a two-sided test).
+- **Preservation Gain:** $\Delta_{\text{pres}} = \mathbf{+31.0\%}$ ($+0.3095$), 95% pair-cluster CI `[+15.9%, +46.0%]`, paired $t(6) = 3.653, p = 0.0107$, Wilcoxon signed-rank $p = 0.0312$.
 - **Tightly Matched Budgets:** Removal difference is only $\Delta_{\text{rem}} = -1.1\%$ ($43.3\%$ span vs $44.5\%$ word).
 - **Scope Statement:** Transparently characterized as rule-based critical-span grouping, not general statistical dependency parsing.
 
@@ -216,11 +221,11 @@ Every headline claim is traced directly to source code, underlying data, saved C
 | 2 | Component collapse occurs at distinct thresholds | `src/analysis/collapse.py` | `fidelity_results.csv` | `collapse_thresholds.csv` | 100 prompts | **Validated Finding** |
 | 3 | Embedding LOO correlation with Sentence-BERT is $r_s = 1.0$ | `src/analysis/attribution_faithfulness.py` | 30 stratified prompts | `attribution_faithfulness_summary.csv` | 30 prompts, 2,588 tokens | **Self-Consistency Check** |
 | 4 | Reference-guided Sentence-BERT drop is an embedding proxy | `src/analysis/attribution_faithfulness.py` | `ground_truth.json` | `attribution_faithfulness_summary.csv` | 30 prompts, 2,588 tokens | **Reference-Guided Embedding Proxy** |
-| 5 | No statistically significant difference detected between Gradient & Embedding LOO | `src/analysis/attribution_faithfulness.py` | `ground_truth.json` | `attribution_faithfulness_summary.csv`, `attribution_pairwise_tests.csv` | 30 prompts, 2,588 tokens | **Validated Finding** |
+| 5 | No statistically significant difference detected between Gradient & Embedding LOO | `src/analysis/attribution_faithfulness.py` | `ground_truth.json` | `attribution_faithfulness_summary.csv`, `attribution_pairwise_tests.csv`, `requirement_sensitivity_analysis.csv` | 30 prompts, 2,588 tokens | **Validated Finding** |
 | 6 | Protocol A (Blind) and Protocol B (Guided) measure distinct constructs | `src/interpretation/evaluator_protocols.py` | 10 pilot prompts | `pilot_evaluation_results.csv` | 30 runs | **Validated Finding** |
 | 7 | Inter-evaluator agreement between independent LLMs is strong | `src/interpretation/evaluator_protocols.py` | 10 paired prompts | `pilot_evaluator_agreement.csv` | 10 paired prompts | **Validated Finding** |
 | 8 | Lexical pruning causes polarity inversions and ambiguity | `src/evaluation/stress_tests.py` | 14 minimal pairs | `stress_test_results.csv`, `polarity_reversals_audit.csv` | 252 evaluations | **Validated Finding** |
-| 9 | Rule-based critical-span pruning eliminates polarity inversions at matched budgets | `src/pruning/dependency_pruner.py` | 14 minimal pairs × 3 scorers | `dependency_pruning_summary.csv`, `dependency_pruning_paired_tests.csv`, `dependency_pruning_reversals_audit.csv` | 126 paired evaluations | **Validated Finding** |
+| 9 | Rule-based critical-span pruning eliminates polarity inversions at matched budgets | `src/pruning/dependency_pruner.py` | 7 minimal pairs × 3 scorers | `dependency_pruning_summary.csv`, `dependency_pruning_paired_tests.csv`, `dependency_pruning_reversals_audit.csv` | 126 paired evaluations | **Validated Finding** |
 | 10 | Functional downstream task retention across 15 stratified tasks | `src/evaluation/downstream.py` | 15 stratified tasks | `downstream_results.csv`, `downstream_matched_comparison.csv`, `downstream_variability.csv` | 285 main + 60 variability runs | **Validated Finding** |
 | 11 | LLMLingua / LLMLingua-2 approximate official algorithms | `src/baselines/` | GPT-2 / Multilingual BERT | `fidelity_results.csv` | 1,800 runs | **Preliminary Finding** |
 

@@ -161,6 +161,13 @@ def run_all_enhancements():
     )
     plot_attribution_faithfulness_summary(summary_df, str(plots_dir / "attribution_faithfulness.png"))
 
+    print("[Phase 3b] Executing Deterministic Requirement Metric Sensitivity Analysis (4 Weighting Schemes)...")
+    faithfulness_evaluator.run_requirement_sensitivity_analysis(
+        prompts=stratified_30,
+        attr_df=detail_df,
+        output_csv=str(tables_dir / "requirement_sensitivity_analysis.csv")
+    )
+
     # -------------------------------------------------------------
     # 4. Rule-Based Critical-Span Pruning vs Ordinary Word Pruning
     # -------------------------------------------------------------
@@ -220,7 +227,7 @@ def run_all_enhancements():
 
     for scope_label, sub_df in [("all_scorers_pooled", span_df)] + [(sn, span_df[span_df["scorer"] == sn]) for sn in scorer_names]:
         n_runs = len(sub_df)
-        n_clusters = len(sub_df["prompt_id"].unique())
+        n_clusters = len(sub_df["pair_id"].unique())
 
         for mode_prefix, col_out, col_cr in [
             ("ordinary_word_pruning", "word_outcome", "word_actual_removal"),
@@ -231,14 +238,15 @@ def run_all_enhancements():
             rem_cnt = int((sub_df[col_out] == "REMOVED").sum())
             pres_cnt = int((sub_df[col_out] == "PRESERVED").sum())
 
-            rev_m, rev_lo, rev_hi = _cluster_boot_rate_ci(sub_df, "prompt_id", col_out, "POLARITY_REVERSED")
-            pres_m, pres_lo, pres_hi = _cluster_boot_rate_ci(sub_df, "prompt_id", col_out, "PRESERVED")
-            amb_m, amb_lo, amb_hi = _cluster_boot_rate_ci(sub_df, "prompt_id", col_out, "AMBIGUOUS")
-            rem_m, rem_lo, rem_hi = _cluster_boot_rate_ci(sub_df, "prompt_id", col_out, "REMOVED")
+            rev_m, rev_lo, rev_hi = _cluster_boot_rate_ci(sub_df, "pair_id", col_out, "POLARITY_REVERSED")
+            pres_m, pres_lo, pres_hi = _cluster_boot_rate_ci(sub_df, "pair_id", col_out, "PRESERVED")
+            amb_m, amb_lo, amb_hi = _cluster_boot_rate_ci(sub_df, "pair_id", col_out, "AMBIGUOUS")
+            rem_m, rem_lo, rem_hi = _cluster_boot_rate_ci(sub_df, "pair_id", col_out, "REMOVED")
 
             summary_span_rows.append({
                 "scorer_scope": scope_label,
                 "pruning_mode": mode_prefix,
+                "cluster_unit": "pair_id (N=7 minimal pairs)",
                 "n_clusters": n_clusters,
                 "n_evaluations": n_runs,
                 "mean_actual_removal": round(float(sub_df[col_cr].mean()), 4),
@@ -256,8 +264,8 @@ def run_all_enhancements():
                 "removed_ci_95": f"[{rem_lo:.4f}, {rem_hi:.4f}]"
             })
 
-        # Paired prompt-cluster comparison between ordinary word pruning and rule-based critical-span pruning
-        p_df = sub_df.groupby("prompt_id").apply(lambda g: pd.Series({
+        # Paired minimal-pair cluster comparison (N=7 semantic contrast pairs)
+        p_df = sub_df.groupby("pair_id").apply(lambda g: pd.Series({
             "w_rev": (g["word_outcome"] == "POLARITY_REVERSED").mean(),
             "s_rev": (g["span_outcome"] == "POLARITY_REVERSED").mean(),
             "w_pres": (g["word_outcome"] == "PRESERVED").mean(),
@@ -273,6 +281,11 @@ def run_all_enhancements():
         t_res_rev = stats.ttest_1samp(diff_rev, 0.0) if np.std(diff_rev, ddof=1) > 1e-12 else (0.0, 1.0)
         t_res_pres = stats.ttest_1samp(diff_pres, 0.0) if np.std(diff_pres, ddof=1) > 1e-12 else (0.0, 1.0)
 
+        w_res_rev = stats.wilcoxon(p_df["w_rev"], p_df["s_rev"]) if (diff_rev != 0).any() else (0.0, 1.0)
+        w_p_rev = float(w_res_rev.pvalue) if hasattr(w_res_rev, "pvalue") else float(w_res_rev[1])
+        w_res_pres = stats.wilcoxon(p_df["s_pres"], p_df["w_pres"]) if (diff_pres != 0).any() else (0.0, 1.0)
+        w_p_pres = float(w_res_pres.pvalue) if hasattr(w_res_pres, "pvalue") else float(w_res_pres[1])
+
         rng = np.random.default_rng(42)
         n_c = len(p_df)
         boot_diff_rev = [np.mean(rng.choice(diff_rev.to_numpy(), size=n_c, replace=True)) for _ in range(10000)]
@@ -282,6 +295,7 @@ def run_all_enhancements():
 
         paired_span_rows.append({
             "scorer_scope": scope_label,
+            "cluster_unit": "pair_id (N=7 minimal pairs)",
             "n_clusters": n_clusters,
             "n_evaluations": n_runs,
             "mean_word_actual_removal": round(float(p_df["w_rem"].mean()), 4),
@@ -292,11 +306,13 @@ def run_all_enhancements():
             "paired_reversal_reduction": round(float(diff_rev.mean()), 4),
             "paired_reversal_reduction_ci_95": f"[{ci_rev_low:.4f}, {ci_rev_high:.4f}]",
             "paired_reversal_p_val": float(t_res_rev.pvalue) if hasattr(t_res_rev, "pvalue") else float(t_res_rev[1]),
+            "paired_reversal_wilcoxon_p": round(w_p_rev, 4),
             "word_preserved_rate": round(float(p_df["w_pres"].mean()), 4),
             "span_preserved_rate": round(float(p_df["s_pres"].mean()), 4),
             "paired_preservation_gain": round(float(diff_pres.mean()), 4),
             "paired_preservation_gain_ci_95": f"[{ci_pres_low:.4f}, {ci_pres_high:.4f}]",
-            "paired_preservation_p_val": float(t_res_pres.pvalue) if hasattr(t_res_pres, "pvalue") else float(t_res_pres[1])
+            "paired_preservation_p_val": float(t_res_pres.pvalue) if hasattr(t_res_pres, "pvalue") else float(t_res_pres[1]),
+            "paired_preservation_wilcoxon_p": round(w_p_pres, 4)
         })
 
     span_sum_df = pd.DataFrame(summary_span_rows)
