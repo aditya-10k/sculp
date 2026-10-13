@@ -131,30 +131,36 @@ Token importance correlations are computed **within individual prompts first** (
 | **Embedding LOO** | Reference-Guided Embedding Proxy Drop | 30 | **0.4938** (0.2340) | 0.4983 | `[0.4077, 0.5718]` | 0.3843 | $< 10^{-11}$ | No |
 | **Gradient Attribution** | Reference-Guided Embedding Proxy Drop | 30 | **0.4109** (0.2352) | 0.4340 | `[0.3251, 0.4922]` | 0.3082 | $< 10^{-9}$ | No |
 | **Integrated Gradients** | Reference-Guided Embedding Proxy Drop | 30 | 0.2465 (0.2400) | 0.2297 | `[0.1605, 0.3326]` | 0.1862 | $9.0 \times 10^{-6}$ | No |
-| **Random Baseline** | **Independent Deterministic Requirement Drop** | 30 | 0.0651 (0.2369) | 0.0215 | `[-0.0175, 0.1495]` | 0.0531 | 0.1432 (n.s.) | No |
+| **Random Baseline** | **Independent Deterministic Requirement Drop** | 30 | 0.0102 (0.2867) | 0.0862 | `[-0.0936, 0.1056]` | 0.0012 | 0.8465 (n.s.) | No |
 | **Embedding LOO** | **Independent Deterministic Requirement Drop** | 30 | **0.5593** (0.2059) | 0.5754 | `[0.4839, 0.6302]` | **0.4371** | $< 10^{-14}$ | **No** |
 | **Gradient Attribution** | **Independent Deterministic Requirement Drop** | 30 | **0.5533** (0.1371) | **0.5788** | `[0.5041, 0.5998]` | **0.4243** | $< 10^{-18}$ | **No** |
 | **Integrated Gradients** | **Independent Deterministic Requirement Drop** | 30 | **0.3174** (0.2442) | 0.3099 | `[0.2311, 0.4023]` | 0.2403 | $< 10^{-7}$ | **No** |
-| **Gradient Attribution** | Downstream Task-Success Loss | 15 | **0.4095** (0.2700) | 0.4091 | `[0.2753, 0.5332]` | 0.3347 | 0.0001 | No |
-| **Embedding LOO** | Downstream Task-Success Loss | 15 | 0.3735 (0.2412) | 0.3993 | `[0.2492, 0.4829]` | 0.3040 | 0.0001 | No |
+| **Gradient Attribution** | Downstream Task Loss (Exploratory Macro) | 15 | **0.3981** (0.2989) | 0.5047 | `[0.2495, 0.5373]` | 0.3312 | 0.0003 | No |
+| **Embedding LOO** | Downstream Task Loss (Exploratory Macro) | 15 | 0.3728 (0.2632) | 0.3989 | `[0.2389, 0.4913]` | 0.3128 | 0.0002 | No |
+| **Random Baseline** | Downstream Task Loss (Exploratory Macro) | 15 | 0.3426 (0.1897) | 0.3608 | `[0.2471, 0.4313]` | 0.2844 | 0.0000 | No |
 
-*Direct Paired Test (`Gradient` vs `Embedding LOO`):* On encoder-free **Independent Deterministic Requirement Drop**, direct paired cluster testing proves that **Gradient Attribution ($r_s = 0.5533$) and Embedding LOO ($r_s = 0.5593$) perform virtually identically ($\Delta r_s = -0.0061$, 95% CI `[-0.0855, +0.0802]`, paired $t$-test $p = 0.8890$, Wilcoxon $p = 0.5940$, $p_{\text{Holm}} = 0.8890$)**, while both significantly outperform Integrated Gradients ($p_{\text{Holm}} \le 0.00095$) and Random ($p_{\text{Holm}} < 10^{-7}$).
+*Direct Paired Test (`Gradient` vs `Embedding LOO`):* On encoder-free **Independent Deterministic Requirement Drop**, direct paired cluster testing shows that **no statistically significant difference was detected between Gradient Attribution ($r_s = 0.5533$) and Embedding LOO ($r_s = 0.5593$) ($\Delta r_s = -0.0061$, 95% CI `[-0.0855, +0.0802]`, paired $t$-test $p = 0.8890$, Wilcoxon $p = 0.5940$, $p_{\text{Holm}} = 0.8890$)**, while both significantly outperform Integrated Gradients ($p_{\text{Holm}} \le 0.00095$) and Random ($p_{\text{Holm}} < 10^{-7}$). Equivalence is not claimed because no formal equivalence margin was pre-specified.
+
+*Note on Downstream Task Loss Alignment:* This analysis measures exploratory macro-level association between total removed importance mass and whole-prompt task loss across multi-token compressed variants, confounded by overall compression ratio (Random $r_s = 0.3426$, $p_{\text{Holm}} = 1.0000$), NOT token-level counterfactual faithfulness validation.
 
 ### 4. Functional Downstream Task Retention (15 Stratified Tasks)
 
 Evaluates whether compressed prompts accomplish their downstream functional objectives across **15 stratified tasks** (3 per category across Instruction, Constraint, Context, Tone, and Multi-Step; $N = 285$ evaluations, **0 missing/failed runs**, uncompressed baseline $S_{\text{orig}} = 0.9778$):
+- **Normalized Retention AUC ($\text{AUC}_{\text{norm}} = \frac{1}{0.70}\int_0^{0.70} R(r)\,dr \in [0.0, 1.0]$):** Evaluates mean task retention across actual removal rates $[0.0, 0.70]$.
+- **Unnormalized Retention AUC ($\text{AUC}_{\text{unnorm}} = \int_0^{0.70} R(r)\,dr = 0.70 \times \text{AUC}_{\text{norm}} \in [0.0, 0.70]$):** Evaluates the raw integrated trapezoidal area.
 
-| Method | Raw Mean Retention | Matched Ret @ 30% Actual | Matched Ret @ 50% Actual | Matched Ret @ 70% Actual | Matched Actual AUC | 95% Cluster Bootstrap CI | $\Delta$ AUC vs Random |
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Embedding LOO** | **0.7243** | **0.8723** | 0.6784 | **0.6059** | **0.8019** | `[0.7169, 0.8825]` | **+0.0882** |
-| **LLMLingua-2 (Fallback)** | 0.7134 | 0.8320 | 0.7060 | 0.5272 | 0.7898 | `[0.6941, 0.8786]` | +0.0761 |
-| **LLMLingua (Fallback)** | 0.7179 | 0.8069 | **0.7191** | 0.5661 | 0.7863 | `[0.6650, 0.8909]` | +0.0726 |
-| **Gradient Attribution** | 0.6642 | 0.7663 | 0.6189 | 0.5639 | 0.7436 | `[0.6081, 0.8682]` | +0.0299 |
-| **Random Baseline** | 0.5857 | 0.7845 | 0.6508 | 0.2863 | 0.7137 | `[0.6143, 0.8040]` | 0.0000 |
-| **Integrated Gradients** | 0.5827 | 0.6827 | 0.5559 | 0.4172 | 0.6726 | `[0.5459, 0.7886]` | -0.0411 |
+| Method | Raw Mean Retention | Matched Ret @ 30% Actual | Matched Ret @ 50% Actual | Matched Ret @ 70% Actual | Matched Normalized AUC (Mean Ret) | 95% Cluster Bootstrap CI | Matched Unnormalized AUC ($\int R\,dr$) | $\Delta$ Norm AUC vs Random | $p$ ($p_{\text{Holm}}$) |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Embedding LOO** | **0.7243** | **0.8723** | 0.6784 | **0.6059** | **0.8019** | `[0.7169, 0.8825]` | **0.5613** | +0.0840 | 0.1552 (0.776) |
+| **LLMLingua-2 (Fallback)** | 0.7134 | 0.8320 | 0.7060 | 0.5272 | 0.7898 | `[0.6941, 0.8786]` | 0.5528 | +0.0719 | 0.0804 (0.482) |
+| **LLMLingua (Fallback)** | 0.7179 | 0.8069 | **0.7191** | 0.5661 | 0.7863 | `[0.6650, 0.8909]` | 0.5504 | +0.0684 | 0.2692 (1.000) |
+| **Gradient Attribution** | 0.6642 | 0.7663 | 0.6189 | 0.5639 | 0.7436 | `[0.6081, 0.8682]` | 0.5205 | +0.0257 | 0.6991 (1.000) |
+| **Random Baseline** | 0.5665 | 0.7611 | 0.6659 | 0.2867 | 0.7179 | `[0.5891, 0.8353]` | 0.5025 | +0.0000 | Control |
+| **Integrated Gradients** | 0.5827 | 0.6827 | 0.5559 | 0.4172 | 0.6726 | `[0.5459, 0.7886]` | 0.4708 | -0.0453 | 0.3047 (1.000) |
 
-*Key Findings:*
-- **Aggressive Compression Resilience:** At 70% actual token removal, Embedding LOO retains **60.59%** of downstream task success vs **28.63%** for Random Baseline ($>2.1\times$ higher retention).
+*Key Findings & Statistical Limitations:*
+- **Aggressive Compression Resilience:** At 70% actual token removal, Embedding LOO retains **60.59%** of downstream task success vs **28.67%** for Random Baseline ($>2.1\times$ higher retention).
+- **Lack of Statistical Significance After Holm Correction:** Across the full $[0, 0.70]$ removal regime on $N=15$ heterogeneous tasks, **no statistically significant difference was detected between any compression method and Random in overall retention AUC** (Embedding $p_{\text{Holm}} = 0.7762$, LLMLingua-2 $p_{\text{Holm}} = 0.4824$, LLMLingua $p_{\text{Holm}} = 1.0000$, Gradient $p_{\text{Holm}} = 1.0000$). While Embedding LOO exhibits the highest point estimate, it cannot be claimed as a statistically proven winner over Random in downstream task retention.
 - **Intra-Model Generation Variability ($K=3$ trials at $T=0.0$ and $T=0.3$, 60 runs):** 100% of condition cells (20/20) exhibit $\text{SD} = 0.0000$ within-temperature score variance, confirming that non-monotonic retention jumps (21 audited cases in `downstream_non_monotonic_cases.csv`) are caused by intermediate polarity interference or syntactic fragmentation rather than decoding noise.
 
 ### 5. Semantic Stress Testing & Audited Polarity Inversions
@@ -174,14 +180,22 @@ Evaluated across 14 minimal pairs (7 dimensions) at 30%, 50%, and 70% compressio
 ### 6. Rule-Based Critical-Span Pruning Ablation (126 Paired Runs)
 
 To prevent orphaned verb and numeric-bound inversions, `DependencyAwarePruner` implements **rule-based critical-span grouping** (`negation_clause`, `numerical_bound`, `conditional_exception`, `priority_directive`) and is evaluated against ordinary word pruning across **all 3 importance scorers (`embedding`, `gradient`, `integrated_gradients`) $\times$ 14 minimal pairs $\times$ 3 CRs = 126 paired evaluations** at matched actual token budgets:
+- Evaluations cluster on the 14 intact prompt items to account for repeated measurements across compression levels and scorers.
+- For 0 observed reversals under span pruning, the defensible **Wilson score 95% confidence interval on prompt clusters is $[0.0000, 0.2153]$ ($[0.0\%, 21.5\%]$)** (Rule of Three upper bound $3/14 = 0.2143$).
 
-| Scorer Scope | Pruning Mode | $N$ Runs | Mean Actual Removal | Polarity Reversals (95% Cluster CI) | Preserved Rate (95% Cluster CI) |
-|:---|:---|:---:|:---:|:---:|:---:|
-| **All 3 Scorers Pooled** | Ordinary Word Pruning | 126 | 0.4446 | **21 / 126 (16.7% `[7.1%, 27.0%]`)** | 35 / 126 (27.8% `[15.1%, 42.9%]`) |
-| **All 3 Scorers Pooled** | **Rule-Based Span Pruning** | 126 | 0.4332 | **0 / 126 (0.0% `[0.0%, 0.0%]`)** | **74 / 126 (58.7% `[45.2%, 72.2%]`)** |
-| `embedding` | Ordinary vs Span Pruning | 42 | 0.464 vs 0.460 | **6 (14.3%) $\rightarrow$ 0 (0.0%)** | **13 (31.0%) $\rightarrow$ 26 (61.9%)** |
-| `gradient` | Ordinary vs Span Pruning | 42 | 0.436 vs 0.420 | **8 (19.0%) $\rightarrow$ 0 (0.0%)** | **11 (26.2%) $\rightarrow$ 23 (54.8%)** |
-| `integrated_gradients` | Ordinary vs Span Pruning | 42 | 0.435 vs 0.419 | **7 (16.7%) $\rightarrow$ 0 (0.0%)** | **11 (26.2%) $\rightarrow$ 25 (59.5%)** |
+| Scorer Scope | Pruning Mode | $N$ Clusters | $N$ Runs | Mean Actual Removal | Polarity Reversals (95% Cluster CI) | Preserved Rate (95% Cluster CI) |
+|:---|:---|:---:|:---:|:---:|:---:|:---:|
+| **All 3 Scorers Pooled** | Ordinary Word Pruning | 14 | 126 | 0.4446 | **21 / 126 (16.7% `[7.1%, 27.0%]`)** | 35 / 126 (27.8% `[15.1%, 42.9%]`) |
+| **All 3 Scorers Pooled** | **Rule-Based Span Pruning** | 14 | 126 | 0.4332 | **0 / 126 (0.0% `[0.0%, 21.5%]`)** | **74 / 126 (58.7% `[45.2%, 72.2%]`)** |
+| `embedding` | Ordinary vs Span Pruning | 14 | 42 | 0.464 vs 0.460 | **6 (14.3%) $\rightarrow$ 0 (0.0% `[0.0%, 21.5%]`)** | **13 (31.0%) $\rightarrow$ 26 (61.9%)** |
+| `gradient` | Ordinary vs Span Pruning | 14 | 42 | 0.436 vs 0.420 | **8 (19.0%) $\rightarrow$ 0 (0.0% `[0.0%, 21.5%]`)** | **11 (26.2%) $\rightarrow$ 23 (54.8%)** |
+| `integrated_gradients` | Ordinary vs Span Pruning | 14 | 42 | 0.435 vs 0.419 | **7 (16.7%) $\rightarrow$ 0 (0.0% `[0.0%, 21.5%]`)** | **11 (26.2%) $\rightarrow$ 25 (59.5%)** |
+
+*Paired Prompt-Cluster Statistical Results (`results/tables/dependency_pruning_paired_tests.csv`):*
+- **Reversal Reduction:** $\Delta_{\text{rev}} = \mathbf{+16.7\%}$ ($+0.1667$), 95% cluster CI `[+7.1%, +27.0%]`, paired $t(13) = 3.220, p = 0.0067$, Wilcoxon $p = 0.0156$.
+- **Preservation Gain:** $\Delta_{\text{pres}} = \mathbf{+31.0\%}$ ($+0.3095$), 95% cluster CI `[+17.5%, +45.2%]`, paired $t(13) = 4.192, p = 0.00105$.
+- **Tightly Matched Budgets:** Removal difference is only $\Delta_{\text{rem}} = -1.1\%$ ($43.3\%$ span vs $44.5\%$ word).
+- **Scope Statement:** Transparently characterized as rule-based critical-span grouping, not general statistical dependency parsing.
 
 ### 7. Blind Standalone vs Reference-Guided Protocols
 
@@ -202,11 +216,11 @@ Every headline claim is traced directly to source code, underlying data, saved C
 | 2 | Component collapse occurs at distinct thresholds | `src/analysis/collapse.py` | `fidelity_results.csv` | `collapse_thresholds.csv` | 100 prompts | **Validated Finding** |
 | 3 | Embedding LOO correlation with Sentence-BERT is $r_s = 1.0$ | `src/analysis/attribution_faithfulness.py` | 30 stratified prompts | `attribution_faithfulness_summary.csv` | 30 prompts, 2,588 tokens | **Self-Consistency Check** |
 | 4 | Reference-guided Sentence-BERT drop is an embedding proxy | `src/analysis/attribution_faithfulness.py` | `ground_truth.json` | `attribution_faithfulness_summary.csv` | 30 prompts, 2,588 tokens | **Reference-Guided Embedding Proxy** |
-| 5 | Gradient & Embedding LOO equivalently predict encoder-free requirement loss | `src/analysis/attribution_faithfulness.py` | `ground_truth.json` | `attribution_faithfulness_summary.csv`, `attribution_pairwise_tests.csv` | 30 prompts, 2,588 tokens | **Validated Finding** |
+| 5 | No statistically significant difference detected between Gradient & Embedding LOO | `src/analysis/attribution_faithfulness.py` | `ground_truth.json` | `attribution_faithfulness_summary.csv`, `attribution_pairwise_tests.csv` | 30 prompts, 2,588 tokens | **Validated Finding** |
 | 6 | Protocol A (Blind) and Protocol B (Guided) measure distinct constructs | `src/interpretation/evaluator_protocols.py` | 10 pilot prompts | `pilot_evaluation_results.csv` | 30 runs | **Validated Finding** |
 | 7 | Inter-evaluator agreement between independent LLMs is strong | `src/interpretation/evaluator_protocols.py` | 10 paired prompts | `pilot_evaluator_agreement.csv` | 10 paired prompts | **Validated Finding** |
 | 8 | Lexical pruning causes polarity inversions and ambiguity | `src/evaluation/stress_tests.py` | 14 minimal pairs | `stress_test_results.csv`, `polarity_reversals_audit.csv` | 252 evaluations | **Validated Finding** |
-| 9 | Rule-based critical-span pruning eliminates polarity inversions at matched budgets | `src/pruning/dependency_pruner.py` | 14 minimal pairs × 3 scorers | `dependency_pruning_summary.csv`, `dependency_pruning_reversals_audit.csv` | 126 paired evaluations | **Validated Finding** |
+| 9 | Rule-based critical-span pruning eliminates polarity inversions at matched budgets | `src/pruning/dependency_pruner.py` | 14 minimal pairs × 3 scorers | `dependency_pruning_summary.csv`, `dependency_pruning_paired_tests.csv`, `dependency_pruning_reversals_audit.csv` | 126 paired evaluations | **Validated Finding** |
 | 10 | Functional downstream task retention across 15 stratified tasks | `src/evaluation/downstream.py` | 15 stratified tasks | `downstream_results.csv`, `downstream_matched_comparison.csv`, `downstream_variability.csv` | 285 main + 60 variability runs | **Validated Finding** |
 | 11 | LLMLingua / LLMLingua-2 approximate official algorithms | `src/baselines/` | GPT-2 / Multilingual BERT | `fidelity_results.csv` | 1,800 runs | **Preliminary Finding** |
 

@@ -310,3 +310,78 @@ def test_downstream_matched_comparison_and_non_monotonic():
     assert len(non_mono_df) == 1
     assert non_mono_df.iloc[0]["method"] == "embedding"
     assert non_mono_df.iloc[0]["retention_rebound"] > 0.5
+
+
+def test_matched_retention_auc_bounds_and_synthetic_curves():
+    """Verifies that retention AUC respects theoretical mathematical bounds:
+    - Normalized AUC in [0.0, 1.0] (mean retention over actual removal [0, 0.70])
+    - Unnormalized AUC in [0.0, 0.70] (raw integrated area under retention curve)
+    """
+    # 1. Perfect retention curve: R(r) = 1.0 everywhere
+    perfect_df = pd.DataFrame([
+        {"prompt_id": "p_syn", "category": "synthetic", "method": "uncompressed", "target_removal": 0.0, "actual_removal": 0.0, "task_success": 1.0, "success_retention": 1.0},
+        {"prompt_id": "p_syn", "category": "synthetic", "method": "perfect_method", "target_removal": 0.3, "actual_removal": 0.30, "task_success": 1.0, "success_retention": 1.0},
+        {"prompt_id": "p_syn", "category": "synthetic", "method": "perfect_method", "target_removal": 0.5, "actual_removal": 0.50, "task_success": 1.0, "success_retention": 1.0},
+        {"prompt_id": "p_syn", "category": "synthetic", "method": "perfect_method", "target_removal": 0.7, "actual_removal": 0.70, "task_success": 1.0, "success_retention": 1.0},
+        {"prompt_id": "p_syn", "category": "synthetic", "method": "random", "target_removal": 0.3, "actual_removal": 0.30, "task_success": 0.5, "success_retention": 0.5},
+        {"prompt_id": "p_syn", "category": "synthetic", "method": "random", "target_removal": 0.5, "actual_removal": 0.50, "task_success": 0.5, "success_retention": 0.5},
+        {"prompt_id": "p_syn", "category": "synthetic", "method": "random", "target_removal": 0.7, "actual_removal": 0.70, "task_success": 0.5, "success_retention": 0.5}
+    ])
+    per_task_p, sum_p = DownstreamEvaluator.compute_matched_rate_comparison(perfect_df, n_bootstrap=100)
+    perf_row = sum_p[sum_p["method"] == "perfect_method"].iloc[0]
+    assert np.isclose(perf_row["matched_actual_auc_normalized"], 1.0000, atol=1e-3)
+    assert np.isclose(perf_row["matched_actual_auc_unnormalized"], 0.7000, atol=1e-3)
+    assert 0.0 <= perf_row["matched_actual_auc_normalized"] <= 1.0
+    assert 0.0 <= perf_row["matched_actual_auc_unnormalized"] <= 0.70
+
+    # 2. Linear decay curve: R(r) = 1.0 - r. Mean on [0, 0.70] is 1.0 - 0.35 = 0.6500
+    linear_df = pd.DataFrame([
+        {"prompt_id": "p_syn2", "category": "synthetic", "method": "uncompressed", "target_removal": 0.0, "actual_removal": 0.0, "task_success": 1.0, "success_retention": 1.0},
+        {"prompt_id": "p_syn2", "category": "synthetic", "method": "linear_decay", "target_removal": 0.3, "actual_removal": 0.30, "task_success": 0.70, "success_retention": 0.70},
+        {"prompt_id": "p_syn2", "category": "synthetic", "method": "linear_decay", "target_removal": 0.5, "actual_removal": 0.50, "task_success": 0.50, "success_retention": 0.50},
+        {"prompt_id": "p_syn2", "category": "synthetic", "method": "linear_decay", "target_removal": 0.7, "actual_removal": 0.70, "task_success": 0.30, "success_retention": 0.30},
+        {"prompt_id": "p_syn2", "category": "synthetic", "method": "random", "target_removal": 0.3, "actual_removal": 0.30, "task_success": 0.5, "success_retention": 0.5},
+        {"prompt_id": "p_syn2", "category": "synthetic", "method": "random", "target_removal": 0.5, "actual_removal": 0.50, "task_success": 0.5, "success_retention": 0.5},
+        {"prompt_id": "p_syn2", "category": "synthetic", "method": "random", "target_removal": 0.7, "actual_removal": 0.70, "task_success": 0.5, "success_retention": 0.5}
+    ])
+    per_task_l, sum_l = DownstreamEvaluator.compute_matched_rate_comparison(linear_df, n_bootstrap=100)
+    lin_row = sum_l[sum_l["method"] == "linear_decay"].iloc[0]
+    assert np.isclose(lin_row["matched_actual_auc_normalized"], 0.6500, atol=1e-3)
+    assert np.isclose(lin_row["matched_actual_auc_unnormalized"], 0.4550, atol=1e-3)
+
+
+def test_span_pruning_uncertainty_non_zero_width():
+    """Verifies that observing 0 events across finite clusters yields a defensible,
+    non-zero-width uncertainty bound (Wilson score interval) instead of [0.0, 0.0].
+    """
+    from scripts.run_research_enhancements import _cluster_boot_rate_ci
+
+    # 14 clusters with 0 events
+    mock_df = pd.DataFrame([
+        {"cluster": f"c_{i}", "outcome": "PRESERVED"}
+        for i in range(14)
+        for _ in range(9)
+    ])
+    mean_val, ci_low, ci_high = _cluster_boot_rate_ci(mock_df, "cluster", "outcome", "POLARITY_REVERSED")
+    assert mean_val == 0.0
+    assert ci_low == 0.0
+    # Wilson upper bound for k=14 is 1.96^2 / (14 + 1.96^2) ~= 0.2153
+    assert 0.15 < ci_high < 0.25
+    assert ci_high > ci_low
+
+
+def test_downstream_attribution_exploratory_labeling():
+    """Verifies that downstream task-loss correlation is labeled as an exploratory macro-level
+    association across multi-token compressed prompt variants, not token-level counterfactual faithfulness.
+    """
+    from src.analysis.attribution_faithfulness import AttributionFaithfulnessEvaluator
+    evaluator = AttributionFaithfulnessEvaluator()
+    mock_downstream = pd.DataFrame([
+        {"prompt_id": "p004", "category": "instruction", "method": "uncompressed", "task_success": 1.0, "prompt_text": "Summarize the findings clearly."},
+        {"prompt_id": "p004", "category": "instruction", "method": "embedding", "task_success": 0.8, "prompt_text": "Summarize findings clearly."},
+        {"prompt_id": "p004", "category": "instruction", "method": "gradient", "task_success": 0.7, "prompt_text": "Summarize findings."}
+    ])
+    summary_rows, corrs = evaluator.evaluate_downstream_task_damage_alignment(mock_downstream, n_bootstrap=100)
+    for r in summary_rows:
+        assert r["evaluation_type"] == "Exploratory Macro-Level Association"
+        assert r["target_outcome"] == "Downstream Task-Success Loss"

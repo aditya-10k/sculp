@@ -694,7 +694,11 @@ class DownstreamEvaluator:
     ) -> Tuple[pd.DataFrame, pd.DataFrame]:
         """Compares compression methods at matched actual token-removal rates via:
         1. Per-task linear interpolation at exact actual removal rates (0.30, 0.50, 0.70)
-        2. Trapezoidal Area Under the Task-Retention vs Actual-Removal Curve (AUC in [0, 0.70])
+        2. Trapezoidal Area Under the Task-Retention vs Actual-Removal Curve:
+           - Normalized Retention AUC (AUC_norm = (1 / 0.70) * int_0^{0.70} R(r) dr in [0.0, 1.0]):
+             Represents the mean / average task retention rate across actual removal rates r in [0.0, 0.70].
+           - Unnormalized Retention AUC (AUC_unnorm = int_0^{0.70} R(r) dr = 0.70 * AUC_norm in [0.0, 0.70]):
+             Represents the raw integrated area under the task retention curve.
         3. Empirical actual-removal bins (Mild [0.15, 0.38], Moderate (0.38, 0.58], Aggressive (0.58, 0.85])
         4. Task-cluster bootstrap 95% CIs and Holm-Bonferroni adjusted paired tests vs random.
         """
@@ -728,10 +732,14 @@ class DownstreamEvaluator:
                 interp_50 = float(np.interp(0.50, unique_x, unique_y))
                 interp_70 = float(np.interp(0.70, unique_x, unique_y))
 
-                # Trapezoidal AUC normalized over [0.0, 0.70]
+                # Trapezoidal AUC:
+                # - Normalized: (1 / 0.70) * int_0^{0.70} y(x) dx, bounded in [0.0, 1.0] (mean retention)
+                # - Unnormalized: int_0^{0.70} y(x) dx, bounded in [0.0, 0.70]
                 grid_x = np.linspace(0.0, 0.70, 71)
                 grid_y = np.interp(grid_x, unique_x, unique_y)
-                norm_auc = float(np.trapezoid(grid_y, grid_x) / 0.70) if hasattr(np, "trapezoid") else float(np.trapz(grid_y, grid_x) / 0.70)
+                trapz_fn = np.trapezoid if hasattr(np, "trapezoid") else np.trapz
+                unnorm_auc = float(trapz_fn(grid_y, grid_x))
+                norm_auc = float(unnorm_auc / 0.70)
 
                 # Raw target removal values
                 r30 = sub[sub["target_removal"] == 0.3]["success_retention"]
@@ -749,7 +757,9 @@ class DownstreamEvaluator:
                     "matched_ret_actual_30": round(interp_30, 4),
                     "matched_ret_actual_50": round(interp_50, 4),
                     "matched_ret_actual_70": round(interp_70, 4),
-                    "matched_actual_auc": round(norm_auc, 4),
+                    "matched_actual_auc": round(norm_auc, 4),  # backwards compatible alias for normalized AUC
+                    "matched_actual_auc_normalized": round(norm_auc, 4),
+                    "matched_actual_auc_unnormalized": round(unnorm_auc, 4),
                     "mean_actual_removal": round(float(sub["actual_removal"].mean()), 4)
                 })
 
@@ -766,15 +776,15 @@ class DownstreamEvaluator:
             if m_sub.empty:
                 continue
 
-            auc_vals = m_sub["matched_actual_auc"].to_numpy()
+            auc_vals = m_sub["matched_actual_auc_normalized"].to_numpy()
             n_t = len(auc_vals)
             boot_auc = [np.mean(rng.choice(auc_vals, size=n_t, replace=True)) for _ in range(n_bootstrap)]
             ci_low, ci_high = np.percentile(boot_auc, [2.5, 97.5])
 
-            # Paired test vs random on matched_actual_auc
+            # Paired test vs random on matched_actual_auc (normalized)
             common_ids = m_sub.index.intersection(rand_sub.index)
             if m != "random" and len(common_ids) > 1:
-                diffs = m_sub.loc[common_ids, "matched_actual_auc"].to_numpy() - rand_sub.loc[common_ids, "matched_actual_auc"].to_numpy()
+                diffs = m_sub.loc[common_ids, "matched_actual_auc_normalized"].to_numpy() - rand_sub.loc[common_ids, "matched_actual_auc_normalized"].to_numpy()
                 if np.std(diffs, ddof=1) > 1e-12:
                     _, p_val = stats.ttest_1samp(diffs, 0.0)
                     p_val = float(p_val)
@@ -798,9 +808,13 @@ class DownstreamEvaluator:
                 "matched_ret_actual_30": round(float(m_sub["matched_ret_actual_30"].mean()), 4),
                 "matched_ret_actual_50": round(float(m_sub["matched_ret_actual_50"].mean()), 4),
                 "matched_ret_actual_70": round(float(m_sub["matched_ret_actual_70"].mean()), 4),
-                "matched_actual_auc": round(float(np.mean(auc_vals)), 4),
+                "matched_actual_auc": round(float(np.mean(auc_vals)), 4),  # backwards compatible normalized AUC
+                "matched_actual_auc_normalized": round(float(np.mean(auc_vals)), 4),
+                "matched_actual_auc_unnormalized": round(float(np.mean(auc_vals) * 0.70), 4),
                 "matched_auc_ci_95": f"[{ci_low:.4f}, {ci_high:.4f}]",
+                "matched_unnorm_auc_ci_95": f"[{ci_low * 0.70:.4f}, {ci_high * 0.70:.4f}]",
                 "delta_auc_vs_random": round(delta_vs_rand, 4),
+                "delta_unnorm_auc_vs_random": round(delta_vs_rand * 0.70, 4),
                 "p_val_vs_random": p_val
             })
 

@@ -1,0 +1,5 @@
+scorer_scope,n_clusters,n_evaluations,mean_word_actual_removal,mean_span_actual_removal,removal_diff,word_reversed_rate,span_reversed_rate,paired_reversal_reduction,paired_reversal_reduction_ci_95,paired_reversal_p_val,word_preserved_rate,span_preserved_rate,paired_preservation_gain,paired_preservation_gain_ci_95,paired_preservation_p_val
+all_scorers_pooled,14,126,0.4446,0.4332,-0.0114,0.1667,0.0,0.1667,"[0.0714, 0.2698]",0.006707052459562141,0.2778,0.5873,0.3095,"[0.1746, 0.4524]",0.0010544415994130428
+embedding,14,42,0.4637,0.4603,-0.0034,0.1429,0.0,0.1429,"[0.0714, 0.2381]",0.008088745097244983,0.3095,0.619,0.3095,"[0.1667, 0.4524]",0.002252281450797755
+gradient,14,42,0.4357,0.4202,-0.0155,0.1905,0.0,0.1905,"[0.0476, 0.3810]",0.05543948493145511,0.2619,0.5476,0.2857,"[0.1190, 0.4762]",0.012008693059506742
+integrated_gradients,14,42,0.4345,0.419,-0.0155,0.1667,0.0,0.1667,"[0.0476, 0.3095]",0.02850443458794701,0.2619,0.5952,0.3333,"[0.1905, 0.4762]",0.000919214289356059

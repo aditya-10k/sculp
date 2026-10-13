@@ -1,9 +1,9 @@
-scorer_scope,pruning_mode,n_evaluations,mean_actual_removal,preserved_count,preserved_rate,preserved_ci_95,polarity_reversed_count,polarity_reversed_rate,polarity_reversed_ci_95,ambiguous_count,ambiguous_rate,ambiguous_ci_95,removed_count,removed_rate,removed_ci_95
-all_scorers_pooled,ordinary_word_pruning,126,0.4446,35,0.2778,"[0.1508, 0.4286]",21,0.1667,"[0.0714, 0.2698]",63,0.5,"[0.3492, 0.6429]",7,0.0556,"[0.0079, 0.1111]"
-all_scorers_pooled,rule_based_span_pruning,126,0.4332,74,0.5873,"[0.4524, 0.7224]",0,0.0,"[0.0000, 0.0000]",44,0.3492,"[0.1984, 0.5079]",8,0.0635,"[0.0000, 0.1429]"
-embedding,ordinary_word_pruning,42,0.4637,13,0.3095,"[0.1429, 0.4762]",6,0.1429,"[0.0714, 0.2381]",21,0.5,"[0.3571, 0.6429]",2,0.0476,"[0.0000, 0.1190]"
-embedding,rule_based_span_pruning,42,0.4603,26,0.619,"[0.5000, 0.7619]",0,0.0,"[0.0000, 0.0000]",13,0.3095,"[0.1667, 0.4524]",3,0.0714,"[0.0000, 0.1429]"
-gradient,ordinary_word_pruning,42,0.4357,11,0.2619,"[0.1190, 0.4286]",8,0.1905,"[0.0476, 0.3810]",23,0.5476,"[0.3571, 0.7381]",0,0.0,"[0.0000, 0.0000]"
-gradient,rule_based_span_pruning,42,0.4202,23,0.5476,"[0.3810, 0.7143]",0,0.0,"[0.0000, 0.0000]",17,0.4048,"[0.2143, 0.5952]",2,0.0476,"[0.0000, 0.1190]"
-integrated_gradients,ordinary_word_pruning,42,0.4345,11,0.2619,"[0.0952, 0.4286]",7,0.1667,"[0.0476, 0.3095]",19,0.4524,"[0.2619, 0.6429]",5,0.119,"[0.0000, 0.2857]"
-integrated_gradients,rule_based_span_pruning,42,0.419,25,0.5952,"[0.4524, 0.7381]",0,0.0,"[0.0000, 0.0000]",14,0.3333,"[0.1905, 0.5000]",3,0.0714,"[0.0000, 0.1905]"
+scorer_scope,pruning_mode,n_clusters,n_evaluations,mean_actual_removal,preserved_count,preserved_rate,preserved_ci_95,polarity_reversed_count,polarity_reversed_rate,polarity_reversed_ci_95,ambiguous_count,ambiguous_rate,ambiguous_ci_95,removed_count,removed_rate,removed_ci_95
+all_scorers_pooled,ordinary_word_pruning,14,126,0.4446,35,0.2778,"[0.1508, 0.4286]",21,0.1667,"[0.0714, 0.2698]",63,0.5,"[0.3492, 0.6429]",7,0.0556,"[0.0079, 0.1111]"
+all_scorers_pooled,rule_based_span_pruning,14,126,0.4332,74,0.5873,"[0.4524, 0.7224]",0,0.0,"[0.0000, 0.2153]",44,0.3492,"[0.1984, 0.5079]",8,0.0635,"[0.0000, 0.1429]"
+embedding,ordinary_word_pruning,14,42,0.4637,13,0.3095,"[0.1429, 0.4762]",6,0.1429,"[0.0714, 0.2381]",21,0.5,"[0.3571, 0.6429]",2,0.0476,"[0.0000, 0.1190]"
+embedding,rule_based_span_pruning,14,42,0.4603,26,0.619,"[0.5000, 0.7619]",0,0.0,"[0.0000, 0.2153]",13,0.3095,"[0.1667, 0.4524]",3,0.0714,"[0.0000, 0.1429]"
+gradient,ordinary_word_pruning,14,42,0.4357,11,0.2619,"[0.1190, 0.4286]",8,0.1905,"[0.0476, 0.3810]",23,0.5476,"[0.3571, 0.7381]",0,0.0,"[0.0000, 0.2153]"
+gradient,rule_based_span_pruning,14,42,0.4202,23,0.5476,"[0.3810, 0.7143]",0,0.0,"[0.0000, 0.2153]",17,0.4048,"[0.2143, 0.5952]",2,0.0476,"[0.0000, 0.1190]"
+integrated_gradients,ordinary_word_pruning,14,42,0.4345,11,0.2619,"[0.0952, 0.4286]",7,0.1667,"[0.0476, 0.3095]",19,0.4524,"[0.2619, 0.6429]",5,0.119,"[0.0000, 0.2857]"
+integrated_gradients,rule_based_span_pruning,14,42,0.419,25,0.5952,"[0.4524, 0.7381]",0,0.0,"[0.0000, 0.2153]",14,0.3333,"[0.1905, 0.5000]",3,0.0714,"[0.0000, 0.1905]"

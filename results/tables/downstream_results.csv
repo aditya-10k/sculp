@@ -1,284 +1,284 @@
 prompt_id,category,method,target_removal,actual_removal,retention,prompt_text,task_success,success_retention,input_tokens,output_tokens,latency_ms,api_error,empty_completion
 p024,constraint,uncompressed,0.0,0.0,1.0,Provide troubleshooting steps for Wi-Fi failure. Output must be strictly valid JSON without any markdown formatting.,1.0,1.0,105,418,1867.39,False,False
-p024,constraint,random,0.3,0.3199999999999999,0.68,Provide troubleshooting steps for Wi-Fi failure Output must without any formatting.,0.2,0.2,103,293,1177.15,False,False
+p024,constraint,random,0.3,0.36,0.64,Provide -Fi failure. Output must be strictly JSON without any markdown.,0.0,0.0,104,53,783.99,False,False
 p024,constraint,embedding,0.3,0.28,0.72,Provide troubleshooting steps for Wi-Fi failure. Output must JSON markdown.,0.5,0.5,99,479,957.62,False,False
 p024,constraint,gradient,0.3,0.24,0.76,Provide troubleshooting steps WiFi failure. Output must strictly valid JSON markdown formatting,0.5,0.5,100,501,2310.45,False,False
 p024,constraint,integrated_gradients,0.3,0.24,0.76,troubleshooting steps for WiFi failure. Output must valid JSON markdown formatting.,0.5,0.5,102,521,834.87,False,False
 p024,constraint,llmlingua,0.3,0.24,0.76,Provide troubleshooting steps for Wi failure Output must strictly valid JSON without markdown formatting,1.0,1.0,100,363,490.63,False,False
 p024,constraint,llmlingua2,0.3,0.24,0.76,Provide troubleshooting steps Wi failure Output must strictly valid JSON without any markdown formatting,1.0,1.0,100,359,1482.23,False,False
-p024,constraint,random,0.5,0.52,0.48,Provide troubleshooting steps Wi- failure Output must without any,0.2,0.2,100,162,586.16,False,False
-p024,constraint,embedding,0.5,0.4399999999999999,0.56,troubleshooting Wi-Fi failure. Output JSON markdown.,0.2,0.2,97,600,969.93,False,False
+p024,constraint,random,0.5,0.56,0.44,Provide -Fi failure. Output must strictly JSON without,0.0,0.0,100,44,411.48,False,False
+p024,constraint,embedding,0.5,0.43999999999999995,0.56,troubleshooting Wi-Fi failure. Output JSON markdown.,0.2,0.2,97,600,969.93,False,False
 p024,constraint,gradient,0.5,0.4,0.6,Provide troubleshooting Wi failure. Output valid JSON markdown formatting,0.2,0.2,96,600,1070.86,False,False
 p024,constraint,integrated_gradients,0.5,0.4,0.6,troubleshooting Wi failure. Output valid JSON markdown formatting.,0.2,0.2,98,600,1100.97,False,False
 p024,constraint,llmlingua,0.5,0.44,0.56,Provide troubleshooting steps failure Output strictly valid without markdown formatting,0.0,0.0,96,135,583.37,False,False
 p024,constraint,llmlingua2,0.5,0.44,0.56,Provide troubleshooting steps failure Output strictly valid without markdown formatting,0.0,0.0,96,135,583.37,False,False
-p024,constraint,random,0.7,0.6799999999999999,0.32,troubleshooting steps Wi failure must any,0.2,0.2,98,544,977.32,False,False
+p024,constraint,random,0.7,0.72,0.28,- failure. must JSON without,0.0,0.0,96,58,402.42,False,False
 p024,constraint,embedding,0.7,0.64,0.36,troubleshooting WiFi failure Output JSON,0.2,0.2,94,600,1237.69,False,False
 p024,constraint,gradient,0.7,0.56,0.44,troubleshooting Wi Output JSON markdown formatting,0.2,0.2,94,600,1088.27,False,False
 p024,constraint,integrated_gradients,0.7,0.56,0.44,troubleshooting. JSON markdown formatting.,0.0,0.0,94,600,1040.82,False,False
 p024,constraint,llmlingua,0.7,0.6,0.4,Provide troubleshooting Output strictly markdown formatting,0.2,0.2,92,600,995.45,False,False
 p024,constraint,llmlingua2,0.7,0.6,0.4,Provide troubleshooting failure strictly markdown formatting,0.2,0.2,92,592,987.24,False,False
 p025,constraint,uncompressed,0.0,0.0,1.0,Describe the French Revolution in exactly three bullet points. Each bullet must be between 15 and 20 words.,1.0,1.0,108,406,2681.22,False,False
-p025,constraint,random,0.3,0.3,0.7,French Revolution exactly three points. Each bullet must between 15 and words.,0.6667,0.6667,105,162,783.55,False,False
-p025,constraint,embedding,0.3,0.3,0.7,Describe French Revolution exactly three bullet points Each bullet must 15 20 words.,1.0,1.0,102,411,3855.26,False,False
-p025,constraint,gradient,0.3,0.3,0.7,Describe French Revolution exactly three bullet points. Each bullet must 20 words.,0.0,0.0,101,600,4082.29,False,False
-p025,constraint,integrated_gradients,0.3,0.3,0.7,Describe the Revolution in exactly bullet points. Each bullet must and words.,0.0,0.0,100,456,5934.68,False,False
+p025,constraint,random,0.3,0.30000000000000004,0.7,Describe the French Revolution in points Each bullet be between 15 20 words.,0.5,0.5,106,311,1700.05,False,False
+p025,constraint,embedding,0.3,0.30000000000000004,0.7,Describe French Revolution exactly three bullet points Each bullet must 15 20 words.,1.0,1.0,102,411,3855.26,False,False
+p025,constraint,gradient,0.3,0.30000000000000004,0.7,Describe French Revolution exactly three bullet points. Each bullet must 20 words.,0.0,0.0,101,600,4082.29,False,False
+p025,constraint,integrated_gradients,0.3,0.30000000000000004,0.7,Describe the Revolution in exactly bullet points. Each bullet must and words.,0.0,0.0,100,456,5934.68,False,False
 p025,constraint,llmlingua,0.3,0.3,0.7,Describe the French Revolution exactly three bullet points Each bullet must between and words,0.0,0.0,100,144,3599.33,False,False
 p025,constraint,llmlingua2,0.3,0.3,0.7,Describe French Revolution exactly three bullet points Each bullet must be between and words,0.0,0.0,100,142,507.61,False,False
-p025,constraint,random,0.5,0.5,0.5,French exactly three points. must 15 and words.,0.0,0.0,101,150,719.28,False,False
+p025,constraint,random,0.5,0.5,0.5,Describe French in bullet be between 15 20 words.,0.0,0.0,102,117,501.08,False,False
 p025,constraint,embedding,0.5,0.5,0.5,Describe French Revolution three points Each bullet 20 words.,1.0,1.0,101,669,1177.22,False,False
 p025,constraint,gradient,0.5,0.5,0.5,Describe French Revolution exactly bullet points. bullet must words,0.0,0.0,100,537,893.42,False,False
 p025,constraint,integrated_gradients,0.5,0.5,0.5,Describe the Revolution in exactly bullet. bullet words.,0.0,0.0,96,543,6036.0,False,False
 p025,constraint,llmlingua,0.5,0.5,0.5,Describe French Revolution exactly three bullet points Each bullet between,0.0,0.0,96,153,3549.47,False,False
 p025,constraint,llmlingua2,0.5,0.5,0.5,Describe French Revolution exactly three bullet points bullet between words,0.6667,0.6667,100,1247,1912.5,False,False
-p025,constraint,random,0.7,0.7,0.3,exactly three points. must words,0.0,0.0,97,79,563.04,False,False
+p025,constraint,random,0.7,0.7,0.3,French bullet between 20 words.,0.0,0.0,97,58,405.46,False,False
 p025,constraint,embedding,0.7,0.7,0.3,Describe French Revolution three points words,0.0,0.0,92,235,4820.54,False,False
 p025,constraint,gradient,0.7,0.7,0.3,Describe exactly bullet points. words,0.0,0.0,92,132,1531.19,False,False
 p025,constraint,integrated_gradients,0.7,0.7,0.3,Describe the in. bullet.,0.0,0.0,92,598,3082.8,False,False
 p025,constraint,llmlingua,0.7,0.7,0.3,Describe French Revolution exactly bullet between,0.3333,0.3333,92,571,5011.89,False,False
 p025,constraint,llmlingua2,0.7,0.7,0.3,Describe French Revolution exactly bullet between,0.3333,0.3333,92,571,5011.89,False,False
 p023,constraint,uncompressed,0.0,0.0,1.0,"Write a promotional blurb for running shoes. You must not use the words 'comfortable', 'fast', or 'lightweight'.",1.0,1.0,112,365,4534.67,False,False
-p023,constraint,random,0.3,0.2857142857142857,0.7142857142857143,"a promotional blurb for running. You must not use words ', 'fast, 'lightweight'",1.0,1.0,110,173,754.42,False,False
+p023,constraint,random,0.3,0.2857142857142857,0.7142857142857143,"Write blurb for shoes. You must not use words '', fast' or 'lightweight'",1.0,1.0,109,144,520.63,False,False
 p023,constraint,embedding,0.3,0.2857142857142857,0.7142857142857143,"Write a promotional blurb for running shoes. You not use the words 'comfortable, fast lightweight.",1.0,1.0,106,486,4012.37,False,False
 p023,constraint,gradient,0.3,0.2857142857142857,0.7142857142857143,"Write a promotional blurb for running shoes. You must use words comfortable, fast, or lightweight.",0.0,0.0,106,196,3319.87,False,False
 p023,constraint,integrated_gradients,0.3,0.2857142857142857,0.7142857142857143,"Write a promotional blurb for running shoes. You must not use words comfortable, fast lightweight'.",0.6667,0.6667,105,600,3093.32,False,False
 p023,constraint,llmlingua,0.3,0.2857,0.7143,Write a promotional blurb for running shoes. You must not use the words 'comfortable fast or lightweight,1.0,1.0,106,446,4600.07,False,False
 p023,constraint,llmlingua2,0.3,0.2857,0.7143,"Write promotional blurb running shoes. You must not use words 'comfortable', 'fast or lightweight",1.0,1.0,105,475,4888.6,False,False
-p023,constraint,random,0.5,0.5,0.5,"promotional blurb running. You must not words fast, 'lightweight'",1.0,1.0,106,131,545.8,False,False
+p023,constraint,random,0.5,0.5,0.5,"Write blurb for shoes. You not use words, fast lightweight'",1.0,1.0,104,100,478.43,False,False
 p023,constraint,embedding,0.5,0.5,0.5,"Write promotional blurb for running shoes. words comfortable, fast lightweight.",0.0,0.0,100,201,4617.08,False,False
 p023,constraint,gradient,0.5,0.5,0.5,Write promotional blurb running shoes. You must words comfortable fast lightweight.,0.0,0.0,100,146,1293.0,False,False
 p023,constraint,integrated_gradients,0.5,0.5,0.5,Write a promotional blurb for running shoes. You must words lightweight.,0.6667,0.6667,100,182,2612.38,False,False
 p023,constraint,llmlingua,0.5,0.4643,0.5357,Write promotional blurb for running shoes You must not use words comfortable fast lightweight,1.0,1.0,101,375,1957.93,False,False
 p023,constraint,llmlingua2,0.5,0.4643,0.5357,Write promotional blurb running shoes You must not use words comfortable fast or lightweight,1.0,1.0,101,424,4156.26,False,False
-p023,constraint,random,0.7,0.6785714285714286,0.3214285714285714,"blurb. You not, 'lightweight'",0.0,0.0,100,119,656.81,False,False
+p023,constraint,random,0.7,0.7142857142857143,0.2857142857142857,"for shoes. use words, fast '",0.3333,0.3333,98,45,417.7,False,False
 p023,constraint,embedding,0.7,0.7142857142857143,0.2857142857142857,Write promotional running shoes. comfortable fast lightweight,0.6667,0.6667,94,314,4787.18,False,False
-p023,constraint,gradient,0.7,0.6785714285714286,0.3214285714285714,Write promotional blurb shoes. must words lightweight,0.6667,0.6667,95,193,2485.16,False,False
-p023,constraint,integrated_gradients,0.7,0.6785714285714286,0.3214285714285714,Write a promotional blurb. You must.,1.0,1.0,95,318,2628.25,False,False
+p023,constraint,gradient,0.7,0.6785714285714286,0.32142857142857145,Write promotional blurb shoes. must words lightweight,0.6667,0.6667,95,193,2485.16,False,False
+p023,constraint,integrated_gradients,0.7,0.6785714285714286,0.32142857142857145,Write a promotional blurb. You must.,1.0,1.0,95,318,2628.25,False,False
 p023,constraint,llmlingua,0.7,0.6786,0.3214,Write promotional blurb running shoes words comfortable lightweight,0.3333,0.3333,95,192,2646.09,False,False
 p023,constraint,llmlingua2,0.7,0.6786,0.3214,Write promotional blurb running shoes words comfortable lightweight,0.3333,0.3333,95,192,2646.09,False,False
 p005,instruction,uncompressed,0.0,0.0,1.0,Extract all action items and their assignees from the following meeting minutes: Sarah will finalize budget; John will patch server.,1.0,1.0,111,116,2497.05,False,False
-p005,instruction,random,0.3,0.28,0.72,Extract all items and their assignees the following minutes Sarah finalize budget John will patch.,1.0,1.0,108,71,514.23,False,False
-p005,instruction,embedding,0.3,0.3199999999999999,0.68,Extract all action items their assignees following meeting minutes: Sarah budget John will patch server,1.0,1.0,104,177,618.57,False,False
+p005,instruction,random,0.3,0.31999999999999995,0.68,Extract all and their from the following meeting: Sarah will finalize; will server.,0.0,0.0,106,86,472.1,False,False
+p005,instruction,embedding,0.3,0.31999999999999995,0.68,Extract all action items their assignees following meeting minutes: Sarah budget John will patch server,1.0,1.0,104,177,618.57,False,False
 p005,instruction,gradient,0.3,0.28,0.72,Extract action items assignees meeting minutes: Sarah finalize budget; John will patch server.,1.0,1.0,104,209,1324.21,False,False
 p005,instruction,integrated_gradients,0.3,0.28,0.72,Extract all action items assignees following meeting minutes: will finalize budget will patch server.,0.0,0.0,104,503,3132.79,False,False
 p005,instruction,llmlingua,0.3,0.28,0.72,Extract action items their assignees from following meeting minutes Sarah will finalize budget John patch server,1.0,1.0,104,151,4195.44,False,False
 p005,instruction,llmlingua2,0.3,0.28,0.72,Extract action items their assignees from following meeting minutes Sarah will finalize budget John patch server,1.0,1.0,104,151,4195.44,False,False
-p005,instruction,random,0.5,0.48,0.52,all items and assignees the Sarah finalize budget John will.,0.5,0.5,103,122,698.51,False,False
+p005,instruction,random,0.5,0.52,0.48,all and from the following Sarah will finalize will server.,0.0,0.0,101,75,323.58,False,False
 p005,instruction,embedding,0.5,0.52,0.48,Extract action items assignees meeting minutes: Sarah budget patch server,0.5,0.5,103,477,931.22,False,False
 p005,instruction,gradient,0.5,0.48,0.52,Extract action items assignees minutes Sarah finalize budget; patch server,0.5,0.5,99,456,6857.16,False,False
 p005,instruction,integrated_gradients,0.5,0.48,0.52,Extract all action assignees minutes: finalize budget patch server.,0.0,0.0,99,431,2749.31,False,False
 p005,instruction,llmlingua,0.5,0.44,0.56,Extract action items assignees following meeting minutes Sarah finalize budget John server,1.0,1.0,100,183,3603.95,False,False
 p005,instruction,llmlingua2,0.5,0.44,0.56,Extract action items their assignees following meeting minutes Sarah finalize budget server,0.5,0.5,100,358,2852.81,False,False
-p005,instruction,random,0.7,0.64,0.36,all and assignees Sarah finalize John will,0.0,0.0,99,74,556.9,False,False
+p005,instruction,random,0.7,0.72,0.28,all and from following Sarah will server,0.0,0.0,97,92,957.43,False,False
 p005,instruction,embedding,0.7,0.72,0.28,Extract action items meeting budget patch server,0.0,0.0,93,271,1599.19,False,False
 p005,instruction,gradient,0.7,0.64,0.36,Extract action items assignees finalize budget server,0.0,0.0,99,468,923.46,False,False
 p005,instruction,integrated_gradients,0.7,0.64,0.36,Extract action assignees finalize patch server.,0.0,0.0,95,265,4574.08,False,False
 p005,instruction,llmlingua,0.7,0.64,0.36,Extract assignees following meeting minutes Sarah finalize,0.5,0.5,95,202,2506.22,False,False
 p005,instruction,llmlingua2,0.7,0.64,0.36,Extract action assignees following meeting minutes finalize,0.0,0.0,95,104,2219.07,False,False
 p004,instruction,uncompressed,0.0,0.0,1.0,Translate this English contract clause into French while preserving precise legal terminology: The party shall indemnify and hold harmless.,1.0,1.0,108,343,1769.7,False,False
-p004,instruction,random,0.3,0.25,0.75,Translate this contract into French while preserving precise legal terminology The indemnify and harmless.,0.0,0.0,106,48,533.84,False,False
+p004,instruction,random,0.3,0.25,0.75,Translate this contract clause into while preserving legal: The shall indemnify and hold harmless,1.0,1.0,106,129,524.34,False,False
 p004,instruction,embedding,0.3,0.25,0.75,Translate this English contract clause French while: party shall indemnify and hold harmless.,1.0,1.0,102,177,2647.78,False,False
 p004,instruction,gradient,0.3,0.25,0.75,Translate English contract clause French preserving precise legal terminology party shall indemnify hold harmless.,1.0,1.0,102,287,1733.24,False,False
 p004,instruction,integrated_gradients,0.3,0.25,0.75,Translate this English contract clause French legal terminology The party shall indemnify hold harmless.,1.0,1.0,102,214,3664.85,False,False
 p004,instruction,llmlingua,0.3,0.25,0.75,Translate English contract clause French while preserving precise legal terminology The party shall indemnify harmless,1.0,1.0,102,374,1791.57,False,False
 p004,instruction,llmlingua2,0.3,0.25,0.75,Translate English contract clause into French while preserving precise legal terminology party shall indemnify harmless,1.0,1.0,102,234,3404.47,False,False
-p004,instruction,random,0.5,0.4166666666666666,0.5833333333333334,contract into French while preserving precise legal The indemnify harmless.,0.0,0.0,102,41,483.46,False,False
-p004,instruction,embedding,0.5,0.4166666666666666,0.5833333333333334,Translate contract clause French: party shall indemnify and harmless.,1.0,1.0,98,137,4518.93,False,False
-p004,instruction,gradient,0.5,0.4166666666666666,0.5833333333333334,Translate contract clause legal terminology party shall indemnify hold harmless.,1.0,1.0,98,381,2801.13,False,False
-p004,instruction,integrated_gradients,0.5,0.4166666666666666,0.5833333333333334,Translate this English contract clause party shall indemnify hold harmless.,1.0,1.0,98,275,2685.23,False,False
+p004,instruction,random,0.5,0.41666666666666663,0.5833333333333334,Translate this contract clause into preserving legal shall indemnify and harmless,1.0,1.0,102,412,800.72,False,False
+p004,instruction,embedding,0.5,0.41666666666666663,0.5833333333333334,Translate contract clause French: party shall indemnify and harmless.,1.0,1.0,98,137,4518.93,False,False
+p004,instruction,gradient,0.5,0.41666666666666663,0.5833333333333334,Translate contract clause legal terminology party shall indemnify hold harmless.,1.0,1.0,98,381,2801.13,False,False
+p004,instruction,integrated_gradients,0.5,0.41666666666666663,0.5833333333333334,Translate this English contract clause party shall indemnify hold harmless.,1.0,1.0,98,275,2685.23,False,False
 p004,instruction,llmlingua,0.5,0.4583,0.5417,Translate English contract clause French preserving precise terminology indemnify harmless,1.0,1.0,97,600,2910.63,False,False
 p004,instruction,llmlingua2,0.5,0.4583,0.5417,Translate English contract clause French preserving precise terminology indemnify harmless,1.0,1.0,97,600,2910.63,False,False
-p004,instruction,random,0.7,0.75,0.25,contract into while legal The harmless,1.0,1.0,96,565,1462.34,False,False
+p004,instruction,random,0.7,0.625,0.375,clause preserving legal shall indemnify harmless,1.0,1.0,98,469,888.05,False,False
 p004,instruction,embedding,0.7,0.625,0.375,Translate contract clause French indemnify harmless,1.0,1.0,97,474,5981.94,False,False
 p004,instruction,gradient,0.7,0.625,0.375,Translate contract party shall indemnify harmless,0.5,0.5,93,273,4647.59,False,False
 p004,instruction,integrated_gradients,0.7,0.625,0.375,Translate party shall indemnify harmless.,0.5,0.5,93,287,2616.41,False,False
 p004,instruction,llmlingua,0.7,0.625,0.375,Translate English French preserving terminology indemnify,1.0,1.0,93,282,3722.8,False,False
 p004,instruction,llmlingua2,0.7,0.625,0.375,Translate contract preserving terminology indemnify harmless,1.0,1.0,93,150,2584.92,False,False
 p041,context,uncompressed,0.0,0.0,1.0,"Given the quarterly earnings report showing Q3 revenue of $4.2B with 18% EBITDA margin, summarize the operating profit trajectory.",1.0,1.0,114,346,1744.25,False,False
-p041,context,random,0.3,0.2580645161290322,0.7419354838709677,"Given the earnings report Q3 $.2B with 18% EBITDA margin, summarize operating profit",0.6667,0.6667,109,155,752.04,False,False
-p041,context,embedding,0.3,0.2580645161290322,0.7419354838709677,"Given earnings Q3 revenue 4.2B with 18 EBITDA margin, summarize operating profit trajectory.",1.0,1.0,107,496,2915.09,False,False
-p041,context,gradient,0.3,0.2580645161290322,0.7419354838709677,"Given quarterly earnings report showing Q3 revenue $2B EBITDA margin, summarize operating profit trajectory.",0.3333,0.3333,105,563,5004.78,False,False
-p041,context,integrated_gradients,0.3,0.2580645161290322,0.7419354838709677,"Given quarterly earnings report Q3 revenue of.2B EBITDA margin, summarize operating profit trajectory.",0.3333,0.3333,105,243,4673.24,False,False
+p041,context,random,0.3,0.3548387096774194,0.6451612903225806,"quarterly report showing revenue $4.2B 18% margin, summarize the profit trajectory.",1.0,1.0,110,67,449.38,False,False
+p041,context,embedding,0.3,0.25806451612903225,0.7419354838709677,"Given earnings Q3 revenue 4.2B with 18 EBITDA margin, summarize operating profit trajectory.",1.0,1.0,107,496,2915.09,False,False
+p041,context,gradient,0.3,0.25806451612903225,0.7419354838709677,"Given quarterly earnings report showing Q3 revenue $2B EBITDA margin, summarize operating profit trajectory.",0.3333,0.3333,105,563,5004.78,False,False
+p041,context,integrated_gradients,0.3,0.25806451612903225,0.7419354838709677,"Given quarterly earnings report Q3 revenue of.2B EBITDA margin, summarize operating profit trajectory.",0.3333,0.3333,105,243,4673.24,False,False
 p041,context,llmlingua,0.3,0.2258,0.7742,Given the quarterly earnings report showing Q3 revenue of 2B with EBITDA margin summarize the operating profit trajectory,0.3333,0.3333,107,160,2635.25,False,False
 p041,context,llmlingua2,0.3,0.2258,0.7742,Given quarterly earnings report showing Q3 revenue $4.2B 18 EBITDA margin summarize operating profit trajectory,1.0,1.0,107,393,1867.33,False,False
-p041,context,random,0.5,0.4193548387096774,0.5806451612903226,"Given the report Q3 $ with 18% EBITDA margin, summarize operating",0.6667,0.6667,105,161,735.14,False,False
+p041,context,random,0.5,0.4838709677419355,0.5161290322580645,"quarterly report showing revenue 4.2B margin, summarize the trajectory.",0.3333,0.3333,106,336,718.8,False,False
 p041,context,embedding,0.5,0.3870967741935484,0.6129032258064516,Given Q3 revenue 4.2B 18 EBITDA margin summarize operating profit trajectory,1.0,1.0,103,475,2833.43,False,False
 p041,context,gradient,0.5,0.3870967741935484,0.6129032258064516,Given quarterly earnings Q3 revenue 2B EBITDA margin summarize operating profit trajectory.,0.3333,0.3333,102,600,3791.84,False,False
 p041,context,integrated_gradients,0.5,0.3870967741935484,0.6129032258064516,"quarterly earnings Q3 revenue.2B EBITDA, summarize operating profit trajectory.",0.3333,0.3333,106,447,765.94,False,False
 p041,context,llmlingua,0.5,0.4839,0.5161,Given quarterly earnings report showing revenue EBITDA margin summarize operating profit trajectory,0.3333,0.3333,98,274,4742.21,False,False
 p041,context,llmlingua2,0.5,0.4839,0.5161,Given quarterly earnings report showing revenue EBITDA margin summarize operating profit trajectory,0.3333,0.3333,98,274,4742.21,False,False
-p041,context,random,0.7,0.7096774193548387,0.2903225806451613,Given the $ with EBITDA margin operating,0.3333,0.3333,97,53,577.76,False,False
+p041,context,random,0.7,0.7741935483870968,0.22580645161290322,"showing revenue 4. margin, the",0.3333,0.3333,99,111,464.82,False,False
 p041,context,embedding,0.7,0.6129032258064516,0.3870967741935484,Given Q3. EBITDA summarize profit trajectory,0.3333,0.3333,94,319,1465.93,False,False
 p041,context,gradient,0.7,0.6129032258064516,0.3870967741935484,Given quarterly earnings Q3 EBITDA summarize operating,0.3333,0.3333,94,250,3651.15,False,False
-p041,context,integrated_gradients,0.7,0.5806451612903225,0.4193548387096774,quarterly Q3 2B EBITDA summarize trajectory.,0.3333,0.3333,97,321,1651.28,False,False
+p041,context,integrated_gradients,0.7,0.5806451612903225,0.41935483870967744,quarterly Q3 2B EBITDA summarize trajectory.,0.3333,0.3333,97,321,1651.28,False,False
 p041,context,llmlingua,0.7,0.6774,0.3226,Given quarterly earnings showing revenue summarize operating trajectory,0.3333,0.3333,94,211,3641.02,False,False
 p041,context,llmlingua2,0.7,0.6774,0.3226,quarterly earnings report showing revenue summarize operating trajectory,0.3333,0.3333,95,114,1391.97,False,False
 p061,tone,uncompressed,0.0,0.0,1.0,"Draft an executive apology to enterprise clients regarding the recent cloud outage, adhering strictly to a formal and professional tone.",1.0,1.0,108,600,3052.52,False,False
-p061,tone,random,0.3,0.3333333333333333,0.6666666666666666,"Draft executive apology to enterprise clients regarding the cloud, adhering to a formal.",1.0,1.0,105,569,1613.53,False,False
-p061,tone,embedding,0.3,0.2916666666666666,0.7083333333333334,Draft an executive apology to enterprise clients recent cloud outage adhering strictly formal tone.,1.0,1.0,101,600,6023.61,False,False
-p061,tone,gradient,0.3,0.2916666666666666,0.7083333333333334,Draft executive apology enterprise clients regarding recent cloud outage adhering strictly formal professional tone.,1.0,1.0,101,600,5012.91,False,False
-p061,tone,integrated_gradients,0.3,0.2916666666666666,0.7083333333333334,"Draft an executive apology enterprise clients cloud outage, adhering strictly formal professional tone.",1.0,1.0,101,600,5152.56,False,False
+p061,tone,random,0.3,0.29166666666666663,0.7083333333333334,Draft executive apology to enterprise clients the outage adhering strictly a formal and professional tone,1.0,1.0,105,403,830.35,False,False
+p061,tone,embedding,0.3,0.29166666666666663,0.7083333333333334,Draft an executive apology to enterprise clients recent cloud outage adhering strictly formal tone.,1.0,1.0,101,600,6023.61,False,False
+p061,tone,gradient,0.3,0.29166666666666663,0.7083333333333334,Draft executive apology enterprise clients regarding recent cloud outage adhering strictly formal professional tone.,1.0,1.0,101,600,5012.91,False,False
+p061,tone,integrated_gradients,0.3,0.29166666666666663,0.7083333333333334,"Draft an executive apology enterprise clients cloud outage, adhering strictly formal professional tone.",1.0,1.0,101,600,5152.56,False,False
 p061,tone,llmlingua,0.3,0.2917,0.7083,Draft executive apology enterprise clients regarding the recent cloud outage adhering strictly formal professional tone,1.0,1.0,101,600,4768.01,False,False
 p061,tone,llmlingua2,0.3,0.2917,0.7083,Draft executive apology enterprise clients regarding recent cloud outage adhering strictly formal and professional tone,1.0,1.0,101,600,4962.97,False,False
-p061,tone,random,0.5,0.5,0.5,"Draft executive to enterprise clients regarding the cloud, adhering to",1.0,1.0,101,1280,3110.21,False,False
+p061,tone,random,0.5,0.5,0.5,Draft executive apology to clients outage strictly a formal and tone,1.0,1.0,101,255,1376.67,False,False
 p061,tone,embedding,0.5,0.5,0.5,Draft executive apology to enterprise clients cloud outage strictly tone.,1.0,1.0,97,600,5146.8,False,False
-p061,tone,gradient,0.5,0.4583333333333333,0.5416666666666666,Draft executive apology enterprise clients regarding cloud outage adhering strictly tone,1.0,1.0,97,600,4926.3,False,False
-p061,tone,integrated_gradients,0.5,0.4583333333333333,0.5416666666666666,"Draft an executive apology clients outage, adhering strictly tone.",0.0,0.0,97,219,4725.14,False,False
+p061,tone,gradient,0.5,0.45833333333333337,0.5416666666666666,Draft executive apology enterprise clients regarding cloud outage adhering strictly tone,1.0,1.0,97,600,4926.3,False,False
+p061,tone,integrated_gradients,0.5,0.45833333333333337,0.5416666666666666,"Draft an executive apology clients outage, adhering strictly tone.",0.0,0.0,97,219,4725.14,False,False
 p061,tone,llmlingua,0.5,0.4583,0.5417,Draft executive apology enterprise clients regarding recent outage adhering strictly professional,1.0,1.0,97,556,3045.71,False,False
 p061,tone,llmlingua2,0.5,0.4583,0.5417,executive apology enterprise clients regarding recent outage adhering strictly formal professional,1.0,1.0,98,600,5143.35,False,False
-p061,tone,random,0.7,0.6666666666666667,0.3333333333333333,"Draft enterprise regarding the cloud, adhering",0.0,0.0,97,1313,3016.87,False,False
+p061,tone,random,0.7,0.6666666666666667,0.3333333333333333,Draft apology to clients outage and tone,1.0,1.0,97,287,709.65,False,False
 p061,tone,embedding,0.7,0.6666666666666667,0.3333333333333333,Draft executive apology clients cloud outage.,1.0,1.0,93,600,5105.41,False,False
 p061,tone,gradient,0.7,0.6666666666666667,0.3333333333333333,Draft apology enterprise cloud adhering strictly tone,1.0,1.0,93,600,4775.91,False,False
 p061,tone,integrated_gradients,0.7,0.625,0.375,"Draft an apology outage, adhering.",1.0,1.0,93,600,5070.21,False,False
 p061,tone,llmlingua,0.7,0.6667,0.3333,Draft executive enterprise regarding adhering strictly professional,0.6667,0.6667,93,600,4994.43,False,False
 p061,tone,llmlingua2,0.7,0.6667,0.3333,executive apology enterprise regarding adhering strictly professional,1.0,1.0,94,600,6144.85,False,False
 p081,multi_step,uncompressed,0.0,0.0,1.0,"List the 3-step security procedure to handle compromised credentials: first revoke active tokens, second rotate keys, third audit access logs.",1.0,1.0,112,256,4640.97,False,False
-p081,multi_step,random,0.3,0.2857142857142857,0.7142857142857143,"the -step to handle credentials: first revoke tokens, second keys, third audit logs.",0.5833,0.5833,108,52,463.1,False,False
+p081,multi_step,random,0.3,0.2857142857142857,0.7142857142857143,"List -step security procedure compromised credentials: revoke active tokens, rotate, third access logs.",0.5833,0.5833,108,341,761.22,False,False
 p081,multi_step,embedding,0.3,0.2857142857142857,0.7142857142857143,List the -step security procedure to handle compromised credentials: revoke active tokens rotate keys audit.,1.0,1.0,104,319,1483.78,False,False
 p081,multi_step,gradient,0.3,0.2857142857142857,0.7142857142857143,"List the procedure credentials: first revoke tokens, second rotate keys, third audit access logs.",1.0,1.0,104,322,3751.6,False,False
 p081,multi_step,integrated_gradients,0.3,0.2857142857142857,0.7142857142857143,"List -step security procedure handle compromised credentials revoke active tokens, rotate keys third access logs.",1.0,1.0,104,600,3031.58,False,False
 p081,multi_step,llmlingua,0.3,0.2857,0.7143,List step security procedure handle compromised credentials first revoke active tokens second rotate keys third audit access logs,1.0,1.0,104,206,4577.91,False,False
 p081,multi_step,llmlingua2,0.3,0.2857,0.7143,List step security procedure handle compromised credentials first revoke active tokens second rotate keys third audit access logs,1.0,1.0,104,206,4577.91,False,False
-p081,multi_step,random,0.5,0.4642857142857143,0.5357142857142857,the - to credentials: first revoke tokens second keys audit logs.,1.0,1.0,103,467,1366.39,False,False
+p081,multi_step,random,0.5,0.5357142857142857,0.4642857142857143,"List - security procedure compromised credentials: active, rotate, third access",0.5833,0.5833,103,342,1583.28,False,False
 p081,multi_step,embedding,0.5,0.4642857142857143,0.5357142857142857,List the - to handle compromised credentials: revoke tokens keys audit.,0.5833,0.5833,99,279,4672.13,False,False
 p081,multi_step,gradient,0.5,0.4642857142857143,0.5357142857142857,": revoke tokens, second rotate keys, third audit access logs.",1.0,1.0,99,600,4065.48,False,False
 p081,multi_step,integrated_gradients,0.5,0.4642857142857143,0.5357142857142857,List -step security procedure credentials revoke tokens rotate keys access logs.,1.0,1.0,99,600,4737.28,False,False
 p081,multi_step,llmlingua,0.5,0.4643,0.5357,List security procedure handle compromised credentials first revoke active tokens second rotate access,0.5833,0.5833,99,202,4485.89,False,False
 p081,multi_step,llmlingua2,0.5,0.4643,0.5357,security procedure handle compromised credentials first revoke active tokens second rotate third access,0.1333,0.1333,99,184,2684.75,False,False
-p081,multi_step,random,0.7,0.6785714285714286,0.3214285714285714,the - to credentials tokens second logs.,0.0,0.0,98,48,462.62,False,False
-p081,multi_step,embedding,0.7,0.6428571428571428,0.3571428571428571,List the - compromised credentials: revoke tokens,0.5833,0.5833,94,600,5028.85,False,False
-p081,multi_step,gradient,0.7,0.6785714285714286,0.3214285714285714,"revoke second rotate keys, third audit logs",0.5833,0.5833,99,76,503.47,False,False
-p081,multi_step,integrated_gradients,0.7,0.6428571428571428,0.3571428571428571,List -step security revoke tokens keys.,0.75,0.75,94,600,5041.49,False,False
+p081,multi_step,random,0.7,0.7142857142857143,0.2857142857142857,"List security compromised credentials: active,,",0.0,0.0,97,37,125.4,False,False
+p081,multi_step,embedding,0.7,0.6428571428571428,0.35714285714285715,List the - compromised credentials: revoke tokens,0.5833,0.5833,94,600,5028.85,False,False
+p081,multi_step,gradient,0.7,0.6785714285714286,0.32142857142857145,"revoke second rotate keys, third audit logs",0.5833,0.5833,99,76,503.47,False,False
+p081,multi_step,integrated_gradients,0.7,0.6428571428571428,0.35714285714285715,List -step security revoke tokens keys.,0.75,0.75,94,600,5041.49,False,False
 p081,multi_step,llmlingua,0.7,0.6786,0.3214,List security procedure handle compromised credentials revoke active,1.0,1.0,94,600,5121.1,False,False
 p081,multi_step,llmlingua2,0.7,0.6429,0.3571,security procedure handle compromised credentials revoke active tokens,0.5833,0.5833,94,600,5155.69,False,False
 p006,instruction,uncompressed,0.0,0.0,1.0,Generate five candidate headlines for a blog post about renewable energy advances.,1.0,1.0,103,172,16712.18,False,False
-p006,instruction,random,0.3,0.3076923076923077,0.6923076923076923,Generate five candidate headlines a blog post about renewable,1.0,1.0,99,124,692.62,False,False
+p006,instruction,random,0.3,0.3076923076923077,0.6923076923076923,Generate five candidate headlines for blog about energy.,1.0,1.0,99,124,494.98,False,False
 p006,instruction,embedding,0.3,0.3076923076923077,0.6923076923076923,Generate five candidate headlines blog about renewable energy advances,1.0,1.0,99,183,2662.36,False,False
 p006,instruction,gradient,0.3,0.3076923076923077,0.6923076923076923,Generate candidate headlines blog post renewable energy advances.,1.0,1.0,99,371,1861.16,False,False
 p006,instruction,integrated_gradients,0.3,0.3076923076923077,0.6923076923076923,Generate candidate headlines blog post renewable energy advances.,1.0,1.0,99,371,1861.16,False,False
 p006,instruction,llmlingua,0.3,0.3077,0.6923,Generate five candidate headlines blog about renewable energy advances,1.0,1.0,99,183,2662.36,False,False
 p006,instruction,llmlingua2,0.3,0.3077,0.6923,Generate five candidate headlines blog about renewable energy advances,1.0,1.0,99,183,2662.36,False,False
-p006,instruction,random,0.5,0.4615384615384615,0.5384615384615384,five candidate headlines a post about renewable,1.0,1.0,97,120,681.12,False,False
-p006,instruction,embedding,0.5,0.4615384615384615,0.5384615384615384,Generate five headlines blog renewable energy advances,1.0,1.0,97,154,2545.23,False,False
-p006,instruction,gradient,0.5,0.4615384615384615,0.5384615384615384,Generate candidate headlines blog renewable energy advances,1.0,1.0,97,354,2726.38,False,False
-p006,instruction,integrated_gradients,0.5,0.4615384615384615,0.5384615384615384,Generate candidate headlines blog post advances.,1.0,1.0,97,355,2966.35,False,False
+p006,instruction,random,0.5,0.46153846153846156,0.5384615384615384,five candidate headlines for blog about energy,1.0,1.0,97,113,477.62,False,False
+p006,instruction,embedding,0.5,0.46153846153846156,0.5384615384615384,Generate five headlines blog renewable energy advances,1.0,1.0,97,154,2545.23,False,False
+p006,instruction,gradient,0.5,0.46153846153846156,0.5384615384615384,Generate candidate headlines blog renewable energy advances,1.0,1.0,97,354,2726.38,False,False
+p006,instruction,integrated_gradients,0.5,0.46153846153846156,0.5384615384615384,Generate candidate headlines blog post advances.,1.0,1.0,97,355,2966.35,False,False
 p006,instruction,llmlingua,0.5,0.5385,0.4615,Generate candidate headlines renewable energy advances,1.0,1.0,96,289,621.35,False,False
 p006,instruction,llmlingua2,0.5,0.5385,0.4615,Generate candidate headlines renewable energy advances,1.0,1.0,96,289,621.35,False,False
-p006,instruction,random,0.7,0.6923076923076923,0.3076923076923077,headlines a post about,0.0,0.0,95,80,561.85,False,False
+p006,instruction,random,0.7,0.6923076923076923,0.3076923076923077,five headlines for about,0.0,0.0,94,60,422.9,False,False
 p006,instruction,embedding,0.7,0.6923076923076923,0.3076923076923077,five headlines blog renewable,1.0,1.0,94,176,1604.97,False,False
 p006,instruction,gradient,0.7,0.6923076923076923,0.3076923076923077,Generate candidate headlines blog,0.0,0.0,94,81,489.81,False,False
 p006,instruction,integrated_gradients,0.7,0.6923076923076923,0.3076923076923077,candidate headlines blog.,0.0,0.0,94,125,2552.04,False,False
 p006,instruction,llmlingua,0.7,0.6923,0.3077,Generate candidate headlines renewable,1.0,1.0,94,301,1729.77,False,False
 p006,instruction,llmlingua2,0.7,0.6923,0.3077,Generate candidate headlines renewable,1.0,1.0,94,301,1729.77,False,False
 p042,context,uncompressed,0.0,0.0,1.0,The client is a Tier-1 enterprise financial institution with strict HIPAA and SOC2 compliance mandates evaluating cloud migration to AWS Ireland region.,0.8333,1.0,117,619,1122.26,False,False
-p042,context,random,0.3,0.3214285714285714,0.6785714285714286,The client is Tier1 enterprise financial institution with strict HIPAA and evaluating migration to AWS Ireland,0.8333,1.0,108,3179,7088.72,False,False
+p042,context,random,0.3,0.2857142857142857,0.7142857142857143,is a Tier1 financial with strict HIPAA SOC2 compliance mandates cloud migration to AWS Ireland region,0.8333,1.0,109,1104,1551.45,False,False
 p042,context,embedding,0.3,0.2857142857142857,0.7142857142857143,The client is a Tier1 financial institution strict HIPAA SOC2 evaluating cloud migration AWS Ireland.,0.8333,1.0,109,723,1189.28,False,False
 p042,context,gradient,0.3,0.2857142857142857,0.7142857142857143,client Tier enterprise financial institution strict HIPAA SOC2 compliance mandates evaluating cloud migration AWS Ireland region.,0.8333,1.0,109,859,7493.57,False,False
 p042,context,integrated_gradients,0.3,0.2857142857142857,0.7142857142857143,client Tier- enterprise financial institution strict HIPAA SOC2 compliance mandates evaluating cloud migration AWS Ireland.,0.8333,1.0,109,674,1183.94,False,False
 p042,context,llmlingua,0.3,0.2857,0.7143,The client Tier enterprise financial institution with strict HIPAA and SOC2 compliance mandates evaluating cloud migration Ireland region,0.8333,1.0,110,858,3264.87,False,False
 p042,context,llmlingua2,0.3,0.25,0.75,client Tier- enterprise financial institution strict HIPAA and SOC2 compliance mandates evaluating cloud migration AWS Ireland region,0.8333,1.0,110,2048,16698.31,False,False
-p042,context,random,0.5,0.5357142857142857,0.4642857142857143,The client is Tier enterprise financial institution with strict and evaluating migration Ireland,0.8333,1.0,103,2158,4951.98,False,False
+p042,context,random,0.5,0.4285714285714286,0.5714285714285714,is Tier1 financial with strict HIPAA SOC2 mandates cloud to AWS region,0.8333,1.0,105,243,493.5,False,False
 p042,context,embedding,0.5,0.4285714285714286,0.5714285714285714,client is a Tier1 strict HIPAA SOC2 cloud migration AWS Ireland.,0.5,0.6,105,175,5618.83,False,False
 p042,context,gradient,0.5,0.4285714285714286,0.5714285714285714,client Tier financial strict HIPAA SOC2 compliance mandates evaluating cloud migration AWS Ireland,0.8333,1.0,105,874,1368.67,False,False
 p042,context,integrated_gradients,0.5,0.4285714285714286,0.5714285714285714,Tier enterprise financial institution strict HIPAA SOC2 compliance mandates evaluating cloud AWS.,0.6667,0.8001,105,749,1296.43,False,False
 p042,context,llmlingua,0.5,0.5714,0.4286,client Tier enterprise financial institution strict compliance mandates evaluating migration Ireland region,0.8333,1.0,102,846,13392.89,False,False
 p042,context,llmlingua2,0.5,0.5357,0.4643,client enterprise financial institution strict HIPAA compliance mandates evaluating migration Ireland region,0.8333,1.0,103,772,2087.39,False,False
-p042,context,random,0.7,0.75,0.25,The client Tier enterprise institution strict migration,0.5,0.6,97,171,17838.68,False,False
+p042,context,random,0.7,0.6785714285714286,0.32142857142857145,Tier1 HIPAA SOC2 mandates cloud region,0.5,0.6,99,652,1119.78,False,False
 p042,context,embedding,0.7,0.7142857142857143,0.2857142857142857,client is Tier HIPAA cloud migration Ireland,0.5,0.6,98,742,5193.7,False,False
-p042,context,gradient,0.7,0.6428571428571428,0.3571428571428571,client financial strict HIPAA SOC2 cloud AWS,0.6667,0.8001,99,1029,6547.5,False,False
-p042,context,integrated_gradients,0.7,0.6428571428571428,0.3571428571428571,Tier HIPAA SOC2 mandates cloud AWS.,0.3333,0.4,99,162,7595.67,False,False
+p042,context,gradient,0.7,0.6428571428571428,0.35714285714285715,client financial strict HIPAA SOC2 cloud AWS,0.6667,0.8001,99,1029,6547.5,False,False
+p042,context,integrated_gradients,0.7,0.6428571428571428,0.35714285714285715,Tier HIPAA SOC2 mandates cloud AWS.,0.3333,0.4,99,162,7595.67,False,False
 p042,context,llmlingua,0.7,0.7143,0.2857,enterprise financial institution compliance mandates evaluating migration Ireland,0.8333,1.0,98,1241,3767.61,False,False
 p042,context,llmlingua2,0.7,0.7143,0.2857,enterprise financial institution compliance mandates evaluating migration Ireland,0.8333,1.0,98,1241,3767.61,False,False
 p043,context,uncompressed,0.0,0.0,1.0,Our company recently laid off 15% of engineering staff following a cancelled Series B funding round. Address remaining employees in an internal memo.,0.8333,1.0,117,681,1086.61,False,False
-p043,context,random,0.3,0.3076923076923077,0.6923076923076923,Our company laid off 15% of staff following cancelled Series funding. remaining employees internal memo.,0.8333,1.0,109,823,51445.46,False,False
+p043,context,random,0.3,0.3076923076923077,0.6923076923076923,Our company off 15 of engineering following a Series B round. Address remaining in an internal memo,0.8333,1.0,109,662,1076.25,False,False
 p043,context,embedding,0.3,0.3076923076923077,0.6923076923076923,Our company laid off 15% engineering staff following cancelled Series B funding. Address employees memo.,0.8333,1.0,109,669,10281.05,False,False
 p043,context,gradient,0.3,0.3076923076923077,0.6923076923076923,Our company recently laid 15% engineering staff cancelled Series funding round. Address remaining employees internal memo,1.0,1.0,109,933,10407.77,False,False
 p043,context,integrated_gradients,0.3,0.3076923076923077,0.6923076923076923,Our company recently laid % engineering staff cancelled Series funding round. Address remaining employees internal memo.,0.8333,1.0,108,816,8042.97,False,False
 p043,context,llmlingua,0.3,0.3077,0.6923,Our company recently laid off 15 engineering staff following cancelled Series funding round Address remaining employees internal memo,0.8333,1.0,109,863,1335.82,False,False
 p043,context,llmlingua2,0.3,0.3077,0.6923,Our company recently laid off 15 engineering staff following cancelled Series funding round Address remaining employees internal memo,0.8333,1.0,109,863,1335.82,False,False
-p043,context,random,0.5,0.5,0.5,company laid off 15% of following cancelled Series. internal memo.,0.6667,0.8001,104,711,1866.16,False,False
+p043,context,random,0.5,0.5,0.5,company off 15 of engineering a Series round. in an internal memo,1.0,1.0,104,460,858.58,False,False
 p043,context,embedding,0.5,0.5,0.5,laid off 15% engineering staff cancelled B funding Address employees memo.,0.8333,1.0,104,739,6314.62,False,False
 p043,context,gradient,0.5,0.5,0.5,Our company laid engineering cancelled Series funding. Address remaining employees internal memo,0.8333,1.0,103,651,6261.63,False,False
 p043,context,integrated_gradients,0.5,0.5,0.5,company laid engineering cancelled Series funding round. Address employees internal memo.,0.8333,1.0,103,1096,1497.6,False,False
 p043,context,llmlingua,0.5,0.5,0.5,company recently engineering staff following cancelled Series funding round Address remaining employees internal,0.8333,1.0,103,459,11716.09,False,False
 p043,context,llmlingua2,0.5,0.5,0.5,company recently engineering staff following cancelled Series funding round Address remaining employees internal,0.8333,1.0,103,459,11716.09,False,False
-p043,context,random,0.7,0.6923076923076923,0.3076923076923077,company laid 15% of following. internal,0.1667,0.2,99,92,474.54,False,False
+p043,context,random,0.7,0.6923076923076923,0.3076923076923077,company off of a Series. an internal,0.0,0.0,98,92,436.09,False,False
 p043,context,embedding,0.7,0.6923076923076923,0.3076923076923077,laid off 15% engineering B Address memo,0.5,0.6,99,873,3368.14,False,False
 p043,context,gradient,0.7,0.6923076923076923,0.3076923076923077,Our engineering Series funding Address employees internal memo,0.8333,1.0,98,769,6259.17,False,False
 p043,context,integrated_gradients,0.7,0.6923076923076923,0.3076923076923077,company funding round. Address internal memo.,0.8333,1.0,98,861,3294.45,False,False
 p043,context,llmlingua,0.7,0.6923,0.3077,recently engineering following cancelled Series Address remaining employees,0.0,0.0,99,191,9669.89,False,False
 p043,context,llmlingua2,0.7,0.6923,0.3077,company recently engineering following cancelled remaining employees internal,0.0,0.0,98,322,2762.26,False,False
 p062,tone,uncompressed,0.0,0.0,1.0,"Draft a cease-and-desist letter to a copyright infringer. Adopt a stern, formal, unambiguous, and authoritative legal tone.",1.0,1.0,118,759,1174.27,False,False
-p062,tone,random,0.3,0.28125,0.71875,"Draft a cease-and- letter to a copyright infringer. formal unambiguous, and authoritative tone",1.0,1.0,110,966,2425.88,False,False
+p062,tone,random,0.3,0.34375,0.65625,"a cease- letter to a copyright. Adopt stern, formal, unambiguous, and authoritative tone",1.0,1.0,110,624,1945.67,False,False
 p062,tone,embedding,0.3,0.25,0.75,Draft a cease-and-desist letter a copyright infringer. Adopt unambiguous authoritative legal tone.,0.0,0.0,110,231,17666.5,False,False
 p062,tone,gradient,0.3,0.25,0.75,"Draft ceasedesist letter copyright infringer. Adopt a stern, formal unambiguous, authoritative legal tone.",1.0,1.0,112,1380,3841.23,False,False
 p062,tone,integrated_gradients,0.3,0.25,0.75,Draft a ceaseanddesist letter copyright infringer. Adopt a stern formal unambiguous authoritative legal tone.,1.0,1.0,112,1010,10611.46,False,False
 p062,tone,llmlingua,0.3,0.25,0.75,Draft a cease-anddesist letter to copyright infringer Adopt stern formal unambiguous and authoritative legal tone,1.0,1.0,111,2048,8634.71,False,False
 p062,tone,llmlingua2,0.3,0.25,0.75,Draft cease-and-desist letter copyright infringer. Adopt stern formal unambiguous and authoritative legal tone,1.0,1.0,110,863,15411.95,False,False
-p062,tone,random,0.5,0.5,0.5,"Draft a cease-- letter to copyright unambiguous, and authoritative tone",1.0,1.0,104,773,1950.2,False,False
+p062,tone,random,0.5,0.5,0.5,"cease- a copyright. Adopt stern, unambiguous, and authoritative tone",1.0,1.0,106,561,1885.06,False,False
 p062,tone,embedding,0.5,0.5,0.5,Draft a cease--desist letter copyright infringer. Adopt legal.,1.0,1.0,104,938,7305.86,False,False
 p062,tone,gradient,0.5,0.40625,0.59375,Draft ceasedesist letter copyright infringer Adopt stern formal unambiguous authoritative legal tone,1.0,1.0,107,877,7235.71,False,False
 p062,tone,integrated_gradients,0.5,0.40625,0.59375,Draft ceasedesist copyright infringer. Adopt stern unambiguous authoritative legal tone.,0.5,0.5,107,893,7356.36,False,False
 p062,tone,llmlingua,0.5,0.4062,0.5938,Draft ceasedesist letter copyright infringer Adopt stern formal unambiguous authoritative legal tone,1.0,1.0,107,877,7235.71,False,False
 p062,tone,llmlingua2,0.5,0.4062,0.5938,Draft ceasedesist letter copyright infringer Adopt stern formal unambiguous authoritative legal tone,1.0,1.0,107,877,7235.71,False,False
-p062,tone,random,0.7,0.65625,0.34375,"Draft -- letter to unambiguous, authoritative",0.75,0.75,99,824,2119.49,False,False
+p062,tone,random,0.7,0.65625,0.34375,"a copyright. Adopt, unambiguous, and",0.0,0.0,100,58,403.71,False,False
 p062,tone,embedding,0.7,0.65625,0.34375,Draft a ceasedesist letter copyright infringer.,1.0,1.0,100,584,5312.59,False,False
 p062,tone,gradient,0.7,0.5625,0.4375,ceasedesist copyright infringer Adopt stern unambiguous authoritative,1.0,1.0,102,691,5137.27,False,False
 p062,tone,integrated_gradients,0.7,0.5625,0.4375,Draft ceasedesist copyright infringer Adopt unambiguous authoritative,0.5,0.5,102,823,6268.04,False,False
 p062,tone,llmlingua,0.7,0.5625,0.4375,Draft desist letter copyright infringer Adopt unambiguous authoritative,1.0,1.0,101,910,2364.36,False,False
 p062,tone,llmlingua2,0.7,0.5625,0.4375,Draft desist letter copyright infringer formal unambiguous authoritative,1.0,1.0,101,778,14238.15,False,False
 p066,tone,uncompressed,0.0,0.0,1.0,"Write a children's bedtime story about a sleepy owl. Use a whimsical, gentle, soothing, and rhythmic voice.",1.0,1.0,112,690,5897.42,False,False
-p066,tone,random,0.3,0.25,0.75,"Write a s bedtime story about a owl. whimsical,, soothing and rhythmic voice.",1.0,1.0,106,540,1498.85,False,False
+p066,tone,random,0.3,0.2857142857142857,0.7142857142857143,"Write a childrens story about a sleepy owl. a whimsical, soothing, and rhythmic",1.0,1.0,106,439,704.9,False,False
 p066,tone,embedding,0.3,0.25,0.75,Write children' bedtime story about a sleepy owl. Use whimsical gentle soothing rhythmic voice.,1.0,1.0,107,729,4893.62,False,False
 p066,tone,gradient,0.3,0.25,0.75,Write a children's bedtime story about sleepy owl. Use whimsical gentle soothing rhythmic.,1.0,1.0,105,2048,7804.21,False,False
 p066,tone,integrated_gradients,0.3,0.25,0.75,"Write children bedtime story sleepy owl. Use whimsical, gentle, soothing, and rhythmic voice",1.0,1.0,107,876,14381.04,False,False
 p066,tone,llmlingua,0.3,0.25,0.75,Write a children's bedtime story about sleepy owl Use whimsical gentle soothing and rhythmic voice,1.0,1.0,105,837,7419.13,False,False
 p066,tone,llmlingua2,0.3,0.25,0.75,Write children's bedtime story about sleepy owl. Use whimsical gentle soothing and rhythmic voice,1.0,1.0,105,564,7061.14,False,False
-p066,tone,random,0.5,0.4285714285714286,0.5714285714285714,"a bedtime story about a. whimsical,, soothing and voice",1.0,1.0,101,850,2215.18,False,False
+p066,tone,random,0.5,0.5714285714285714,0.42857142857142855,"a childrens story a sleepy owl a,, and rhythmic",1.0,1.0,100,374,1663.0,False,False
 p066,tone,embedding,0.5,0.5357142857142857,0.4642857142857143,Write children bedtime story about sleepy owl. Use soothing rhythmic.,1.0,1.0,102,485,4144.06,False,False
 p066,tone,gradient,0.5,0.4285714285714286,0.5714285714285714,Write a children's bedtime story about sleepy owl. whimsical,1.0,1.0,100,678,1137.02,False,False
 p066,tone,integrated_gradients,0.5,0.4285714285714286,0.5714285714285714,"Write children bedtime sleepy owl. whimsical gentle, soothing rhythmic voice",1.0,1.0,102,722,9300.05,False,False
 p066,tone,llmlingua,0.5,0.4286,0.5714,Write children bedtime story about sleepy Use whimsical gentle soothing rhythmic voice,1.0,1.0,102,679,3030.75,False,False
 p066,tone,llmlingua2,0.5,0.4286,0.5714,Write children bedtime story about sleepy owl whimsical gentle soothing rhythmic voice,1.0,1.0,102,1460,10101.58,False,False
-p066,tone,random,0.7,0.6071428571428572,0.3928571428571428,"bedtime about a whimsical, soothing voice",0.0,0.0,98,629,1707.84,False,False
+p066,tone,random,0.7,0.75,0.25,"a childrens a, and rhythmic",0.0,0.0,96,190,1858.14,False,False
 p066,tone,embedding,0.7,0.7142857142857143,0.2857142857142857,Write children bedtime story about sleepy owl,1.0,1.0,97,970,1505.2,False,False
-p066,tone,gradient,0.7,0.6071428571428572,0.3928571428571428,Write a children's bedtime whimsical,1.0,1.0,95,576,10083.64,False,False
-p066,tone,integrated_gradients,0.7,0.6071428571428572,0.3928571428571428,Write bedtime. whimsical gentle soothing rhythmic,0.0,0.0,97,324,4642.87,False,False
+p066,tone,gradient,0.7,0.6071428571428572,0.39285714285714285,Write a children's bedtime whimsical,1.0,1.0,95,576,10083.64,False,False
+p066,tone,integrated_gradients,0.7,0.6071428571428572,0.39285714285714285,Write bedtime. whimsical gentle soothing rhythmic,0.0,0.0,97,324,4642.87,False,False
 p066,tone,llmlingua,0.7,0.6071,0.3929,Write children bedtime sleepy whimsical soothing rhythmic,0.0,0.0,97,278,2703.33,False,False
 p066,tone,llmlingua2,0.7,0.6071,0.3929,children bedtime sleepy whimsical gentle soothing rhythmic,0.0,0.0,97,362,2541.41,False,False
 p088,multi_step,uncompressed,0.0,0.0,1.0,First brainstorm five startup concepts in climate tech. Then evaluate market size for each. Next pick the most viable idea. Finally outline a 30-day MVP roadmap.,1.0,1.0,122,1646,3714.66,False,False
-p088,multi_step,random,0.3,0.3428571428571428,0.6571428571428571,First brainstorm startup concepts in climate. Then evaluate market size each. Next most idea. Finally outline 30day MVP,0.5625,0.5625,113,1962,4537.39,False,False
+p088,multi_step,random,0.3,0.2857142857142857,0.7142857142857143,First brainstorm five startup concepts climate tech Then evaluate market size each. the idea Finally a 30-day MVP roadmap,1.0,1.0,112,1434,2787.86,False,False
 p088,multi_step,embedding,0.3,0.2857142857142857,0.7142857142857143,First brainstorm five startup concepts in climate tech. Then evaluate market size each viable idea. outline 30day MVP roadmap,0.5625,0.5625,113,2011,13681.5,False,False
 p088,multi_step,gradient,0.3,0.2857142857142857,0.7142857142857143,First brainstorm five startup concepts climate tech. evaluate market size. Next pick viable. Finally outline 30day MVP roadmap,1.0,1.0,113,2170,18024.44,False,False
 p088,multi_step,integrated_gradients,0.3,0.2857142857142857,0.7142857142857143,First brainstorm startup climate tech. Then evaluate market. Next pick the. Finally outline a 30day MVP roadmap.,0.5625,0.5625,113,1644,17842.64,False,False
 p088,multi_step,llmlingua,0.3,0.2857,0.7143,First brainstorm five startup concepts climate tech Then evaluate market size for each Next pick the most viable idea Finally outline roadmap,1.0,1.0,112,2245,10135.12,False,False
 p088,multi_step,llmlingua2,0.3,0.2857,0.7143,First brainstorm five startup concepts climate tech Then evaluate market size each Next pick most viable idea Finally outline day MVP roadmap,1.0,1.0,112,2168,40056.25,False,False
-p088,multi_step,random,0.5,0.5142857142857142,0.4857142857142857,First brainstorm startup concepts in climate Then evaluate market size Next. outline 30day MVP,0.5625,0.5625,107,2034,4643.13,False,False
+p088,multi_step,random,0.5,0.4571428571428572,0.5428571428571428,First brainstorm five concepts climate tech evaluate size each the idea Finally -day MVP roadmap,0.5625,0.5625,106,859,1818.65,False,False
 p088,multi_step,embedding,0.5,0.4571428571428572,0.5428571428571428,brainstorm five startup concepts in climate tech Then evaluate market size. outline day MVP roadmap,0.5625,0.5625,107,1738,6945.4,False,False
 p088,multi_step,gradient,0.5,0.4571428571428572,0.5428571428571428,First brainstorm startup concepts climate tech evaluate market. Next pick viable Finally outline MVP roadmap,0.5625,0.5625,106,2065,14845.49,False,False
 p088,multi_step,integrated_gradients,0.5,0.4571428571428572,0.5428571428571428,First brainstorm climate tech. evaluate market. Next pick. Finally outline day roadmap.,1.0,1.0,106,1813,15363.24,False,False
 p088,multi_step,llmlingua,0.5,0.4571,0.5429,First brainstorm five startup concepts climate tech Then evaluate market size Next viable Finally outline roadmap,0.5625,0.5625,106,1846,14332.23,False,False
 p088,multi_step,llmlingua2,0.5,0.4571,0.5429,First brainstorm five startup concepts climate tech Then evaluate market size each viable Finally outline roadmap,0.5625,0.5625,106,2159,14841.47,False,False
-p088,multi_step,random,0.7,0.7142857142857143,0.2857142857142857,startup concepts in climate Then market size outline 30 MVP,0.3,0.3,101,2628,13968.09,False,False
+p088,multi_step,random,0.7,0.6285714285714286,0.37142857142857144,First brainstorm five concepts tech evaluate -day MVP roadmap,0.1,0.1,100,409,1156.15,False,False
 p088,multi_step,embedding,0.7,0.6857142857142857,0.3142857142857143,brainstorm five startup concepts in climate tech market size MVP,0.1,0.1,101,952,13523.51,False,False
-p088,multi_step,gradient,0.7,0.6285714285714286,0.3714285714285714,brainstorm startup climate tech. Next Finally outline MVP roadmap,0.375,0.375,101,1284,9163.56,False,False
-p088,multi_step,integrated_gradients,0.7,0.6285714285714286,0.3714285714285714,First brainstorm tech. evaluate market. pick roadmap.,0.375,0.375,100,1418,10472.17,False,False
+p088,multi_step,gradient,0.7,0.6285714285714286,0.37142857142857144,brainstorm startup climate tech. Next Finally outline MVP roadmap,0.375,0.375,101,1284,9163.56,False,False
+p088,multi_step,integrated_gradients,0.7,0.6285714285714286,0.37142857142857144,First brainstorm tech. evaluate market. pick roadmap.,0.375,0.375,100,1418,10472.17,False,False
 p088,multi_step,llmlingua,0.7,0.6286,0.3714,First brainstorm startup concepts climate Then evaluate Finally outline roadmap,0.5625,0.5625,100,2110,12905.34,False,False
 p088,multi_step,llmlingua2,0.7,0.6286,0.3714,brainstorm startup concepts climate evaluate market viable Finally outline roadmap,0.5625,0.5625,101,1759,15153.95,False,False
 p098,multi_step,uncompressed,0.0,0.0,1.0,First audit website SEO metadata. Second analyze page load performance on mobile. Third inspect keyword ranking competition. Fourth deliver prioritized SEO recommendations.,1.0,1.0,116,2429,15590.44,False,False
-p098,multi_step,random,0.3,0.3448275862068966,0.6551724137931034,First audit website SEO metadata Second analyze page on mobile. Third inspect keyword ranking competition deliver.,1.0,1.0,108,2382,15598.13,False,False
+p098,multi_step,random,0.3,0.27586206896551724,0.7241379310344828,audit website SEO metadata analyze load performance on. Third keyword ranking competition Fourth deliver prioritized recommendations.,0.0,0.0,108,65,436.29,False,False
 p098,multi_step,embedding,0.3,0.3448275862068966,0.6551724137931034,First audit website SEO metadata. Second analyze load performance mobile. Third inspect keyword competition recommendations.,1.0,1.0,108,2237,6128.45,False,False
-p098,multi_step,gradient,0.3,0.2758620689655172,0.7241379310344828,audit website SEO metadata analyze load mobile. inspect keyword ranking competition. Fourth deliver prioritized SEO recommendations,1.0,1.0,108,2156,31046.96,False,False
-p098,multi_step,integrated_gradients,0.3,0.2758620689655172,0.7241379310344828,First audit website SEO. analyze page mobile. inspect keyword ranking competition. prioritized SEO recommendations.,0.4,0.4,108,898,1401.03,False,False
+p098,multi_step,gradient,0.3,0.27586206896551724,0.7241379310344828,audit website SEO metadata analyze load mobile. inspect keyword ranking competition. Fourth deliver prioritized SEO recommendations,1.0,1.0,108,2156,31046.96,False,False
+p098,multi_step,integrated_gradients,0.3,0.27586206896551724,0.7241379310344828,First audit website SEO. analyze page mobile. inspect keyword ranking competition. prioritized SEO recommendations.,0.4,0.4,108,898,1401.03,False,False
 p098,multi_step,llmlingua,0.3,0.2759,0.7241,First audit website metadata Second analyze page performance mobile Third inspect keyword ranking competition Fourth deliver prioritized recommendations,0.0,0.0,108,58,444.41,False,False
 p098,multi_step,llmlingua2,0.3,0.2759,0.7241,First audit website metadata Second analyze page performance mobile Third inspect keyword ranking competition Fourth deliver prioritized recommendations,0.0,0.0,108,58,444.41,False,False
-p098,multi_step,random,0.5,0.5517241379310345,0.4482758620689655,First SEO analyze page on mobile. Third inspect ranking competition deliver.,0.5625,0.5625,103,229,13120.64,False,False
+p098,multi_step,random,0.5,0.4482758620689655,0.5517241379310345,audit website SEO metadata analyze performance. Third keyword deliver prioritized recommendations.,1.0,1.0,103,1069,1523.3,False,False
 p098,multi_step,embedding,0.5,0.5172413793103448,0.4827586206896552,First audit website metadata. load performance mobile. inspect keyword competition.,0.0,0.0,103,55,432.21,False,False
 p098,multi_step,gradient,0.5,0.4482758620689655,0.5517241379310345,audit website SEO metadata analyze mobile inspect keyword Fourth deliver prioritized SEO recommendations,0.0,0.0,103,56,569.89,False,False
 p098,multi_step,integrated_gradients,0.5,0.4482758620689655,0.5517241379310345,audit website SEO. analyze. inspect keyword. prioritized SEO recommendations.,1.0,1.0,103,2144,4976.39,False,False
 p098,multi_step,llmlingua,0.5,0.4483,0.5517,First website metadata Second analyze performance Third inspect keyword competition Fourth prioritized recommendations,1.0,1.0,103,2040,17162.61,False,False
 p098,multi_step,llmlingua2,0.5,0.4483,0.5517,website metadata Second analyze performance mobile inspect keyword ranking competition deliver prioritized recommendations,1.0,1.0,103,1673,15100.18,False,False
-p098,multi_step,random,0.7,0.7241379310344828,0.2758620689655172,First analyze page on mobile. ranking.,1.0,1.0,98,680,59075.86,False,False
+p098,multi_step,random,0.7,0.6896551724137931,0.3103448275862069,website SEO metadata. keyword deliver recommendations.,0.5625,0.5625,98,149,3700.5,False,False
 p098,multi_step,embedding,0.7,0.6896551724137931,0.3103448275862069,First audit metadata performance mobile. inspect keyword,1.0,1.0,98,1472,3330.06,False,False
 p098,multi_step,gradient,0.7,0.6206896551724138,0.3793103448275862,audit website SEO analyze inspect keyword prioritized SEO,1.0,1.0,98,1942,11599.13,False,False
 p098,multi_step,integrated_gradients,0.7,0.6206896551724138,0.3793103448275862,SEO.. keyword. prioritized SEO.,0.4,0.4,97,1018,60655.19,False,False

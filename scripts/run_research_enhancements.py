@@ -21,6 +21,7 @@ import time
 from pathlib import Path
 import pandas as pd
 import numpy as np
+from scipy import stats
 from dotenv import load_dotenv
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -57,21 +58,37 @@ def _cluster_boot_rate_ci(
     n_boot: int = 10000,
     seed: int = 42
 ) -> Tuple[float, float, float]:
-    """Computes cluster-bootstrapped proportion and 95% CI for a categorical outcome."""
+    """Computes cluster-level proportion and defensible 95% CI.
+    When cluster rates observe zero events, computes the Wilson score interval
+    upper bound on the number of clusters to replace inappropriate zero-width intervals.
+    """
     clusters = df[cluster_col].unique()
-    if len(clusters) == 0:
+    k = len(clusters)
+    if k == 0:
         return 0.0, 0.0, 0.0
     cluster_rates = np.array([
         np.mean(df[df[cluster_col] == c][val_col] == target_val)
         for c in clusters
     ])
+    mean_rate = float(np.mean(cluster_rates))
+
+    if np.all(cluster_rates == 0.0):
+        # Defensible Wilson score interval for 0 events across k clusters (z=1.95996)
+        z = 1.95996
+        wilson_upper = (z * z) / (k + z * z)
+        return 0.0, 0.0, float(wilson_upper)
+    elif np.all(cluster_rates == 1.0):
+        z = 1.95996
+        wilson_lower = k / (k + z * z)
+        return 1.0, float(wilson_lower), 1.0
+
     rng = np.random.default_rng(seed)
     boot_means = [
-        np.mean(rng.choice(cluster_rates, size=len(cluster_rates), replace=True))
+        np.mean(rng.choice(cluster_rates, size=k, replace=True))
         for _ in range(n_boot)
     ]
     ci_low, ci_high = np.percentile(boot_means, [2.5, 97.5])
-    return float(np.mean(cluster_rates)), float(ci_low), float(ci_high)
+    return mean_rate, float(ci_low), float(ci_high)
 
 
 def run_all_enhancements():
@@ -199,8 +216,12 @@ def run_all_enhancements():
 
     # Generate summary table with cluster-bootstrapped CIs across prompts
     summary_span_rows = []
+    paired_span_rows = []
+
     for scope_label, sub_df in [("all_scorers_pooled", span_df)] + [(sn, span_df[span_df["scorer"] == sn]) for sn in scorer_names]:
         n_runs = len(sub_df)
+        n_clusters = len(sub_df["prompt_id"].unique())
+
         for mode_prefix, col_out, col_cr in [
             ("ordinary_word_pruning", "word_outcome", "word_actual_removal"),
             ("rule_based_span_pruning", "span_outcome", "span_actual_removal")
@@ -218,6 +239,7 @@ def run_all_enhancements():
             summary_span_rows.append({
                 "scorer_scope": scope_label,
                 "pruning_mode": mode_prefix,
+                "n_clusters": n_clusters,
                 "n_evaluations": n_runs,
                 "mean_actual_removal": round(float(sub_df[col_cr].mean()), 4),
                 "preserved_count": pres_cnt,
@@ -234,8 +256,54 @@ def run_all_enhancements():
                 "removed_ci_95": f"[{rem_lo:.4f}, {rem_hi:.4f}]"
             })
 
+        # Paired prompt-cluster comparison between ordinary word pruning and rule-based critical-span pruning
+        p_df = sub_df.groupby("prompt_id").apply(lambda g: pd.Series({
+            "w_rev": (g["word_outcome"] == "POLARITY_REVERSED").mean(),
+            "s_rev": (g["span_outcome"] == "POLARITY_REVERSED").mean(),
+            "w_pres": (g["word_outcome"] == "PRESERVED").mean(),
+            "s_pres": (g["span_outcome"] == "PRESERVED").mean(),
+            "w_rem": g["word_actual_removal"].mean(),
+            "s_rem": g["span_actual_removal"].mean()
+        })).reset_index()
+
+        diff_rev = p_df["w_rev"] - p_df["s_rev"]
+        diff_pres = p_df["s_pres"] - p_df["w_pres"]
+        diff_rem = p_df["s_rem"] - p_df["w_rem"]
+
+        t_res_rev = stats.ttest_1samp(diff_rev, 0.0) if np.std(diff_rev, ddof=1) > 1e-12 else (0.0, 1.0)
+        t_res_pres = stats.ttest_1samp(diff_pres, 0.0) if np.std(diff_pres, ddof=1) > 1e-12 else (0.0, 1.0)
+
+        rng = np.random.default_rng(42)
+        n_c = len(p_df)
+        boot_diff_rev = [np.mean(rng.choice(diff_rev.to_numpy(), size=n_c, replace=True)) for _ in range(10000)]
+        boot_diff_pres = [np.mean(rng.choice(diff_pres.to_numpy(), size=n_c, replace=True)) for _ in range(10000)]
+        ci_rev_low, ci_rev_high = np.percentile(boot_diff_rev, [2.5, 97.5])
+        ci_pres_low, ci_pres_high = np.percentile(boot_diff_pres, [2.5, 97.5])
+
+        paired_span_rows.append({
+            "scorer_scope": scope_label,
+            "n_clusters": n_clusters,
+            "n_evaluations": n_runs,
+            "mean_word_actual_removal": round(float(p_df["w_rem"].mean()), 4),
+            "mean_span_actual_removal": round(float(p_df["s_rem"].mean()), 4),
+            "removal_diff": round(float(diff_rem.mean()), 4),
+            "word_reversed_rate": round(float(p_df["w_rev"].mean()), 4),
+            "span_reversed_rate": round(float(p_df["s_rev"].mean()), 4),
+            "paired_reversal_reduction": round(float(diff_rev.mean()), 4),
+            "paired_reversal_reduction_ci_95": f"[{ci_rev_low:.4f}, {ci_rev_high:.4f}]",
+            "paired_reversal_p_val": float(t_res_rev.pvalue) if hasattr(t_res_rev, "pvalue") else float(t_res_rev[1]),
+            "word_preserved_rate": round(float(p_df["w_pres"].mean()), 4),
+            "span_preserved_rate": round(float(p_df["s_pres"].mean()), 4),
+            "paired_preservation_gain": round(float(diff_pres.mean()), 4),
+            "paired_preservation_gain_ci_95": f"[{ci_pres_low:.4f}, {ci_pres_high:.4f}]",
+            "paired_preservation_p_val": float(t_res_pres.pvalue) if hasattr(t_res_pres, "pvalue") else float(t_res_pres[1])
+        })
+
     span_sum_df = pd.DataFrame(summary_span_rows)
     span_sum_df.to_csv(tables_dir / "dependency_pruning_summary.csv", index=False)
+
+    paired_span_df = pd.DataFrame(paired_span_rows)
+    paired_span_df.to_csv(tables_dir / "dependency_pruning_paired_tests.csv", index=False)
 
     # Save audit table of all cases where either word or span pruning caused a polarity reversal
     rev_cases_span = span_df[
@@ -243,7 +311,7 @@ def run_all_enhancements():
     ].copy()
     rev_cases_span.to_csv(tables_dir / "dependency_pruning_reversals_audit.csv", index=False)
 
-    print(f"[Phase 4] Saved {len(span_df)} paired span-pruning evaluations and {len(rev_cases_span)} audited reversal cases.")
+    print(f"[Phase 4] Saved {len(span_df)} paired span-pruning evaluations, summary ({len(span_sum_df)} rows), paired tests ({len(paired_span_df)} rows), and {len(rev_cases_span)} audited reversals.")
 
     # -------------------------------------------------------------
     # 5. Enhanced Rate-Distortion & Protocol Plots

@@ -367,8 +367,17 @@ class AttributionFaithfulnessEvaluator:
         downstream_df: pd.DataFrame,
         n_bootstrap: int = 10000
     ) -> Tuple[List[Dict[str, Any]], Dict[str, List[Dict[str, float]]]]:
-        """Evaluates whether predicted importance of pruned tokens correlates with
+        """Evaluates whether predicted aggregate importance of pruned tokens correlates with
         observed functional downstream task-success loss (S_orig - S_comp) across compressed variants.
+
+        NOTE ON METHODOLOGICAL SCOPE:
+        This analysis measures exploratory macro-level association between the total removed
+        importance mass and whole-prompt task loss across multi-token compressed variants.
+        It is NOT a token-level counterfactual attribution faithfulness validation (which would
+        require evaluating single-token leave-one-out counterfactuals through the downstream LLM).
+        Because both removed importance mass and task failure scale with the overall compression ratio,
+        this metric reflects a macro-level budget confound (as evidenced by Random achieving r_s ~ 0.40).
+        True token-level counterfactual faithfulness is measured by Independent Deterministic Requirement Drop.
         """
         if downstream_df is None or downstream_df.empty:
             return [], {}
@@ -453,7 +462,7 @@ class AttributionFaithfulnessEvaluator:
         for idx, (m_name, n_tasks, st_sp, st_kd) in enumerate(temp_stats):
             summary_rows.append({
                 "method": m_name,
-                "evaluation_type": "Independent Functional Task Validation",
+                "evaluation_type": "Exploratory Macro-Level Association",
                 "target_outcome": "Downstream Task-Success Loss",
                 "n_prompts": n_tasks,
                 "mean_spearman_r": round(st_sp["mean"], 4),
